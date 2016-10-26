@@ -2,6 +2,7 @@ package sk.oravcok.posta.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * Created by Ondrej Oravcok on 26-Oct-16.
@@ -21,6 +22,8 @@ public class Employee {
     private String surname;
 
     private String title;
+
+    private LocalDate birth;
 
     private String phone;
 
@@ -58,6 +61,14 @@ public class Employee {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
     }
 
     public String getPhone() {

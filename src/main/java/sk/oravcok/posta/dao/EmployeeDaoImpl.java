@@ -1,16 +1,20 @@
 package sk.oravcok.posta.dao;
 
+import org.springframework.stereotype.Repository;
 import sk.oravcok.posta.entity.Employee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by Ondrej Oravcok on 26-Oct-16.
  */
+@Repository
+@Transactional
 public class EmployeeDaoImpl implements EmployeeDao {
 
     @PersistenceContext
