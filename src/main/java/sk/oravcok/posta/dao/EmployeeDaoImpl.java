@@ -44,13 +44,29 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return query.getResultList();
     }
 
-    public Employee findByName(String name) {
-        try {
-            TypedQuery<Employee> q = entityManager.createQuery("SELECT e FROM Employee e WHERE concat(e.name, ' ', e.surname) LIKE :givenName",
-                    Employee.class).setParameter("givenName", "%" + name + "%");
-            return q.getSingleResult();
-        } catch (NoResultException e) {
+    public Employee findByName(String name){
+        try{
+            TypedQuery<Employee> query = entityManager.createQuery("SELECT e FROM Employee e WHERE e.name = :name",
+                    Employee.class).setParameter("name", name);
+            return query.getSingleResult();
+        } catch(NoResultException e){
             return null;
         }
+    }
+
+    public Employee findBySurname(String surname){
+        try{
+            TypedQuery<Employee> query = entityManager.createQuery("SELECT e FROM Employee e WHERE e.surname = :surname",
+                    Employee.class).setParameter("surname", surname);
+            return query.getSingleResult();
+        } catch(NoResultException e){
+            return null;
+        }
+    }
+
+    public List<Employee> findByFullName(String name) {
+        TypedQuery<Employee> q = entityManager.createQuery("SELECT e FROM Employee e WHERE concat(e.name, ' ', e.surname, ' ', e.name) LIKE :givenName",
+                Employee.class).setParameter("givenName", "%" + name + "%");
+        return q.getResultList();
     }
 }

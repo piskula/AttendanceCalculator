@@ -54,4 +54,19 @@ public interface EmployeeDao {
      */
     public Employee findByName(String name);
 
+    /**
+     * find specific employee by it's surname
+     *
+     * @param surname given name
+     * @return specific employee, if found
+     */
+    public Employee findBySurname(String surname);
+
+    /**
+     * find employees matching name and surname
+     *
+     * @param fullname name and surname or surname and name
+     * @return employees matching full name
+     */
+    public List<Employee> findByFullName(String fullname);
 }

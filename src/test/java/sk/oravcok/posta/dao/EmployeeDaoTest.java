@@ -17,9 +17,10 @@ import javax.transaction.Transactional;
 import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 /**
- * Created by User on 26-Oct-16.
+ * Created by Ondrej Oravcok on 26-Oct-16.
  */
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -188,11 +189,77 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         employeeDao.create(employeeNotFull);
         employeeDao.create(employeeFull);
 
-        Employee result = employeeDao.findByName("Misko");
+        Employee result = employeeDao.findByName("Mojko");
         Assert.assertNotNull(result);
-        assertDeepEquals(employeeFull, result);
+        assertDeepEquals(employeeNotFull, result);
     }
 
+    @Test
+    public void findEmployeeByBadNameTest(){
+        employeeDao.create(employeeNotFull);
+        employeeDao.create(employeeFull);
+
+        Employee result = employeeDao.findByName("Tvojko");
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void findEmployeeBySurnameTest(){
+        employeeDao.create(employeeNotFull);
+        employeeDao.create(employeeFull);
+
+        Employee result = employeeDao.findBySurname("Capasik");
+        Assert.assertNotNull(result);
+        assertDeepEquals(employeeNotFull, result);
+    }
+
+    @Test
+    public void findEmployeeByBadSurnameTest(){
+        employeeDao.create(employeeNotFull);
+        employeeDao.create(employeeFull);
+
+        Employee result = employeeDao.findBySurname("Piskota");
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void findEmployeesByFullNameTest(){
+        Employee buchnat2 = new Employee();
+        buchnat2.setName("Alojz");
+        buchnat2.setSurname("Buchnat");
+
+        employeeDao.create(employeeFull);
+        employeeDao.create(employeeNotFull);
+        employeeDao.create(buchnat2);
+
+        List<Employee> result = employeeDao.findByFullName("Buch");
+        Assert.assertEquals(result.size(), 2);
+
+        if(result.get(0).getName().equals("Alojz")){
+            assertDeepEquals(result.get(0), buchnat2);
+            assertDeepEquals(result.get(1), employeeFull);
+        }
+        else{
+            assertDeepEquals(result.get(1), buchnat2);
+            assertDeepEquals(result.get(0), employeeFull);
+        }
+    }
+
+    @Test
+    public void findEmployeeByFullNameTest(){
+        employeeDao.create(employeeFull);
+        employeeDao.create(employeeNotFull);
+
+        Assert.assertEquals(employeeDao.findByFullName("Jozko Buchnat").size(), 1);
+    }
+
+    @Test
+    public void findEmployeeByFullSurnameTest(){
+        employeeDao.create(employeeFull);
+        employeeDao.create(employeeNotFull);
+
+        Assert.assertEquals(employeeDao.findByFullName("Buchnat Jozko").size(), 1);
+    }
 
     private void assertDeepEquals(Employee e1, Employee e2){
         Assert.assertEquals(e1.getName(), e2.getName());
