@@ -46,8 +46,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     public Employee findByName(String name) {
         try {
-            TypedQuery<Employee> q = entityManager.createQuery("SELECT e FROM Employee e WHERE :givenName LIKE concat('%', e.name, ' ', e.surname, '%')",
-                    Employee.class).setParameter("givenName", name);
+            TypedQuery<Employee> q = entityManager.createQuery("SELECT e FROM Employee e WHERE concat(e.name, ' ', e.surname) LIKE :givenName",
+                    Employee.class).setParameter("givenName", "%" + name + "%");
             return q.getSingleResult();
         } catch (NoResultException e) {
             return null;

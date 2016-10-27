@@ -2,6 +2,7 @@ package sk.oravcok.posta.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 /**
@@ -28,6 +29,9 @@ public class Employee {
     private String phone;
 
     private String address;
+
+    @Pattern(regexp = ".+@.+\\....?")
+    private String email;
 
     private String annotation;
 
@@ -85,6 +89,14 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAnnotation() {
