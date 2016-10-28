@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Created by Ondrej Oravcok on 26-Oct-16.
@@ -105,5 +106,29 @@ public class Employee {
 
     public void setAnnotation(String annotation) {
         this.annotation = annotation;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if(this == object) return true;
+        if(!(object instanceof Employee)) return false;
+
+        final Employee other = (Employee) object;
+
+        if (name != null ? !name.equals(other.name) : other.name != null) return false;
+        if (surname != null ? !surname.equals(other.surname) : other.surname != null) return false;
+        if (title != null ? !title.equals(other.title) : other.title != null) return false;
+        if (birth != null ? !birth.equals(other.birth) : other.birth != null) return false;
+        if (phone != null ? !phone.equals(other.phone) : other.phone != null) return false;
+        if (address != null ? !address.equals(other.address) : other.address != null) return false;
+        if (email != null ? !email.equals(other.email) : other.email != null) return false;
+        if (annotation != null ? !annotation.equals(other.annotation) : other.annotation != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(name, surname, title, birth, phone, address, email, annotation);
     }
 }

@@ -99,8 +99,6 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateNullEmployee(){
         employeeDao.create(employeeNotFull);
-        employeeDao.update(employeeFull);
-
         employeeDao.update(null);
     }
 

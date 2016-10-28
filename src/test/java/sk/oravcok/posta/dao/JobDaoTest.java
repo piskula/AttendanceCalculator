@@ -134,6 +134,24 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.create(andrewWindow1);
     }
 
+    @Test(expectedExceptions = ValidationException.class)
+    public void createJobStartNullJobTest(){
+        andrewWindow1.setJobStart(null);
+        jobDao.create(andrewWindow1);
+    }
+
+    @Test(expectedExceptions = ValidationException.class)
+    public void createJobEndNullJobTest(){
+        andrewWindow1.setJobEnd(null);
+        jobDao.create(andrewWindow1);
+    }
+
+    @Test(expectedExceptions = ValidationException.class)
+    public void createJobDateNullJobTest(){
+        andrewWindow1.setJobDate(null);
+        jobDao.create(andrewWindow1);
+    }
+
     @Test
     public void createMultipleJobsTest(){
         jobDao.create(andrewWindow1);
@@ -142,5 +160,30 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.create(susieGarage);
         Assert.assertEquals(jobDao.findAll().size(), 4);
     }
-    
+
+    @Test
+    public void updateJobTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setJobDate(LocalDate.of(2015, Month.SEPTEMBER, 27));
+        andrewWindow1.setJobStart(LocalTime.of(5, 20));
+        andrewWindow1.setJobEnd(LocalTime.of(12, 35));
+        andrewWindow1.setPlace(garage1);
+        andrewWindow1.setEmployee(susie);
+        Job updated = jobDao.update(andrewWindow1);
+        assertDeepEquals(updated, andrewWindow1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void updateNullJobTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.update(null);
+    }
+
+    private void assertDeepEquals(Job j1, Job j2){
+        Assert.assertEquals(j1.getJobStart(), j2.getJobStart());
+        Assert.assertEquals(j1.getJobEnd(), j2.getJobEnd());
+        Assert.assertEquals(j1.getJobDate(), j2.getJobDate());
+        Assert.assertEquals(j1.getPlace(), j2.getPlace());
+        Assert.assertEquals(j1.getEmployee(), j2.getEmployee());
+    }
 }

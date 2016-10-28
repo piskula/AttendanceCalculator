@@ -4,6 +4,7 @@ import sk.oravcok.posta.enums.PlaceType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * Created by Ondrej Oravcok on 27-Oct-16.
@@ -55,5 +56,24 @@ public class Place {
 
     public void setAnnotation(String annotation) {
         this.annotation = annotation;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if(this == object) return true;
+        if(!(object instanceof Place)) return false;
+
+        final Place other = (Place) object;
+
+        if (name != null ? !name.equals(other.name) : other.name != null) return false;
+        if (placeType != null ? !placeType.equals(other.placeType) : other.placeType != null) return false;
+        if (annotation != null ? !annotation.equals(other.annotation) : other.annotation != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(name, placeType, annotation);
     }
 }

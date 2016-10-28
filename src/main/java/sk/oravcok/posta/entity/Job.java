@@ -5,6 +5,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * Created by Ondrej Oravcok on 27-Oct-16.
@@ -86,5 +87,26 @@ public class Job {
 
     public void setJobDate(LocalDate jobDate) {
         this.jobDate = jobDate;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if(this == object) return true;
+        if(!(object instanceof Job)) return false;
+
+        final Job other = (Job) object;
+
+        if (employee != null ? !employee.equals(other.employee) : other.employee != null) return false;
+        if (place != null ? !place.equals(other.place) : other.place != null) return false;
+        if (jobStart != null ? !jobStart.equals(other.jobStart) : other.jobStart != null) return false;
+        if (jobEnd != null ? !jobEnd.equals(other.jobEnd) : other.jobEnd != null) return false;
+        if (jobDate != null ? !jobDate.equals(other.jobDate) : other.jobDate != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(employee, place, jobStart, jobEnd, jobDate);
     }
 }
