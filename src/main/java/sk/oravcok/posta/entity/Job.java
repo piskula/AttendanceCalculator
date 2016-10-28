@@ -32,7 +32,7 @@ public class Job {
     private LocalTime jobEnd;
 
     @NotNull
-    private LocalDate job_date;
+    private LocalDate jobDate;
 
     public Long getId() {
         return id;
@@ -80,11 +80,11 @@ public class Job {
         this.jobEnd = jobEnd;
     }
 
-    public LocalDate getJob_date() {
-        return job_date;
+    public LocalDate getJobDate() {
+        return jobDate;
     }
 
-    public void setJob_date(LocalDate job_date) {
-        this.job_date = job_date;
+    public void setJobDate(LocalDate jobDate) {
+        this.jobDate = jobDate;
     }
 }
