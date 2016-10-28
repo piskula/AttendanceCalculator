@@ -30,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     public void remove(Employee employee) {
         if(employee == null){
-            throw new IllegalArgumentException("Deleting null entity.");
+            throw new IllegalArgumentException("Deleting null Employee entity.");
         }
         entityManager.remove(findById(employee.getId()));
     }

@@ -64,13 +64,13 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void createNameNullEmployee(){
+    public void createNameNullEmployeeTest(){
         employeeFull.setName(null);
         employeeDao.create(employeeFull);
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void createSurnameNullEmployee(){
+    public void createSurnameNullEmployeeTest(){
         employeeFull.setSurname(null);
         employeeDao.create(employeeFull);
     }
@@ -178,7 +178,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         employeeDao.create(employeeFull);
 
         Employee result1 = employeeDao.findById(employeeNotFull.getId());
-        assertDeepEquals(result1, result1);
+        assertDeepEquals(result1, employeeNotFull);
 
         Employee result2 = employeeDao.findById(employeeFull.getId());
         assertDeepEquals(result2, employeeFull);
