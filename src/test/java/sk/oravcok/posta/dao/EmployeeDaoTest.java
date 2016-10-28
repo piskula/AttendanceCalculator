@@ -263,8 +263,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(e1.getName(), e2.getName());
         Assert.assertEquals(e1.getSurname(), e2.getSurname());
         Assert.assertEquals(e1.getTitle(), e2.getTitle());
-        if(e1.getBirth() != null || e2.getBirth() != null)
-            Assert.assertTrue(e1.getBirth().equals(e2.getBirth()));
+        Assert.assertEquals(e1.getBirth(), e2.getBirth());
         Assert.assertEquals(e1.getPhone(), e2.getPhone());
         Assert.assertEquals(e1.getAddress(), e2.getAddress());
         Assert.assertEquals(e1.getEmail(), e2.getEmail());

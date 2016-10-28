@@ -64,10 +64,14 @@ public class Job {
     }
 
     public void setJobStart(LocalTime jobStart) {
-        if(jobEnd != null)
-            if(jobEnd.isBefore(jobStart))
-                throw new IllegalArgumentException("Job end cannot be before start!");
-        this.jobStart = jobStart;
+        if (jobStart == null){
+            this.jobStart = null;
+        }else{
+            if(jobEnd != null)
+                if(jobEnd.isBefore(jobStart))
+                    throw new IllegalArgumentException("Job end cannot be before start!");
+            this.jobStart = jobStart;
+        }
     }
 
     public LocalTime getJobEnd() {
@@ -75,10 +79,14 @@ public class Job {
     }
 
     public void setJobEnd(LocalTime jobEnd) {
-        if(jobStart != null)
-            if(jobStart.isAfter(jobEnd))
-                throw new IllegalArgumentException("Job start cannot be after end!");
-        this.jobEnd = jobEnd;
+        if(jobEnd == null) {
+            this.jobEnd = null;
+        }else{
+            if(jobStart != null)
+                if(jobStart.isAfter(jobEnd))
+                    throw new IllegalArgumentException("Job start cannot be after end!");
+            this.jobEnd = jobEnd;
+        }
     }
 
     public LocalDate getJobDate() {

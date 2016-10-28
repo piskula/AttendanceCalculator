@@ -3,6 +3,7 @@ package sk.oravcok.posta.dao;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.transaction.TransactionSystemException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -20,6 +21,7 @@ import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.List;
 
 /**
  * Created by Ondrej Oravcok on 28-Oct-16.
@@ -122,6 +124,16 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.create(null);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void createBadStartJobTest(){
+        andrewWindow1.setJobStart(LocalTime.of(23, 55));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void createBadEndJobTest(){
+        andrewWindow1.setJobEnd(LocalTime.of(0, 1));
+    }
+
     @Test(expectedExceptions = ValidationException.class)
     public void createEmployeeNullJobTest(){
         andrewWindow1.setEmployee(null);
@@ -153,15 +165,6 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void createMultipleJobsTest(){
-        jobDao.create(andrewWindow1);
-        jobDao.create(susieWindow1);
-        jobDao.create(andrewGarage);
-        jobDao.create(susieGarage);
-        Assert.assertEquals(jobDao.findAll().size(), 4);
-    }
-
-    @Test
     public void updateJobTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobDate(LocalDate.of(2015, Month.SEPTEMBER, 27));
@@ -177,6 +180,203 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
     public void updateNullJobTest(){
         jobDao.create(andrewWindow1);
         jobDao.update(null);
+    }
+
+    @Test(expectedExceptions = TransactionSystemException.class)
+    public void updateJobNullEmployeeTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setEmployee(null);
+        jobDao.update(andrewWindow1);
+    }
+
+    @Test(expectedExceptions = TransactionSystemException.class)
+    public void updateJobNullPlaceTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setPlace(null);
+        jobDao.update(andrewWindow1);
+    }
+
+    @Test(expectedExceptions = TransactionSystemException.class)
+    public void updateJobNullJobDateTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setJobDate(null);
+        jobDao.update(andrewWindow1);
+    }
+
+    @Test(expectedExceptions = TransactionSystemException.class)
+    public void updateJobNullJobStartTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setJobStart(null);
+        jobDao.update(andrewWindow1);
+    }
+
+    @Test(expectedExceptions = TransactionSystemException.class)
+    public void updateJobNullJobEndTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setJobEnd(null);
+        jobDao.update(andrewWindow1);
+    }
+
+    @Test
+    public void updateNotExistingJobTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.update(andrewGarage);
+        Assert.assertEquals(jobDao.findAll().size(), 2);
+    }
+
+    @Test
+    public void removeJobTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(andrewGarage);
+        Assert.assertEquals(2, jobDao.findAll().size());
+
+        jobDao.remove(andrewWindow1);
+        Assert.assertEquals(1, jobDao.findAll().size());
+
+        Job notRemoved = jobDao.findAll().get(0);
+        assertDeepEquals(notRemoved, andrewGarage);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void removeNullJobTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.remove(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void removeNotExistingJobTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.remove(andrewGarage);
+    }
+
+    @Test
+    public void findAllJobsTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+        Assert.assertEquals(jobDao.findAll().size(), 4);
+    }
+
+    @Test
+    public void findJobsOfEmployeeTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        Assert.assertEquals(jobDao.findJobsOfEmployee(andrew).size(), 2);
+        Assert.assertEquals(jobDao.findJobsOfEmployee(susie).size(), 2);
+
+        Assert.assertEquals(jobDao.findJobsOfEmployee(andrew).get(0).getJobStart(), LocalTime.of(6, 25));
+        Assert.assertEquals(jobDao.findJobsOfEmployee(andrew).get(1).getJobStart(), LocalTime.of(8, 10));
+
+        Assert.assertEquals(jobDao.findJobsOfEmployee(susie).get(0).getJobStart(), LocalTime.of(12, 22));
+        Assert.assertEquals(jobDao.findJobsOfEmployee(susie).get(0).getJobDate(), LocalDate.of(2016, Month.OCTOBER, 28));
+        Assert.assertEquals(jobDao.findJobsOfEmployee(susie).get(1).getJobStart(), LocalTime.of(7, 55));
+        Assert.assertEquals(jobDao.findJobsOfEmployee(susie).get(1).getJobDate(), LocalDate.of(2016, Month.OCTOBER, 29));
+    }
+
+    @Test
+    public void findJobsOfPlaceTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        Assert.assertEquals(jobDao.findJobsOfPlace(window1).size(), 2);
+        Assert.assertEquals(jobDao.findJobsOfPlace(garage1).size(), 2);
+
+        Assert.assertEquals(jobDao.findJobsOfPlace(window1).get(0).getJobStart(), LocalTime.of(6, 25));
+        Assert.assertEquals(jobDao.findJobsOfPlace(window1).get(1).getJobStart(), LocalTime.of(12, 22));
+
+        Assert.assertEquals(jobDao.findJobsOfPlace(garage1).get(0).getJobStart(), LocalTime.of(8, 10));
+        Assert.assertEquals(jobDao.findJobsOfPlace(garage1).get(0).getJobDate(), LocalDate.of(2016, Month.OCTOBER, 28));
+        Assert.assertEquals(jobDao.findJobsOfPlace(garage1).get(1).getJobStart(), LocalTime.of(7, 55));
+        Assert.assertEquals(jobDao.findJobsOfPlace(garage1).get(1).getJobDate(), LocalDate.of(2016, Month.OCTOBER, 29));
+    }
+
+    @Test
+    public void findJobsOfDateTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        LocalDate date = LocalDate.of(2016, Month.OCTOBER, 28);
+        Assert.assertEquals(jobDao.findJobsOfDate(date).size(), 3);
+
+        Assert.assertEquals(jobDao.findJobsOfDate(date).get(0).getJobStart(), LocalTime.of(6, 25));
+        Assert.assertEquals(jobDao.findJobsOfDate(date).get(1).getJobStart(), LocalTime.of(8, 10));
+        Assert.assertEquals(jobDao.findJobsOfDate(date).get(2).getJobStart(), LocalTime.of(12, 22));
+    }
+
+    @Test
+    public void findJobsOfEmployeeAndDateTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        LocalDate date = LocalDate.of(2016, Month.OCTOBER, 28);
+        Assert.assertEquals(jobDao.findJobsOfEmployeeAndDate(susie, date).size(), 1);
+
+        Assert.assertEquals(jobDao.findJobsOfEmployeeAndDate(andrew, date).get(0).getJobStart(), LocalTime.of(6, 25));
+        Assert.assertEquals(jobDao.findJobsOfEmployeeAndDate(andrew, date).get(1).getJobStart(), LocalTime.of(8, 10));
+    }
+
+    @Test
+    public void findJobsOfPlaceAndDateTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        LocalDate date = LocalDate.of(2016, Month.OCTOBER, 28);
+        Assert.assertEquals(jobDao.findJobsOfPlaceAndDate(garage1, date).size(), 1);
+
+        Assert.assertEquals(jobDao.findJobsOfPlaceAndDate(window1, date).get(0).getJobStart(), LocalTime.of(6, 25));
+        Assert.assertEquals(jobDao.findJobsOfPlaceAndDate(window1, date).get(1).getJobStart(), LocalTime.of(12, 22));
+    }
+
+    @Test
+    public void findJobsOfPlaceBetweenDaysTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        List<Job> result1 = jobDao.findJobsOfPlaceBetweenDays(garage1, LocalDate.of(2016, Month.OCTOBER, 28), LocalDate.of(2016, Month.OCTOBER, 29));
+        Assert.assertEquals(result1.size(), 2);
+
+        List<Job> result2 = jobDao.findJobsOfPlaceBetweenDays(garage1, LocalDate.of(2016, Month.OCTOBER, 28), LocalDate.of(2016, Month.OCTOBER, 28));
+        Assert.assertEquals(result2.size(), 1);
+
+        List<Job> result3 = jobDao.findJobsOfPlaceBetweenDays(garage1, LocalDate.of(2016, Month.DECEMBER, 3), LocalDate.of(2016, Month.JANUARY, 28));
+        Assert.assertEquals(result3.size(), 2);
+
+        Assert.assertEquals(result1.get(0).getJobStart(), LocalTime.of(8, 10));
+        Assert.assertEquals(result1.get(1).getJobStart(), LocalTime.of(7, 55));
+    }
+
+    @Test
+    public void findJobsOfEmployeeBetweenDaysTest(){
+        jobDao.create(andrewWindow1);
+        jobDao.create(susieWindow1);
+        jobDao.create(andrewGarage);
+        jobDao.create(susieGarage);
+
+        List<Job> result1 = jobDao.findJobsOfEmployeeBetweenDays(andrew, LocalDate.of(2016, Month.OCTOBER, 28), LocalDate.of(2016, Month.OCTOBER, 29));
+        Assert.assertEquals(result1.size(), 2);
+
+        List<Job> result2 = jobDao.findJobsOfEmployeeBetweenDays(susie, LocalDate.of(2016, Month.OCTOBER, 28), LocalDate.of(2016, Month.OCTOBER, 28));
+        Assert.assertEquals(result2.size(), 1);
+
+        List<Job> result3 = jobDao.findJobsOfEmployeeBetweenDays(susie, LocalDate.of(2016, Month.DECEMBER, 3), LocalDate.of(2016, Month.JANUARY, 28));
+        Assert.assertEquals(result3.size(), 2);
+
+        Assert.assertEquals(result3.get(0).getJobStart(), LocalTime.of(12, 22));
+        Assert.assertEquals(result3.get(1).getJobStart(), LocalTime.of(7, 55));
     }
 
     private void assertDeepEquals(Job j1, Job j2){
