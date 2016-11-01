@@ -1,8 +1,9 @@
 package sk.oravcok.posta.dao;
 
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.TransactionSystemException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,7 +29,7 @@ import java.util.List;
  * Created by Ondrej Oravcok on 28-Oct-16.
  */
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class JobDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -182,39 +184,44 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.update(null);
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateJobNullEmployeeTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setEmployee(null);
         jobDao.update(andrewWindow1);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateJobNullPlaceTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setPlace(null);
         jobDao.update(andrewWindow1);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateJobNullJobDateTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobDate(null);
         jobDao.update(andrewWindow1);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateJobNullJobStartTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobStart(null);
         jobDao.update(andrewWindow1);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateJobNullJobEndTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobEnd(null);
         jobDao.update(andrewWindow1);
+        entityManager.flush();
     }
 
     @Test

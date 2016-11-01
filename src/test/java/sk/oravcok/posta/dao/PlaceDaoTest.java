@@ -1,8 +1,9 @@
 package sk.oravcok.posta.dao;
 
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.TransactionSystemException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -15,13 +16,14 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 
 /**
  * Created by Ondrej Oravcok on 27-Oct-16.
  */
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -85,18 +87,20 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.update(null);
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updatePlaceNullNameTest(){
         placeDao.create(window1);
         window1.setName(null);
         placeDao.update(window1);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updatePlaceNullPlaceTypeTest(){
         placeDao.create(window1);
         window1.setPlaceType(null);
         placeDao.update(window1);
+        entityManager.flush();
     }
 
     @Test
@@ -147,7 +151,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findEmployeeByIdTest() {
+    public void findPlaceByIdTest() {
         placeDao.create(window1);
         placeDao.create(background1);
 
@@ -159,7 +163,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findEmployeeByNameTest(){
+    public void findPlaceByNameTest(){
         placeDao.create(window1);
         placeDao.create(background1);
 
@@ -169,7 +173,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findEmployeeByBadNameTest(){
+    public void findPlaceByBadNameTest(){
         placeDao.create(window1);
         placeDao.create(background1);
 

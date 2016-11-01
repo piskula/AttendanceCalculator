@@ -1,9 +1,9 @@
 package sk.oravcok.posta.dao;
 
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.transaction.TransactionSystemException;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by Ondrej Oravcok on 26-Oct-16.
  */
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -79,6 +80,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
     public void createInvalidEmailEmployee(){
         employeeFull.setEmail("mojnovyemajlik");
         employeeDao.create(employeeFull);
+        entityManager.flush();
     }
 
     @Test
@@ -102,25 +104,28 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         employeeDao.update(null);
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateNameNullEmployee(){
         employeeDao.create(employeeFull);
         employeeFull.setName(null);
         employeeDao.update(employeeFull);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateSurnameNullEmployeeTest(){
         employeeDao.create(employeeFull);
         employeeFull.setSurname(null);
         employeeDao.update(employeeFull);
+        entityManager.flush();
     }
 
-    @Test(expectedExceptions = TransactionSystemException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateInvalidEmailEmployeeTest(){
         employeeDao.create(employeeFull);
         employeeFull.setEmail("supermagegigamail@mojnovy");
         employeeDao.update(employeeFull);
+        entityManager.flush();
     }
 
     @Test

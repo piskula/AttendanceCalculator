@@ -18,9 +18,11 @@ public class Employee {
     private Long id;
 
     @NotNull
+    @Column(nullable = false)
     private String name;
 
     @NotNull
+    @Column(nullable = false)
     private String surname;
 
     private String title;

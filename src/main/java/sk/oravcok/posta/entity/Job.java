@@ -27,12 +27,15 @@ public class Job {
     private Place place;
 
     @NotNull
+    @Column(nullable = false)
     private LocalTime jobStart;
 
     @NotNull
+    @Column(nullable = false)
     private LocalTime jobEnd;
 
     @NotNull
+    @Column(nullable = false)
     private LocalDate jobDate;
 
     public Long getId() {
@@ -100,6 +103,7 @@ public class Job {
     @Override
     public boolean equals(Object object){
         if(this == object) return true;
+        if(object == null) return false;
         if(!(object instanceof Job)) return false;
 
         final Job other = (Job) object;
