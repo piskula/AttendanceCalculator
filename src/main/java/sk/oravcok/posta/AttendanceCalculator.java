@@ -8,7 +8,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * Created by Ondrej Oravcok on 26-Oct-16.
  */
 public class AttendanceCalculator {
+
     private static EntityManagerFactory emf;
+
+    private AttendanceCalculator(){
+    }
 
     public static void main(String[] args) {
         // Start in-memory database

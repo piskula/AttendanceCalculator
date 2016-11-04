@@ -74,14 +74,16 @@ public class JobDaoImpl implements JobDao {
 
     @Override
     public List<Job> findJobsOfEmployeeAndDate(Employee employee, LocalDate date) {
-        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j WHERE j.employee = :employee AND j.jobDate = :date ORDER BY j.jobStart",
+        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j " +
+                        "WHERE j.employee = :employee AND j.jobDate = :date ORDER BY j.jobStart",
                 Job.class).setParameter("employee", employee).setParameter("date", date);
         return query.getResultList();
     }
 
     @Override
     public List<Job> findJobsOfPlaceAndDate(Place place, LocalDate date) {
-        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j WHERE j.place = :place AND j.jobDate = :date ORDER BY j.jobStart",
+        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j " +
+                        "WHERE j.place = :place AND j.jobDate = :date ORDER BY j.jobStart",
                 Job.class).setParameter("place", place).setParameter("date", date);
         return query.getResultList();
     }
@@ -91,13 +93,13 @@ public class JobDaoImpl implements JobDao {
         if(startDate.isEqual(endDate)){
             return findJobsOfPlaceAndDate(place, startDate);
         }
-        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j WHERE j.place = :place AND j.jobDate BETWEEN :startdate AND :enddate ORDER BY j.jobDate, j.jobStart",
+        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j " +
+                        "WHERE j.place = :place AND j.jobDate BETWEEN :startdate AND :enddate ORDER BY j.jobDate, j.jobStart",
                 Job.class).setParameter("place", place);
         if(endDate.isBefore(startDate)){
             query.setParameter("startdate", endDate);
             query.setParameter("enddate", startDate);
-        }
-        else{
+        } else {
             query.setParameter("startdate", startDate);
             query.setParameter("enddate", endDate);
         }
@@ -109,13 +111,13 @@ public class JobDaoImpl implements JobDao {
         if(startDate.isEqual(endDate)){
             return findJobsOfEmployeeAndDate(employee, startDate);
         }
-        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j WHERE j.employee = :employee AND j.jobDate BETWEEN :startdate AND :enddate ORDER BY j.jobDate, j.jobStart",
+        TypedQuery<Job> query = entityManager.createQuery("SELECT j FROM Job j " +
+                        "WHERE j.employee = :employee AND j.jobDate BETWEEN :startdate AND :enddate ORDER BY j.jobDate, j.jobStart",
                 Job.class).setParameter("employee", employee);
         if(startDate.isAfter(endDate)){
             query.setParameter("startdate", endDate);
             query.setParameter("enddate", startDate);
-        }
-        else{
+        } else {
             query.setParameter("startdate", startDate);
             query.setParameter("enddate", endDate);
         }

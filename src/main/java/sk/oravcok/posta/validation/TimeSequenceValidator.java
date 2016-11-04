@@ -4,11 +4,10 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
 import java.time.LocalTime;
-import java.util.Objects;
 
 /**
  *  Created by Ondrej Oravcok on 03-Nov-16.
- * inspired by Martin Styk
+ * inspired by Martin Styk https://github.com/MartinStyk/pa165-activity-tracker
  */
 public class TimeSequenceValidator implements ConstraintValidator<TimeSequence, Object> {
 

@@ -1,7 +1,8 @@
 package sk.oravcok.posta.entity;
 
+import sk.oravcok.posta.validation.TimeSequence;
+
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,6 +13,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "jobs")
+@TimeSequence(members = {"jobStart", "jobEnd"})
 public class Job {
 
     @Id
@@ -67,14 +69,7 @@ public class Job {
     }
 
     public void setJobStart(LocalTime jobStart) {
-        if (jobStart == null){
-            this.jobStart = null;
-        }else{
-            if(jobEnd != null)
-                if(jobEnd.isBefore(jobStart))
-                    throw new IllegalArgumentException("Job end cannot be before start!");
-            this.jobStart = jobStart;
-        }
+        this.jobStart = jobStart;
     }
 
     public LocalTime getJobEnd() {
@@ -82,14 +77,7 @@ public class Job {
     }
 
     public void setJobEnd(LocalTime jobEnd) {
-        if(jobEnd == null) {
-            this.jobEnd = null;
-        }else{
-            if(jobStart != null)
-                if(jobStart.isAfter(jobEnd))
-                    throw new IllegalArgumentException("Job start cannot be after end!");
-            this.jobEnd = jobEnd;
-        }
+        this.jobEnd = jobEnd;
     }
 
     public LocalDate getJobDate() {
@@ -108,11 +96,11 @@ public class Job {
 
         final Job other = (Job) object;
 
-        if (employee != null ? !employee.equals(other.employee) : other.employee != null) return false;
-        if (place != null ? !place.equals(other.place) : other.place != null) return false;
-        if (jobStart != null ? !jobStart.equals(other.jobStart) : other.jobStart != null) return false;
-        if (jobEnd != null ? !jobEnd.equals(other.jobEnd) : other.jobEnd != null) return false;
-        if (jobDate != null ? !jobDate.equals(other.jobDate) : other.jobDate != null) return false;
+        if (employee != null ? !employee.equals(other.getEmployee()) : other.getEmployee() != null) return false;
+        if (place != null ? !place.equals(other.getPlace()) : other.getPlace() != null) return false;
+        if (jobStart != null ? !jobStart.equals(other.getJobStart()) : other.getJobStart() != null) return false;
+        if (jobEnd != null ? !jobEnd.equals(other.getJobEnd()) : other.getJobEnd() != null) return false;
+        if (jobDate != null ? !jobDate.equals(other.getJobDate()) : other.getJobDate() != null) return false;
 
         return true;
     }

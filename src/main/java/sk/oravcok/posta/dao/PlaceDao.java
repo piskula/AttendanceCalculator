@@ -52,5 +52,5 @@ public interface PlaceDao {
      * @param name given name
      * @return specific place, if found
      */
-    public Place findByName(String name);
+    Place findByName(String name);
 }

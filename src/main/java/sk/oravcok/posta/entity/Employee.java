@@ -117,14 +117,14 @@ public class Employee {
 
         final Employee other = (Employee) object;
 
-        if (name != null ? !name.equals(other.name) : other.name != null) return false;
-        if (surname != null ? !surname.equals(other.surname) : other.surname != null) return false;
-        if (title != null ? !title.equals(other.title) : other.title != null) return false;
-        if (birth != null ? !birth.equals(other.birth) : other.birth != null) return false;
-        if (phone != null ? !phone.equals(other.phone) : other.phone != null) return false;
-        if (address != null ? !address.equals(other.address) : other.address != null) return false;
-        if (email != null ? !email.equals(other.email) : other.email != null) return false;
-        if (annotation != null ? !annotation.equals(other.annotation) : other.annotation != null) return false;
+        if (name != null ? !name.equals(other.getName()) : other.getName() != null) return false;
+        if (surname != null ? !surname.equals(other.getSurname()) : other.getSurname() != null) return false;
+        if (title != null ? !title.equals(other.getTitle()) : other.getTitle() != null) return false;
+        if (birth != null ? !birth.equals(other.getBirth()) : other.getBirth() != null) return false;
+        if (phone != null ? !phone.equals(other.getPhone()) : other.getPhone() != null) return false;
+        if (address != null ? !address.equals(other.getAddress()) : other.getAddress() != null) return false;
+        if (email != null ? !email.equals(other.getEmail()) : other.getEmail() != null) return false;
+        if (annotation != null ? !annotation.equals(other.getAnnotation()) : other.getAnnotation() != null) return false;
 
         return true;
     }

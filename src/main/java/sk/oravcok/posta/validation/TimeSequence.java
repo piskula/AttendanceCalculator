@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  *  Created by Ondrej Oravcok on 03-Nov-16.
- * inspired by Martin Styk
+ * inspired by Martin Styk https://github.com/MartinStyk/pa165-activity-tracker
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

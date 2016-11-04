@@ -55,7 +55,7 @@ public interface JobDao {
      * @param employee given employee
      * @return specific jobs
      */
-    public List<Job> findJobsOfEmployee(Employee employee);
+    List<Job> findJobsOfEmployee(Employee employee);
 
     /**
      * find jobs of place
@@ -63,7 +63,7 @@ public interface JobDao {
      * @param place given place
      * @return specific jobs
      */
-    public List<Job> findJobsOfPlace(Place place);
+    List<Job> findJobsOfPlace(Place place);
 
     /**
      * find jobs of date
@@ -71,7 +71,7 @@ public interface JobDao {
      * @param date given place
      * @return specific jobs
      */
-    public List<Job> findJobsOfDate(LocalDate date);
+    List<Job> findJobsOfDate(LocalDate date);
 
     /**
      * find jobs of place and date
@@ -80,7 +80,7 @@ public interface JobDao {
      * @param date given date
      * @return specific jobs
      */
-    public List<Job> findJobsOfPlaceAndDate(Place place, LocalDate date);
+    List<Job> findJobsOfPlaceAndDate(Place place, LocalDate date);
 
     /**
      * find jobs of employee and date
@@ -89,7 +89,7 @@ public interface JobDao {
      * @param date given date
      * @return specific jobs
      */
-    public List<Job> findJobsOfEmployeeAndDate(Employee employee, LocalDate date);
+    List<Job> findJobsOfEmployeeAndDate(Employee employee, LocalDate date);
 
     /**
      * find jobs of place between days
@@ -99,7 +99,7 @@ public interface JobDao {
      * @param endDate given end date
      * @return specific jobs
      */
-    public List<Job> findJobsOfPlaceBetweenDays(Place place, LocalDate startDate, LocalDate endDate);
+    List<Job> findJobsOfPlaceBetweenDays(Place place, LocalDate startDate, LocalDate endDate);
 
     /**
      * find jobs of employee between days
@@ -109,5 +109,5 @@ public interface JobDao {
      * @param endDate given end date
      * @return specific jobs
      */
-    public List<Job> findJobsOfEmployeeBetweenDays(Employee employee, LocalDate startDate, LocalDate endDate);
+    List<Job> findJobsOfEmployeeBetweenDays(Employee employee, LocalDate startDate, LocalDate endDate);
 }

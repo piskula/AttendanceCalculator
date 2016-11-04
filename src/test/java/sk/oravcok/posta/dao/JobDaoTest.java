@@ -126,14 +126,16 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.create(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void createBadStartJobTest(){
         andrewWindow1.setJobStart(LocalTime.of(23, 55));
+        jobDao.create(andrewWindow1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void createBadEndJobTest(){
         andrewWindow1.setJobEnd(LocalTime.of(0, 1));
+        jobDao.create(andrewWindow1);
     }
 
     @Test(expectedExceptions = ValidationException.class)
@@ -208,7 +210,7 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         entityManager.flush();
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updateJobNullJobStartTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobStart(null);
@@ -216,10 +218,26 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         entityManager.flush();
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updateJobNullJobEndTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobEnd(null);
+        jobDao.update(andrewWindow1);
+        entityManager.flush();
+    }
+
+    @Test(expectedExceptions = ValidationException.class)
+    public void updateJobBadJobStartTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setJobStart(LocalTime.of(22, 15));
+        jobDao.update(andrewWindow1);
+        entityManager.flush();
+    }
+
+    @Test(expectedExceptions = ValidationException.class)
+    public void updateJobBadJobEndTest(){
+        jobDao.create(andrewWindow1);
+        andrewWindow1.setJobEnd(LocalTime.of(3, 10));
         jobDao.update(andrewWindow1);
         entityManager.flush();
     }

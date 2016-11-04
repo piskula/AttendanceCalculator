@@ -65,9 +65,9 @@ public class Place {
 
         final Place other = (Place) object;
 
-        if (name != null ? !name.equals(other.name) : other.name != null) return false;
-        if (placeType != null ? !placeType.equals(other.placeType) : other.placeType != null) return false;
-        if (annotation != null ? !annotation.equals(other.annotation) : other.annotation != null) return false;
+        if (name != null ? !name.equals(other.getName()) : other.getName() != null) return false;
+        if (placeType != null ? !placeType.equals(other.getPlaceType()) : other.getPlaceType() != null) return false;
+        if (annotation != null ? !annotation.equals(other.getAnnotation()) : other.getAnnotation() != null) return false;
 
         return true;
     }
