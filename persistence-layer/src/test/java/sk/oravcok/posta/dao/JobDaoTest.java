@@ -4,7 +4,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.TransactionSystemException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -12,6 +11,8 @@ import sk.oravcok.posta.PersistenceApplicationContext;
 import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.entity.Job;
 import sk.oravcok.posta.entity.Place;
+import sk.oravcok.posta.enums.PlaceType;
+import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.enums.PlaceType;
 
 import javax.inject.Inject;
