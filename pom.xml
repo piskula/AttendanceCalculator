@@ -51,7 +51,7 @@
                         <id>validate</id>
                         <phase>validate</phase>
                         <configuration>
-                            <configLocation>persistence-layer/src/main/resources/checkstyle.xml</configLocation>
+                            <configLocation>resources/checkstyle.xml</configLocation>
                             <encoding>UTF-8</encoding>
                             <consoleOutput>false</consoleOutput>
                             <failsOnError>false</failsOnError>
