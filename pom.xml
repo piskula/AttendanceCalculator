@@ -9,8 +9,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>api-layer</module>
         <module>persistence-layer</module>
-        <module>facade-layer</module>
+        <module>service-layer</module>
     </modules>
 
     <properties>

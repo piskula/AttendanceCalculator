@@ -1,28 +1,22 @@
-package sk.oravcok.posta.entity;
+package sk.oravcok.posta.dto;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * Created by Ondrej Oravcok on 26-Oct-16.
+ * DTO for Employee
+ *
+ * Created by Ondrej Oravcok on 18-Nov-16.
  */
-@Entity
-@Table(name = "employees")
-public class Employee {
+public class EmployeeDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
     private String name;
 
     @NotNull
-    @Column(nullable = false)
     private String surname;
 
     private String title;
@@ -33,16 +27,15 @@ public class Employee {
 
     private String address;
 
-    @Pattern(regexp = ".+@.+\\....?")
     private String email;
 
     private String annotation;
 
-    public Long getId() {
-        return id;
+    public Long getId(){
+        return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id){
         this.id = id;
     }
 
@@ -113,9 +106,9 @@ public class Employee {
     @Override
     public boolean equals(Object object){
         if(this == object) return true;
-        if(!(object instanceof Employee)) return false;
+        if(!(object instanceof EmployeeCreateDTO)) return false;
 
-        final Employee other = (Employee) object;
+        final EmployeeCreateDTO other = (EmployeeCreateDTO) object;
 
         if (name != null ? !name.equals(other.getName()) : other.getName() != null) return false;
         if (surname != null ? !surname.equals(other.getSurname()) : other.getSurname() != null) return false;
@@ -136,7 +129,7 @@ public class Employee {
 
     @Override
     public String toString(){
-        return "Employee{"
+        return "EmployeeCreateDTO{"
                 + "id=" + id
                 + ", name=" + name
                 + ", surname=" + surname
@@ -148,4 +141,5 @@ public class Employee {
                 + ", annotation=" + annotation
                 +"}";
     }
+
 }
