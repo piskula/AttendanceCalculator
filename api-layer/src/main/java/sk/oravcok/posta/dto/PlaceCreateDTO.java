@@ -1,39 +1,24 @@
-package sk.oravcok.posta.entity;
+package sk.oravcok.posta.dto;
 
 import sk.oravcok.posta.enums.PlaceType;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
- * Created by Ondrej Oravcok on 27-Oct-16.
+ * DTO for creating Place
+ *
+ * Created by Ondrej Oravcok on 20-Nov-16.
  */
-@Entity
-@Table(name = "places")
-public class Place {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PlaceCreateDTO {
 
     @NotNull
-    @Column(nullable = false, unique = true)
     private String name;
 
-    @Enumerated
     @NotNull
     private PlaceType placeType;
 
     private String annotation;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -60,11 +45,11 @@ public class Place {
     }
 
     @Override
-    public boolean equals(Object object){
-        if(this == object) return true;
-        if(!(object instanceof Place)) return false;
+    public boolean equals(Object obj){
+        if(this == obj) return true;
+        if(!(obj instanceof PlaceCreateDTO)) return false;
 
-        final Place other = (Place) object;
+        final PlaceCreateDTO other = (PlaceCreateDTO) obj;
 
         if (name != null ? !name.equals(other.getName()) : other.getName() != null) return false;
 
@@ -73,6 +58,15 @@ public class Place {
 
     @Override
     public int hashCode(){
-        return Objects.hash(name);
+        return Objects.hash(name, placeType, annotation);
+    }
+
+    @Override
+    public String toString(){
+        return "PlaceCreateDTO{"
+                + "name=" + name
+                + ", placeType=" + placeType
+                + ", annotation=" + annotation
+                +"}";
     }
 }

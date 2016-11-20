@@ -38,6 +38,13 @@ public class Employee {
 
     private String annotation;
 
+    public Employee(){
+    }
+
+    public Employee(Long employeeId) {
+        this.id = employeeId;
+    }
+
     public Long getId() {
         return id;
     }

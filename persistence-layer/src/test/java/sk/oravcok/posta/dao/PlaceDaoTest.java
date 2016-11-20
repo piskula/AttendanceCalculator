@@ -14,6 +14,7 @@ import sk.oravcok.posta.enums.PlaceType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
@@ -70,6 +71,13 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.create(window1);
     }
 
+    @Test(expectedExceptions = PersistenceException.class)
+    public void createPlaceSameNameTest(){
+        placeDao.create(window1);
+        background1.setName("Priehradka 1");
+        placeDao.create(background1);
+    }
+
     @Test
     public void updatePlaceTest(){
         placeDao.create(window1);
@@ -107,6 +115,15 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.create(window1);
         placeDao.update(background1);
         Assert.assertEquals(placeDao.findAll().size(), 2);
+    }
+
+    @Test(expectedExceptions = PersistenceException.class)
+    public void updateNotUniqueNameTest(){
+        placeDao.create(window1);
+        placeDao.create(background1);
+        background1.setName("Priehradka 1");
+        placeDao.update(background1);
+        entityManager.flush();
     }
 
     @Test
