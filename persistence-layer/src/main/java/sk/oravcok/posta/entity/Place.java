@@ -27,6 +27,13 @@ public class Place {
 
     private String annotation;
 
+    public Place(){
+    }
+
+    public Place(Long id){
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

@@ -49,6 +49,16 @@ public interface PlaceFacade {
     PlaceDTO getPlaceById(Long placeId);
 
     /**
+     * Returns place according to given name.
+     *
+     * @param placeName
+     * @return place identified by unique name
+     * @throws NonExistingEntityException if place for given id doesn't exist
+     * @throws IllegalArgumentException if placeName is null
+     */
+    PlaceDTO getPlaceByName(String placeName);
+
+    /**
      * Deletes place.
      *
      * @param placeId id of report to delete
