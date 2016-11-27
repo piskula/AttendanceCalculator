@@ -82,6 +82,7 @@ public interface JobFacade {
      * @param toDay end day (including)
      * @return these jobs
      * @throws IllegalArgumentException if employeeId, fromDay or toDay is null
+     * @throws IllegalArgumentException if toDay is before fromDay
      * @throws NonExistingEntityException if Employee does not exist
      */
     List<JobDTO> findJobsOfEmployeeBetweenDays(Long employeeId, LocalDate fromDay, LocalDate toDay);
@@ -94,6 +95,7 @@ public interface JobFacade {
      * @param toDay end day (including)
      * @return these jobs
      * @throws IllegalArgumentException if placeId, fromDay, toDay is null
+     * @throws IllegalArgumentException if toDay is before fromDay
      * @throws NonExistingEntityException if Place does not exist
      */
     List<JobDTO> findJobsOfPlaceBetweenDays(Long placeId, LocalDate fromDay, LocalDate toDay);
