@@ -3,6 +3,7 @@ package sk.oravcok.posta.facade;
 import sk.oravcok.posta.dto.PlaceCreateDTO;
 import sk.oravcok.posta.dto.PlaceDTO;
 import sk.oravcok.posta.dto.PlaceUpdateDTO;
+import sk.oravcok.posta.exception.NonExistingEntityException;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface PlaceFacade {
      *
      * @return list of all place entities or empty list if no place exists
      */
-    List<PlaceDTO> getAllPlaces();
+    List<PlaceDTO> findAllPlaces();
 
     /**
      * Returns place according to given id.
@@ -46,7 +47,7 @@ public interface PlaceFacade {
      * @throws NonExistingEntityException if place for given id doesn't exist
      * @throws IllegalArgumentException if placeId is null
      */
-    PlaceDTO getPlaceById(Long placeId);
+    PlaceDTO findPlaceById(Long placeId);
 
     /**
      * Returns place according to given name.
@@ -56,7 +57,7 @@ public interface PlaceFacade {
      * @throws NonExistingEntityException if place for given id doesn't exist
      * @throws IllegalArgumentException if placeName is null
      */
-    PlaceDTO getPlaceByName(String placeName);
+    PlaceDTO findPlaceByName(String placeName);
 
     /**
      * Deletes place.

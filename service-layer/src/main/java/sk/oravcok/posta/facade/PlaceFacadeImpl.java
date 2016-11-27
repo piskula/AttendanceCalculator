@@ -1,6 +1,7 @@
 package sk.oravcok.posta.facade;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sk.oravcok.posta.dto.PlaceCreateDTO;
 import sk.oravcok.posta.dto.PlaceDTO;
 import sk.oravcok.posta.dto.PlaceUpdateDTO;
@@ -10,7 +11,6 @@ import sk.oravcok.posta.mapping.BeanMappingService;
 import sk.oravcok.posta.service.PlaceService;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -54,12 +54,12 @@ public class PlaceFacadeImpl implements PlaceFacade {
     }
 
     @Override
-    public List<PlaceDTO> getAllPlaces() {
+    public List<PlaceDTO> findAllPlaces() {
         return beanMappingService.mapTo(placeService.findAll(), PlaceDTO.class);
     }
 
     @Override
-    public PlaceDTO getPlaceById(Long placeId) {
+    public PlaceDTO findPlaceById(Long placeId) {
         if (placeId == null) {
             throw new IllegalArgumentException("placeId is null");
         }
@@ -72,7 +72,7 @@ public class PlaceFacadeImpl implements PlaceFacade {
     }
 
     @Override
-    public PlaceDTO getPlaceByName(String placeName) {
+    public PlaceDTO findPlaceByName(String placeName) {
         if (placeName == null) {
             throw new IllegalArgumentException("placeName is null");
         }

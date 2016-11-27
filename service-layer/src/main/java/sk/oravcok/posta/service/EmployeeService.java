@@ -12,7 +12,7 @@ import java.util.List;
 public interface EmployeeService {
 
     /**
-     * Creates new Employee. If calories are not set, their values is computed.
+     * Creates new Employee.
      *
      * @param employee to be created
      * @throws IllegalArgumentException if employee is null
@@ -33,6 +33,7 @@ public interface EmployeeService {
      *
      * @param id id of the employee entity to be returned
      * @return the employee entity with given id
+     * @throws IllegalArgumentException if id is null
      */
     Employee findById(Long id);
 

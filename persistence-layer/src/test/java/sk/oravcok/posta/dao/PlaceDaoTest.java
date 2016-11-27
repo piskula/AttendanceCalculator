@@ -1,5 +1,6 @@
 package sk.oravcok.posta.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -54,7 +55,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.create(window1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void createNullPlaceTest(){
         placeDao.create(null);
     }
@@ -71,7 +72,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.create(window1);
     }
 
-    @Test(expectedExceptions = PersistenceException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void createPlaceSameNameTest(){
         placeDao.create(window1);
         background1.setName("Priehradka 1");
@@ -88,7 +89,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(updated, window1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void updateNullPlaceTest(){
         placeDao.create(window1);
         placeDao.update(null);
@@ -139,7 +140,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(notRemoved, window1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNullPlaceTest(){
         placeDao.create(window1);
         placeDao.create(background1);
@@ -147,7 +148,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.remove(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNotExistingPlaceTest(){
         placeDao.create(window1);
         placeDao.remove(background1);

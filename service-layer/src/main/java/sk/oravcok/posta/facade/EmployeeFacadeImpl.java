@@ -1,6 +1,7 @@
 package sk.oravcok.posta.facade;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sk.oravcok.posta.dto.EmployeeCreateDTO;
 import sk.oravcok.posta.dto.EmployeeDTO;
 import sk.oravcok.posta.dto.EmployeeUpdateDTO;
@@ -10,7 +11,6 @@ import sk.oravcok.posta.mapping.BeanMappingService;
 import sk.oravcok.posta.service.EmployeeService;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -54,12 +54,12 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
     }
 
     @Override
-    public List<EmployeeDTO> getAllEmployees() {
+    public List<EmployeeDTO> findAllEmployees() {
         return beanMappingService.mapTo(employeeService.findAll(), EmployeeDTO.class);
     }
 
     @Override
-    public EmployeeDTO getEmployeeById(Long employeeId) {
+    public EmployeeDTO findEmployeeById(Long employeeId) {
         if (employeeId == null) {
             throw new IllegalArgumentException("employeeId is null");
         }

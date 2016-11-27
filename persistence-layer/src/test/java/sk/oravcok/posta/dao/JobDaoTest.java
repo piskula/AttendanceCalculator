@@ -1,5 +1,6 @@
 package sk.oravcok.posta.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -120,7 +121,7 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(jobDao.findAll().get(0).getPlace().getName(), "Window 1");
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void createNullJobTest(){
         jobDao.create(null);
     }
@@ -179,7 +180,7 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(updated, andrewWindow1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void updateNullJobTest(){
         jobDao.create(andrewWindow1);
         jobDao.update(null);
@@ -261,13 +262,13 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(notRemoved, andrewGarage);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNullJobTest(){
         jobDao.create(andrewWindow1);
         jobDao.remove(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNotExistingJobTest(){
         jobDao.create(andrewWindow1);
         jobDao.remove(andrewGarage);

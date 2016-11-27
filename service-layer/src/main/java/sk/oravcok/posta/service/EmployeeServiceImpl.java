@@ -21,7 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void create(Employee employee) {
         if (employee == null) {
-            throw new IllegalArgumentException("Employee is null");
+            throw new IllegalArgumentException("Employee is null - cannot create");
         }
         employeeDao.create(employee);
     }
@@ -29,13 +29,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee update(Employee employee) {
         if (employee == null) {
-            throw new IllegalArgumentException("Employee is null");
+            throw new IllegalArgumentException("Employee is null - cannot update");
         }
         return employeeDao.update(employee);
     }
 
     @Override
     public Employee findById(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("id of employee is null - cannot find by id");
+        }
         return employeeDao.findById(id);
     }
 

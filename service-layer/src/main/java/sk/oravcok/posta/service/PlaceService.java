@@ -33,6 +33,7 @@ public interface PlaceService {
      *
      * @param id id of the place entity to be returned
      * @return the place entity with given id
+     * @throws IllegalArgumentException if id is null
      */
     Place findById(Long id);
 

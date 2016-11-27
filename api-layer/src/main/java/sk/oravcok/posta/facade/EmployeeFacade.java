@@ -3,6 +3,7 @@ package sk.oravcok.posta.facade;
 import sk.oravcok.posta.dto.EmployeeCreateDTO;
 import sk.oravcok.posta.dto.EmployeeDTO;
 import sk.oravcok.posta.dto.EmployeeUpdateDTO;
+import sk.oravcok.posta.exception.NonExistingEntityException;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface EmployeeFacade {
      *
      * @return list of all employee entities or empty list if no employee exists
      */
-    List<EmployeeDTO> getAllEmployees();
+    List<EmployeeDTO> findAllEmployees();
 
     /**
      * Returns employee according to given id.
@@ -46,7 +47,7 @@ public interface EmployeeFacade {
      * @throws NonExistingEntityException if employee for given id doesn't exist
      * @throws IllegalArgumentException if employeeId is null
      */
-    EmployeeDTO getEmployeeById(Long employeeId);
+    EmployeeDTO findEmployeeById(Long employeeId);
 
     /**
      * Deletes employee.
