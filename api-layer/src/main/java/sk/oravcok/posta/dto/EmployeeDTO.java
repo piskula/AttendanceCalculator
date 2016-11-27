@@ -31,6 +31,8 @@ public class EmployeeDTO {
 
     private String annotation;
 
+    //end of attributes
+
     public Long getId(){
         return this.id;
     }

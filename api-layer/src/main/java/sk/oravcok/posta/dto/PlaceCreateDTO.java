@@ -20,6 +20,8 @@ public class PlaceCreateDTO {
 
     private String annotation;
 
+    //end of attributes
+
     public String getName() {
         return name;
     }

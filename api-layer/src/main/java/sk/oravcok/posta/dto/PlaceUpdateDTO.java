@@ -9,6 +9,8 @@ public class PlaceUpdateDTO {
 
     private Long id;
 
+    //end of attributes
+
     public Long getId() {
         return id;
     }

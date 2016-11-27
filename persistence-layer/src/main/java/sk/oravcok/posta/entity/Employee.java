@@ -38,6 +38,8 @@ public class Employee {
 
     private String annotation;
 
+    //end of attributes
+
     public Employee(){
     }
 

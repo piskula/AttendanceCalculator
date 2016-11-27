@@ -1,53 +1,38 @@
-package sk.oravcok.posta.entity;
+package sk.oravcok.posta.dto;
 
-import sk.oravcok.posta.validation.TimeSequence;
+import sk.oravcok.posta.entity.Employee;
+import sk.oravcok.posta.entity.Place;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
 /**
- * Created by Ondrej Oravcok on 27-Oct-16.
+ * DTO for Job
+ *
+ * Created by Ondrej Oravcok on 27-Nov-16.
  */
-@Entity
-@Table(name = "jobs")
-@TimeSequence(members = {"jobStart", "jobEnd"})
-public class Job {
+public class JobDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @ManyToOne
     private Employee employee;
 
     @NotNull
-    @ManyToOne
     private Place place;
 
     @NotNull
-    @Column(nullable = false)
     private LocalTime jobStart;
 
     @NotNull
-    @Column(nullable = false)
     private LocalTime jobEnd;
 
     @NotNull
-    @Column(nullable = false)
     private LocalDate jobDate;
 
-    //end of attributes
-
-    public Job(){
-    }
-
-    public Job(Long id){
-        this.id = id;
-    }
+    //end od attributes
 
     public Long getId() {
         return id;
@@ -100,9 +85,9 @@ public class Job {
     @Override
     public boolean equals(Object object){
         if(this == object) return true;
-        if(!(object instanceof Job)) return false;
+        if(!(object instanceof JobDTO)) return false;
 
-        final Job other = (Job) object;
+        final JobDTO other = (JobDTO) object;
 
         if (employee != null ? !employee.equals(other.getEmployee()) : other.getEmployee() != null) return false;
         if (place != null ? !place.equals(other.getPlace()) : other.getPlace() != null) return false;
@@ -120,7 +105,7 @@ public class Job {
 
     @Override
     public String toString(){
-        return "Job{" +
+        return "JobDTO{" +
                 "id=" + id +
                 ", employee=" + employee +
                 ", place=" + place +

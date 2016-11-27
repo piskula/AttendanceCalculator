@@ -22,6 +22,8 @@ public class PlaceDTO {
 
     private String annotation;
 
+    //end of attributes
+
     public Long getId() {
         return id;
     }

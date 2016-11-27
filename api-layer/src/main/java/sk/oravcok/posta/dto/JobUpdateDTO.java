@@ -3,13 +3,13 @@ package sk.oravcok.posta.dto;
 import java.util.Objects;
 
 /**
- * DTO for update Employee
+ * DTO for updating Job
  *
- * Created by Ondrej Oravcok on 18-Nov-16.
+ * Created by Ondrej Oravcok on 27-Nov-16.
  */
-public class EmployeeUpdateDTO extends EmployeeCreateDTO {
+public class JobUpdateDTO extends JobCreateDTO {
 
-    private Long id;
+    Long id;
 
     //end of attributes
 
@@ -24,9 +24,10 @@ public class EmployeeUpdateDTO extends EmployeeCreateDTO {
     @Override
     public boolean equals(Object object){
         if(this == object) return true;
-        if(!(object instanceof EmployeeUpdateDTO)) return false;
+        if(object == null) return false;
+        if(!(object instanceof JobUpdateDTO)) return false;
 
-        final EmployeeUpdateDTO other = (EmployeeUpdateDTO) object;
+        final JobUpdateDTO other = (JobUpdateDTO) object;
         if (id != null ? !id.equals(other.getId()) : other.getId() != null) return false;
 
         return super.equals(other);
@@ -39,6 +40,6 @@ public class EmployeeUpdateDTO extends EmployeeCreateDTO {
 
     @Override
     public String toString(){
-        return "EmployeeUpdateDTO{id=" + id + ", " + super.toStringValues();
+        return "JobUpdateDTO{id=" + id + ", " + super.toStringValues();
     }
 }

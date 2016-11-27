@@ -1,76 +1,49 @@
-package sk.oravcok.posta.entity;
+package sk.oravcok.posta.dto;
 
-import sk.oravcok.posta.validation.TimeSequence;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
 /**
- * Created by Ondrej Oravcok on 27-Oct-16.
+ * DTO for create Job
+ *
+ * Created by Ondrej Oravcok on 27-Nov-16.
  */
-@Entity
-@Table(name = "jobs")
-@TimeSequence(members = {"jobStart", "jobEnd"})
-public class Job {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class JobCreateDTO {
 
     @NotNull
-    @ManyToOne
-    private Employee employee;
+    private Long employeeId;
 
     @NotNull
-    @ManyToOne
-    private Place place;
+    private Long placeId;
 
     @NotNull
-    @Column(nullable = false)
     private LocalTime jobStart;
 
     @NotNull
-    @Column(nullable = false)
     private LocalTime jobEnd;
 
     @NotNull
-    @Column(nullable = false)
     private LocalDate jobDate;
 
     //end of attributes
 
-    public Job(){
+
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public Job(Long id){
-        this.id = id;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPlaceId() {
+        return placeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setPlaceId(Long placeId) {
+        this.placeId = placeId;
     }
 
     public LocalTime getJobStart() {
@@ -100,12 +73,13 @@ public class Job {
     @Override
     public boolean equals(Object object){
         if(this == object) return true;
-        if(!(object instanceof Job)) return false;
+        if(object == null) return false;
+        if(!(object instanceof JobCreateDTO)) return false;
 
-        final Job other = (Job) object;
+        final JobCreateDTO other = (JobCreateDTO) object;
 
-        if (employee != null ? !employee.equals(other.getEmployee()) : other.getEmployee() != null) return false;
-        if (place != null ? !place.equals(other.getPlace()) : other.getPlace() != null) return false;
+        if (employeeId != null ? !employeeId.equals(other.getEmployeeId()) : other.getEmployeeId() != null) return false;
+        if (placeId != null ? !placeId.equals(other.getPlaceId()) : other.getPlaceId() != null) return false;
         if (jobStart != null ? !jobStart.equals(other.getJobStart()) : other.getJobStart() != null) return false;
         if (jobEnd != null ? !jobEnd.equals(other.getJobEnd()) : other.getJobEnd() != null) return false;
         if (jobDate != null ? !jobDate.equals(other.getJobDate()) : other.getJobDate() != null) return false;
@@ -115,15 +89,17 @@ public class Job {
 
     @Override
     public int hashCode(){
-        return Objects.hash(employee, place, jobStart, jobEnd, jobDate);
+        return Objects.hash(employeeId, placeId, jobStart, jobEnd, jobDate);
     }
 
     @Override
     public String toString(){
-        return "Job{" +
-                "id=" + id +
-                ", employee=" + employee +
-                ", place=" + place +
+        return "JobCreateDTO{" + this.toStringValues();
+    }
+
+    protected String toStringValues(){
+        return "employeeId=" + employeeId +
+                ", placeId=" + placeId +
                 ", jobStart=" + jobStart +
                 ", jobEnd=" + jobEnd +
                 ", jobDate=" + jobDate +

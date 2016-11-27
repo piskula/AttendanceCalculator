@@ -27,6 +27,8 @@ public class Place {
 
     private String annotation;
 
+    //end of attributes
+
     public Place(){
     }
 
@@ -81,5 +83,15 @@ public class Place {
     @Override
     public int hashCode(){
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString(){
+        return "Place{" +
+                "id=" + id +
+                ", name=" + name +
+                ", placeType=" + placeType +
+                ", annotation=" + annotation +
+                '}';
     }
 }

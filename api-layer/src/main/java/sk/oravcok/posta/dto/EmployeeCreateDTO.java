@@ -29,6 +29,8 @@ public class EmployeeCreateDTO {
 
     private String annotation;
 
+    //end of attributes
+
     public String getName() {
         return name;
     }
@@ -119,8 +121,11 @@ public class EmployeeCreateDTO {
 
     @Override
     public String toString(){
-        return "EmployeeCreateDTO{"
-                + "name=" + name
+        return "EmployeeCreateDTO{" + this.toStringValues();
+    }
+
+    protected String toStringValues(){
+        return "name=" + name
                 + ", surname=" + surname
                 + ", title=" + title
                 + ", birth=" + birth
