@@ -8,14 +8,12 @@ import sk.oravcok.posta.entity.Place;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Created by Ondrej Oravcok on 28-Oct-16.
  */
-@Transactional
 @Repository
 public class JobDaoImpl implements JobDao {
 

@@ -10,11 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>api-layer</artifactId>
+
+    <name>Attendance Calculator API</name>
+
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
         <dependency>
             <groupId>posta</groupId>
@@ -22,6 +24,5 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 
 </project>

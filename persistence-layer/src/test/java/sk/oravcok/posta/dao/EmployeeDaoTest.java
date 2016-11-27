@@ -1,5 +1,6 @@
 package sk.oravcok.posta.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -59,7 +60,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         employeeDao.create(employeeFull);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void createNullEmployeeTest(){
         employeeDao.create(null);
     }
@@ -98,7 +99,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(updated, employeeFull);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void updateNullEmployee(){
         employeeDao.create(employeeNotFull);
         employeeDao.update(null);
@@ -148,7 +149,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(notRemoved, employeeFull);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNullEmployeeTest(){
         employeeDao.create(employeeNotFull);
         employeeDao.update(employeeFull);
@@ -156,7 +157,7 @@ public class EmployeeDaoTest extends AbstractTestNGSpringContextTests {
         employeeDao.remove(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNotExistingEmployeeTest(){
         employeeDao.create(employeeNotFull);
         employeeDao.remove(employeeFull);

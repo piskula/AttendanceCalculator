@@ -12,8 +12,6 @@ import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.entity.Job;
 import sk.oravcok.posta.entity.Place;
 import sk.oravcok.posta.enums.PlaceType;
-import sk.oravcok.posta.entity.Employee;
-import sk.oravcok.posta.enums.PlaceType;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

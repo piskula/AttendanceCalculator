@@ -7,13 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by Ondrej Oravcok on 27-Oct-16.
  */
-@Transactional
 @Repository
 public class PlaceDaoImpl implements PlaceDao {
 

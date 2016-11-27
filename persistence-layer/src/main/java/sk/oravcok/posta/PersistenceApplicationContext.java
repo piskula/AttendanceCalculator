@@ -4,6 +4,7 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
@@ -22,7 +23,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan("sk.oravcok.posta.dao")
+@ComponentScan(basePackages = "sk.oravcok.posta.dao")
 public class PersistenceApplicationContext {
 
     @Bean
@@ -40,11 +41,6 @@ public class PersistenceApplicationContext {
     }
 
     @Bean
-    public LocalValidatorFactoryBean localValidatorFactoryBean() {
-        return new LocalValidatorFactoryBean();
-    }
-
-    @Bean
     public LoadTimeWeaver instrumentationLoadTimeWeaver() {
         return new InstrumentationLoadTimeWeaver();
     }
@@ -53,5 +49,11 @@ public class PersistenceApplicationContext {
     public DataSource db() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.DERBY).build();
+    }
+
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor postProcessor() {
+        PersistenceExceptionTranslationPostProcessor postProcessor = new PersistenceExceptionTranslationPostProcessor();
+        return postProcessor;
     }
 }
