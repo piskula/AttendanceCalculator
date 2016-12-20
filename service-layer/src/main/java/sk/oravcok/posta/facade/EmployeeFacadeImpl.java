@@ -71,6 +71,14 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
     }
 
     @Override
+    public List<EmployeeDTO> findEmployeesByKey(String key) {
+        if(key == null) {
+            throw new IllegalArgumentException("searching key is null - cannot look for employees");
+        }
+        return beanMappingService.mapTo(employeeService.findEmployeesByKey(key), EmployeeDTO.class);
+    }
+
+    @Override
     public void removeEmployee(Long employeeId) {
         if (employeeId == null) {
             throw new IllegalArgumentException("employeeId is null");
@@ -79,7 +87,7 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
         if (employee == null) {
             throw new NonExistingEntityException("Cannot remove non existing Employee (with id=" + employeeId + ")");
         }
-        employeeService.remove(new Employee(employeeId));
+        employeeService.remove(employee);
     }
 
 }

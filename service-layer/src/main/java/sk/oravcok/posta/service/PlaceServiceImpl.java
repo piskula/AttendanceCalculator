@@ -3,6 +3,7 @@ package sk.oravcok.posta.service;
 import org.springframework.stereotype.Service;
 import sk.oravcok.posta.dao.PlaceDao;
 import sk.oravcok.posta.entity.Place;
+import sk.oravcok.posta.exception.ServiceExceptionTranslate;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * Created by Ondrej Oravcok on 27-Nov-16.
  */
 @Service
+@ServiceExceptionTranslate
 public class PlaceServiceImpl implements PlaceService {
 
     @Inject

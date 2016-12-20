@@ -38,6 +38,14 @@ public interface EmployeeService {
     Employee findById(Long id);
 
     /**
+     * searches for employees by name and surname
+     *
+     * @param key what to look for
+     * @return employees, whose name + surname containt searching key
+     */
+    List<Employee> findEmployeesByKey(String key);
+
+    /**
      * Returns all employee entities.
      *
      * @return all employees

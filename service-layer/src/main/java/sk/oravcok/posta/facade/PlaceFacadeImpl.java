@@ -94,7 +94,7 @@ public class PlaceFacadeImpl implements PlaceFacade {
         if (place == null) {
             throw new NonExistingEntityException("Place with id=" + placeId + " does not exist");
         }
-        placeService.remove(new Place(place.getId()));
+        placeService.remove(place);
     }
 
 }

@@ -3,6 +3,7 @@ package sk.oravcok.posta.service;
 import org.springframework.stereotype.Service;
 import sk.oravcok.posta.dao.EmployeeDao;
 import sk.oravcok.posta.entity.Employee;
+import sk.oravcok.posta.exception.ServiceExceptionTranslate;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by Ondrej Oravcok on 18-Nov-16.
  */
 @Service
+@ServiceExceptionTranslate
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Inject
@@ -40,6 +42,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new IllegalArgumentException("id of employee is null - cannot find by id");
         }
         return employeeDao.findById(id);
+    }
+
+    @Override
+    public List<Employee> findEmployeesByKey(String key) {
+        if(key == null) {
+            throw new IllegalArgumentException("key is null - cannot filter employees");
+        }
+        return employeeDao.findByFullName(key);
     }
 
     @Override

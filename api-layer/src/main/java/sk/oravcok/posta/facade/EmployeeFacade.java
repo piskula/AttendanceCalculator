@@ -50,6 +50,14 @@ public interface EmployeeFacade {
     EmployeeDTO findEmployeeById(Long employeeId);
 
     /**
+     * searching for employees in name + surname
+     *
+     * @param key what to search
+     * @return employees, which meets the condition
+     */
+    List<EmployeeDTO> findEmployeesByKey(String key);
+
+    /**
      * Deletes employee.
      *
      * @param employeeId id of report to delete

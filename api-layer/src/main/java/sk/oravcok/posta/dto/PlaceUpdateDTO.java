@@ -5,7 +5,7 @@ package sk.oravcok.posta.dto;
  *
  * Created by Ondrej Oravcok on 20-Nov-16.
  */
-public class PlaceUpdateDTO {
+public class PlaceUpdateDTO extends PlaceCreateDTO {
 
     private Long id;
 
@@ -17,6 +17,16 @@ public class PlaceUpdateDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
 }

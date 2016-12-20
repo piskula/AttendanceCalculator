@@ -5,6 +5,7 @@ import sk.oravcok.posta.dao.JobDao;
 import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.entity.Job;
 import sk.oravcok.posta.entity.Place;
+import sk.oravcok.posta.exception.ServiceExceptionTranslate;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by Ondrej Oravcok on 20-Dec-16.
  */
 @Service
+@ServiceExceptionTranslate
 public class JobServiceImpl implements JobService {
 
     @Inject
