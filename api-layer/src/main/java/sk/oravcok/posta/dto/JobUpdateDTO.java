@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class JobUpdateDTO extends JobCreateDTO {
 
-    Long id;
+    private Long id;
 
     //end of attributes
 

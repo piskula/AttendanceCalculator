@@ -3,16 +3,14 @@ package sk.oravcok.posta.facade;
 import sk.oravcok.posta.dto.JobCreateDTO;
 import sk.oravcok.posta.dto.JobDTO;
 import sk.oravcok.posta.dto.JobUpdateDTO;
-import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 /**
  * Facade interface for Job
- * 
+ *
  * Created by Ondrej Oravcok on 27-Nov-16.
  */
 public interface JobFacade {
@@ -108,5 +106,5 @@ public interface JobFacade {
      * @throws IllegalArgumentException if jobId is null
      */
     void removeJob(Long jobId);
-    
+
 }

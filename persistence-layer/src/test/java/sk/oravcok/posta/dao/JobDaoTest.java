@@ -5,6 +5,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,8 +18,6 @@ import sk.oravcok.posta.enums.PlaceType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -126,13 +125,13 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.create(null);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void createBadStartJobTest(){
         andrewWindow1.setJobStart(LocalTime.of(23, 55));
         jobDao.create(andrewWindow1);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void createBadEndJobTest(){
         andrewWindow1.setJobEnd(LocalTime.of(0, 1));
         jobDao.create(andrewWindow1);
@@ -186,7 +185,7 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         jobDao.update(null);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updateJobNullEmployeeTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setEmployee(null);
@@ -194,7 +193,7 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         entityManager.flush();
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updateJobNullPlaceTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setPlace(null);
@@ -202,7 +201,7 @@ public class JobDaoTest extends AbstractTestNGSpringContextTests {
         entityManager.flush();
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updateJobNullJobDateTest(){
         jobDao.create(andrewWindow1);
         andrewWindow1.setJobDate(null);

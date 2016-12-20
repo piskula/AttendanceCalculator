@@ -23,10 +23,10 @@ import java.util.List;
 public class PlaceFacadeImpl implements PlaceFacade {
 
     @Inject
-    PlaceService placeService;
+    private PlaceService placeService;
 
     @Inject
-    BeanMappingService beanMappingService;
+    private BeanMappingService beanMappingService;
 
     @Override
     public Long createPlace(PlaceCreateDTO placeCreateDTO) {

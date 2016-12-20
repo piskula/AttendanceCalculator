@@ -3,7 +3,6 @@ package sk.oravcok.posta;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.context.annotation.*;
-import sk.oravcok.posta.service.EmployeeServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

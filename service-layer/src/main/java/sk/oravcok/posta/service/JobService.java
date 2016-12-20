@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Business logic for Job
- * 
+ *
  * Created by Ondrej Oravcok on 27-Nov-16.
  */
 public interface JobService {
@@ -94,5 +94,5 @@ public interface JobService {
      * @throws IllegalArgumentException if job is null
      */
     void remove(Job job);
-    
+
 }

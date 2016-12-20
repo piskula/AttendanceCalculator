@@ -5,6 +5,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -16,7 +17,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 
@@ -95,7 +95,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         placeDao.update(null);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updatePlaceNullNameTest(){
         placeDao.create(window1);
         window1.setName(null);
@@ -103,7 +103,7 @@ public class PlaceDaoTest extends AbstractTestNGSpringContextTests {
         entityManager.flush();
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void updatePlaceNullPlaceTypeTest(){
         placeDao.create(window1);
         window1.setPlaceType(null);

@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import sk.oravcok.posta.dto.JobCreateDTO;
 import sk.oravcok.posta.dto.JobDTO;
 import sk.oravcok.posta.dto.JobUpdateDTO;
-import sk.oravcok.posta.dto.PlaceDTO;
 import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.entity.Job;
 import sk.oravcok.posta.entity.Place;
