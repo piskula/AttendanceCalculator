@@ -206,9 +206,15 @@ public class EmployeeFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getEmployeeByKeyTest() {
-        List<EmployeeDTO> employees = employeeFacade.findEmployeesByKey("Webber Mark");
-        assertEquals(employees.get(0).getId(), Long.valueOf(1l));
+        List<EmployeeDTO> employees1 = employeeFacade.findEmployeesByKey("Webber Mark");
+        assertEquals(employees1.get(0).getId(), Long.valueOf(1l));
 
+        List<EmployeeDTO> employees2 = employeeFacade.findEmployeesByKey("Mark Webber");
+        assertEquals(employees2.get(0).getId(), Long.valueOf(1l));
+    }
+
+    @Test
+    public void getNonExistingEmployeesByKeyTest() {
         List<EmployeeDTO> emptyList = employeeFacade.findEmployeesByKey("non-existing");
         assertNotNull(emptyList);
         assertEquals(emptyList.size(), 0);
