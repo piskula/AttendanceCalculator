@@ -12,6 +12,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import sk.oravcok.posta.ServiceConfiguration;
 import sk.oravcok.posta.dao.PlaceDao;
 import sk.oravcok.posta.entity.Place;
@@ -23,7 +24,10 @@ import javax.validation.ConstraintViolationException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Ondrej Oravcok
@@ -55,7 +59,7 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
         //We need to setup proxy correctly because of using exception translation
         //through Aspect on mocked objects
         ServiceExceptionTranslateAspect serviceExceptionTranslateAspect = new ServiceExceptionTranslateAspect();
-        AspectJProxyFactory aspectJProxyFactory = new AspectJProxyFactory(new EmployeeServiceImpl());
+        AspectJProxyFactory aspectJProxyFactory = new AspectJProxyFactory(new PlaceServiceImpl());
         aspectJProxyFactory.addAspect(serviceExceptionTranslateAspect);
 
         placeService = aspectJProxyFactory.getProxy();
@@ -145,5 +149,25 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
         }).when(placeDao).remove(any(Place.class));
     }
 
+    @Test
+    public void createPlaceTest() {
+        Place window2 = new Place();
+        window2.setName("Window 2");
+        window2.setPlaceType(PlaceType.WINDOW);
+        window2.setAnnotation("very fast window");
+
+        placeService.create(window2);
+        verify(placeDao).create(argumentCaptor.capture());
+        assertNotNull(window2);
+        assertEquals((long) window2.getId(), createdPlaceId);
+        assertDeepEqualsWithoutId(argumentCaptor.getValue(), window2);
+    }
+
     //TODO
+
+    private void assertDeepEqualsWithoutId(Place p1, Place p2) {
+        assertEquals(p1.getName(), p2.getName());
+        assertEquals(p1.getPlaceType(), p2.getPlaceType());
+        assertEquals(p1.getAnnotation(), p2.getAnnotation());
+    }
 }
