@@ -31,7 +31,8 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Tests for PlaceFacade
  *
- * Created by Ondrej Oravcok on 27-Nov-16.
+ * @author Ondrej Oravcok
+ * @version  27-Nov-16.
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class PlaceFacadeTest extends AbstractTestNGSpringContextTests {

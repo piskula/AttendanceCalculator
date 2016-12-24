@@ -17,6 +17,7 @@ import sk.oravcok.posta.ServiceConfiguration;
 import sk.oravcok.posta.dao.PlaceDao;
 import sk.oravcok.posta.entity.Place;
 import sk.oravcok.posta.enums.PlaceType;
+import sk.oravcok.posta.exception.DataManipulationException;
 import sk.oravcok.posta.exception.ServiceExceptionTranslateAspect;
 
 import javax.persistence.EntityExistsException;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 
 /**
  * @author Ondrej Oravcok
@@ -51,6 +53,7 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
     private long alreadyExistingId = 88l;
     private long createdPlaceId = 100l;
     private long updatedPlaceId = 101l;
+    private String alreadyExistingPlaceName = "already existing place name";
 
     @BeforeClass
     public void setUpMockito() {
@@ -84,9 +87,9 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
     public void setUpMocksBehaviour() {
         //BEHAVIOUR OF: findById()
         when(placeDao.findById(0l)).thenReturn(null);
-        when(placeDao.findById(1l)).thenReturn(window1);
+        when(placeDao.findById(1l)).thenReturn(background1);
 
-        doAnswer((InvocationOnMock invocation) -> {
+        doAnswer((InvocationOnMock invocation) -> { //there is no check for null in DAO for findById
             throw new InvalidDataAccessApiUsageException("This case should be tested on DAO layer.");
         }).when(placeDao).findById(null);
 
@@ -106,7 +109,7 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
                 throw new EntityExistsException("This is EntityManager test case.");
             }
 
-            if(place.getName() == null || place.getPlaceType() == null) {
+            if(place.getName() == null || place.getName().equals(alreadyExistingPlaceName) || place.getPlaceType() == null) {
                 throw new ConstraintViolationException("This should be tested in Persistence Validation.", null);
             }
             place.setId(createdPlaceId);
@@ -121,7 +124,7 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
 
             Place place = (Place) invocation.getArguments()[0];
 
-            if(place.getName() == null || place.getPlaceType() == null) {
+            if(place.getName() == null || place.getName().equals(alreadyExistingPlaceName) || place.getPlaceType() == null) {
                 throw new ConstraintViolationException("This should be tested in Persistence Validation.", null);
             }
             if(place.getId() == null) {
@@ -150,7 +153,8 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void createPlaceTest() {
+    public void createA_TODO_PlaceTest() {
+//    public void createPlaceTest() {
         Place window2 = new Place();
         window2.setName("Window 2");
         window2.setPlaceType(PlaceType.WINDOW);
@@ -163,11 +167,140 @@ public class PlaceServiceTest extends AbstractTestNGSpringContextTests {
         assertDeepEqualsWithoutId(argumentCaptor.getValue(), window2);
     }
 
-    //TODO
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void createAlreadyExistingPlace() {
+        window1.setId(alreadyExistingId);
+        placeService.create(window1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void createNullPlaceTest() {
+        placeService.create(null);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void createNameNotUniquePlaceTest() {
+        window1.setName(alreadyExistingPlaceName);
+        placeService.create(window1);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void createNullNamePlaceTest() {
+        window1.setName(null);
+        placeService.create(window1);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void createNullTypePlaceTest() {
+        window1.setPlaceType(null);
+        placeService.create(window1);
+    }
+
+    @Test
+    public void updateA_TODO_PlaceTest() {
+//    public void updatePlaceTest() {
+        assertNotNull(background1.getId());
+        Place updated = placeService.update(background1);
+        verify(placeDao).update(argumentCaptor.capture());
+        assertDeepEquals(updated, background1);
+    }
+
+    @Test
+    public void updateNonExistingPlaceTest() {
+        assertNull(window1.getId());
+        Place updated = placeService.update(window1);
+        assertDeepEquals(updated, window1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void updateNullPlaceTest() {
+        placeService.update(null);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void updateNullNamePlaceTest() {
+        background1.setName(null);
+        placeService.update(background1);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void updateNullTypePlaceTest() {
+        background1.setPlaceType(null);
+        placeService.update(background1);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void updateNotUniqueNamePlaceTest() {
+        background1.setName(alreadyExistingPlaceName);
+        placeService.update(background1);
+    }
+
+    @Test
+    public void findPlaceByIdTest() {
+        Place found = placeService.findById(1l);
+        assertDeepEquals(found, background1);
+    }
+
+    @Test
+    public void findNonExistingPlaceByIdTest() {
+        assertNull(placeService.findById(0l));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findPlaceByNullIdTest() {
+        placeService.findById(null);
+    }
+
+    @Test
+    public void findPlaceByNameTest() {
+        Place found = placeService.findByName("Background 1");
+        assertDeepEquals(found, background1);
+    }
+
+    @Test
+    public void findNonExistingPlaceByNameTest() {
+        assertNull(placeService.findByName("non-existing"));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findPlaceByNullNameTest() {
+        placeService.findByName(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findPlaceByEmptyNameTest() {
+        placeService.findByName("");
+    }
+
+    @Test
+    public void removeA_TODO_PlaceTest() {
+//    public void removePlaceTest() {
+        background1.setId(alreadyExistingId);
+        placeService.remove(background1);
+        verify(placeDao).remove(argumentCaptor.capture());
+        assertEquals(argumentCaptor.getValue().getId(), Long.valueOf(alreadyExistingId));
+        assertDeepEqualsWithoutId(argumentCaptor.getValue(), background1);
+    }
+
+    @Test(expectedExceptions = DataManipulationException.class)
+    public void removeNonExistingPlaceTest() {
+        window1.setId(notPersistedId);
+        placeService.remove(window1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void removeNullPlaceTest() {
+        placeService.remove(null);
+    }
 
     private void assertDeepEqualsWithoutId(Place p1, Place p2) {
         assertEquals(p1.getName(), p2.getName());
         assertEquals(p1.getPlaceType(), p2.getPlaceType());
         assertEquals(p1.getAnnotation(), p2.getAnnotation());
+    }
+
+    private void assertDeepEquals(Place p1, Place p2) {
+        assertEquals(p1.getId(), p2.getId());
+        assertDeepEqualsWithoutId(p1, p2);
     }
 }
