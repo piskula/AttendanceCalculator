@@ -46,8 +46,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findEmployeesByKey(String key) {
-        if(key == null) {
-            throw new IllegalArgumentException("key is null - cannot filter employees");
+        if(key == null || key.isEmpty()) {
+            throw new IllegalArgumentException("key is null or empty - cannot filter employees");
         }
         return employeeDao.findByFullName(key);
     }

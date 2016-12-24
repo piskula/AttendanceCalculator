@@ -98,7 +98,7 @@ public class EmployeeServiceTest extends AbstractTestNGSpringContextTests {
         when(employeeDao.findById(0l)).thenReturn(null);
         when(employeeDao.findById(1l)).thenReturn(ricciardo);
 
-        doAnswer((InvocationOnMock invocation) -> {
+        doAnswer((InvocationOnMock invocation) -> { //there is no check for null in DAO for findById
             throw new InvalidDataAccessApiUsageException("This case should be tested on DAO layer.");
         }).when(employeeDao).findById(null);
 
@@ -177,9 +177,9 @@ public class EmployeeServiceTest extends AbstractTestNGSpringContextTests {
 
         employeeService.create(verstappen);
         verify(employeeDao).create(argumentCaptor.capture());
-        assertDeepEqualsWithoutIds(argumentCaptor.getValue(), verstappen);
         assertNotNull(verstappen);
         assertEquals((long) verstappen.getId(), createdEmployeeId);
+        assertDeepEquals(argumentCaptor.getValue(), verstappen);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -286,6 +286,16 @@ public class EmployeeServiceTest extends AbstractTestNGSpringContextTests {
         assertTrue(result.isEmpty());
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findEmployeesByNullKey() {
+        employeeService.findEmployeesByKey(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findEmployeesByEmptyKey() {
+        employeeService.findEmployeesByKey("");
+    }
+
     @Test
     public void removeEmployeeTest() {
         ricciardo.setId(alreadyExistingId);
@@ -315,6 +325,11 @@ public class EmployeeServiceTest extends AbstractTestNGSpringContextTests {
         assertEquals(e1.getPhone(), e2.getPhone());
         assertEquals(e1.getBirth(), e2.getBirth());
         assertEquals(e1.getAnnotation(), e2.getAnnotation());
+    }
+
+    private void assertDeepEquals(Employee e1, Employee e2) {
+        assertEquals(e1.getId(), e2.getId());
+        assertDeepEqualsWithoutIds(e1, e2);
     }
 
 }

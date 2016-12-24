@@ -29,7 +29,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 /**
- * Created by Ondrej Oravcok on 20-Dec-16.
+ * @author Ondrej Oravcok
+ * @version 20-Dec-16.
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class EmployeeFacadeTest extends AbstractTestNGSpringContextTests {
