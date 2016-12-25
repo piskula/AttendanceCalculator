@@ -112,7 +112,7 @@ public class JobFacadeImpl implements JobFacade {
         if(toDay == null){
             throw new IllegalArgumentException("toDay is null - cannot find jobs of employee between days");
         }
-        if(!toDay.isAfter(fromDay)){
+        if(fromDay.isAfter(toDay)){
             throw new IllegalArgumentException("fromDay must be before toDay");
         }
 
@@ -128,7 +128,7 @@ public class JobFacadeImpl implements JobFacade {
         if(toDay == null){
             throw new IllegalArgumentException("toDay is null - cannot find jobs of place between days");
         }
-        if(!toDay.isAfter(fromDay)){
+        if(fromDay.isAfter(toDay)){
             throw new IllegalArgumentException("fromDay must be before toDay");
         }
 
@@ -146,7 +146,7 @@ public class JobFacadeImpl implements JobFacade {
         if(job == null){
             throw new NonExistingEntityException("Job with id=" + jobId + " does not exist");
         }
-        jobService.remove(new Job(jobId));
+        jobService.remove(job);
     }
 
     /**
