@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Ondrej Oravcok
  * @version  25-Dec-16.
  */
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Requested resource does not exist in system")
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Requested entity does not exist in system")
 public class RequestedResourceNotFound extends RuntimeException {
 
     public RequestedResourceNotFound(String message, Throwable cause){

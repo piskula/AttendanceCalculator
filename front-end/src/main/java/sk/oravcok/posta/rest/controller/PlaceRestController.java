@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import sk.oravcok.posta.dto.PlaceCreateDTO;
-import sk.oravcok.posta.dto.PlaceDTO;
-import sk.oravcok.posta.dto.PlaceFindDTO;
-import sk.oravcok.posta.dto.PlaceUpdateDTO;
+import sk.oravcok.posta.dto.*;
 import sk.oravcok.posta.exception.DataManipulationException;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 import sk.oravcok.posta.facade.PlaceFacade;
@@ -76,7 +73,7 @@ public class PlaceRestController {
      * @return specific place
      */
     @RequestMapping(value = "/findName", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final PlaceDTO findPlaceByName(@RequestBody PlaceFindDTO place) {
+    public final PlaceDTO findPlaceByName(@RequestBody FindTextDTO place) {
         try {
             LOGGER.info("getting Place with name=" + place.getName());
             return placeFacade.findPlaceByName(place.getName());
