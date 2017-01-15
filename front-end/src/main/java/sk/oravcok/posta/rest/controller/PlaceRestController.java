@@ -74,11 +74,14 @@ public class PlaceRestController {
      */
     @RequestMapping(value = "/findName", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final PlaceDTO findPlaceByName(@RequestBody FindTextDTO place) {
+        if(place.getText() == null || place.getText().isEmpty()) {
+            throw new ValidationException("Name of place to search is invalid");
+        }
         try {
-            LOGGER.info("getting Place with name=" + place.getName());
-            return placeFacade.findPlaceByName(place.getName());
+            LOGGER.info("getting Place with name=" + place.getText());
+            return placeFacade.findPlaceByName(place.getText());
         } catch (NonExistingEntityException e) {
-            throw new RequestedResourceNotFound("Place with name=" + place.getName() + " does not exist in system.", e);
+            throw new RequestedResourceNotFound("Place with name=" + place.getText() + " does not exist in system.", e);
         } catch (IllegalArgumentException e) {
             throw new RequestedResourceNotFound("Argument name is illegal", e);
         }
@@ -111,10 +114,9 @@ public class PlaceRestController {
      * curl -i -X DELETE http://localhost:8080/posta/rest/places/3
      *
      * @param id of Place to remove
-     * @throws Exception
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final void deletePlace(@PathVariable("id") long id) throws Exception {
+    public final void deletePlace(@PathVariable("id") long id) {
         try {
             LOGGER.info("deleting Place with id=" + id);
             placeFacade.removePlace(id);
@@ -133,7 +135,7 @@ public class PlaceRestController {
      * @return actualised Place
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final PlaceDTO updatePlace(@PathVariable("id") long id, @RequestBody PlaceUpdateDTO placeDTO) {
+    public final PlaceDTO updatePlace(@PathVariable("id") long id, @RequestBody PlaceDTO placeDTO) {
         PlaceDTO previous;
         try {
             LOGGER.info("updating Place with id=" + id + ", with values " + placeDTO);
@@ -144,7 +146,7 @@ public class PlaceRestController {
             throw new RequestedResourceNotFound("Argument id is illegal.", e);
         }
 
-        PlaceUpdateDTO actual = mergeDtosForUpdate(previous, placeDTO);
+        PlaceDTO actual = mergeDtosForUpdate(previous, placeDTO);
         try {
             placeFacade.updatePlace(actual);
         } catch (NonExistingEntityException e) {
@@ -153,11 +155,11 @@ public class PlaceRestController {
             throw new RequestedResourceNotFound("Exception thrown while updating existing place.", e);
         }
 
-        return placeFacade.findPlaceById(id);
+        return actual;
     }
 
-    private PlaceUpdateDTO mergeDtosForUpdate(PlaceDTO previous, PlaceUpdateDTO actual) {
-        PlaceUpdateDTO place = new PlaceUpdateDTO();
+    private PlaceDTO mergeDtosForUpdate(PlaceDTO previous, PlaceDTO actual) {
+        PlaceDTO place = new PlaceDTO();
         place.setId(previous.getId());
 
         place.setName(actual.getName() != null ? actual.getName() : previous.getName());
