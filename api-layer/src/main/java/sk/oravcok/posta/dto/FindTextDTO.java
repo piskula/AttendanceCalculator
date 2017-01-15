@@ -10,18 +10,18 @@ import java.util.Objects;
 public class FindTextDTO {
 
     @NotNull
-    private String name;
+    private String text;
 
     //end of attributes
 
     //it was not possible to assign it in constructor directly
 
-    public String getName() {
-        return name;
+    public String getText() {
+        return text;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -31,18 +31,18 @@ public class FindTextDTO {
 
         final FindTextDTO other = (FindTextDTO) obj;
 
-        if (name != null ? !name.equals(other.getName()) : other.getName() != null) return false;
+        if (text != null ? !text.equals(other.getText()) : other.getText() != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(name);
+        return Objects.hash(text);
     }
 
     @Override
     public String toString(){
-        return "FindTextDTO{name=" + name +"}";
+        return "FindTextDTO{text=" + text +"}";
     }
 }
