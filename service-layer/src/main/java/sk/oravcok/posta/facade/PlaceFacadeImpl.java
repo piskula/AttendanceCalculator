@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sk.oravcok.posta.dto.PlaceCreateDTO;
 import sk.oravcok.posta.dto.PlaceDTO;
-import sk.oravcok.posta.dto.PlaceUpdateDTO;
 import sk.oravcok.posta.entity.Place;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 import sk.oravcok.posta.mapping.BeanMappingService;
@@ -40,11 +39,11 @@ public class PlaceFacadeImpl implements PlaceFacade {
     }
 
     @Override
-    public void updatePlace(PlaceUpdateDTO placeUpdateDTO) {
-        if (placeUpdateDTO == null) {
+    public void updatePlace(PlaceDTO placeDTO) {
+        if (placeDTO == null) {
             throw new IllegalArgumentException("place cannot be null");
         }
-        Place place = beanMappingService.mapTo(placeUpdateDTO, Place.class);
+        Place place = beanMappingService.mapTo(placeDTO, Place.class);
 
         if(placeService.findById(place.getId()) == null){
             throw new NonExistingEntityException("Can not update non existing employee");

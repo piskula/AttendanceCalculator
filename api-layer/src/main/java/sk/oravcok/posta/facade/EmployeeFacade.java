@@ -2,7 +2,6 @@ package sk.oravcok.posta.facade;
 
 import sk.oravcok.posta.dto.EmployeeCreateDTO;
 import sk.oravcok.posta.dto.EmployeeDTO;
-import sk.oravcok.posta.dto.EmployeeUpdateDTO;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public interface EmployeeFacade {
      * @throws IllegalArgumentException   if employee is null
      * @throws NonExistingEntityException on attempt to update non existing employee
      */
-    void updateEmployee(EmployeeUpdateDTO employee);
+    void updateEmployee(EmployeeDTO employee);
 
     /**
      * Returns all employees.

@@ -75,11 +75,11 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         employees.put("ves", employee("Max", "Verstappen", null, "max33verstappen@redbullracing.com",
                 date(30, 9, 1997), "+421 950 448 011","Nam. SNP 60, 92007 Kokava nad Rimavicou"));
         employees.put("hul", employee("Nico", "Hulkenberg", null, "hulk@saharafi.co.uk",
-                date(19, 8, 1987), "+421 917 834 447", "Milady Horačkovej 1023/16, 79030 Podhorie"));
+                date(19, 8, 1987), "+421 917 834 447", "Milady Horackovej 1023/16, 79030 Podhorie"));
         employees.put("mas", employee("Felipe", "Massa", null, "felipemassa@williams.co.uk",
-                date(25, 4, 1981), "+421 908 334 813", "Cintorínska 17, 82204 Veľké Uherce"));
+                date(25, 4, 1981), "+421 908 334 813", "Cintorinska 17, 82204 Velke Uherce"));
         employees.put("but", employee("Jenson", "Button", null, "pushthebutton@mclaren.co.uk",
-                date(19, 1, 1980), "+421 949 446 600", "J. C. Hronského 66, 82202 Zvolenská Slatina"));
+                date(19, 1, 1980), "+421 949 446 600", "J. C. Hronskeho 66, 82202 Zvolenska Slatina"));
         LOGGER.info("employees loaded");
     }
 

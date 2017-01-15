@@ -9,13 +9,11 @@ import org.testng.annotations.Test;
 import sk.oravcok.posta.ServiceConfiguration;
 import sk.oravcok.posta.dto.EmployeeCreateDTO;
 import sk.oravcok.posta.dto.EmployeeDTO;
-import sk.oravcok.posta.dto.EmployeeUpdateDTO;
 import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 import sk.oravcok.posta.mapping.BeanMappingService;
 import sk.oravcok.posta.mapping.BeanMappingServiceImpl;
 import sk.oravcok.posta.service.EmployeeService;
-import sk.oravcok.posta.service.EmployeeServiceImpl;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -111,18 +109,18 @@ public class EmployeeFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void updateEmployeeTest() {
-        EmployeeUpdateDTO rosberg = new EmployeeUpdateDTO();
-        rosberg.setId(1l);  //mock set to return webber (id=1)
-        rosberg.setName("Nico");
-        rosberg.setSurname("Rosberg");
-        rosberg.setTitle("Mr.");
-        rosberg.setEmail("nico.rosberg@mercedes.de");
-        rosberg.setAddress("Monte Carlo, Monaco");
-        rosberg.setBirth(LocalDate.of(1985, 6, 27));
-        rosberg.setPhone("+49 69 209 777 777");
-        rosberg.setAnnotation("previous years very good driver");
+        EmployeeDTO rosbergUpdate = new EmployeeDTO();
+        rosbergUpdate.setId(1l);  //mock set to return webber (id=1)
+        rosbergUpdate.setName("Nico");
+        rosbergUpdate.setSurname("Rosberg");
+        rosbergUpdate.setTitle("Mr.");
+        rosbergUpdate.setEmail("nico.rosberg@mercedes.de");
+        rosbergUpdate.setAddress("Monte Carlo, Monaco");
+        rosbergUpdate.setBirth(LocalDate.of(1985, 6, 27));
+        rosbergUpdate.setPhone("+49 69 209 777 777");
+        rosbergUpdate.setAnnotation("previous years very good driver");
 
-        employeeFacade.updateEmployee(rosberg);
+        employeeFacade.updateEmployee(rosbergUpdate);
         verify(employeeService).update(argumentCaptor.capture());
         assertEquals(argumentCaptor.getValue().getId(), Long.valueOf(1l));
         assertEquals(argumentCaptor.getValue().getName(), "Nico");
@@ -137,18 +135,18 @@ public class EmployeeFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = NonExistingEntityException.class)
     public void updateNonExistingEmployeeTest() {
-        EmployeeUpdateDTO rosberg = new EmployeeUpdateDTO();
-        rosberg.setId(0l);  //mock set to return non-existing (id=0)
-        rosberg.setName("Nico");
-        rosberg.setSurname("Rosberg");
-        rosberg.setTitle("Mr.");
-        rosberg.setEmail("nico.rosberg@mercedes.de");
-        rosberg.setAddress("Monte Carlo, Monaco");
-        rosberg.setBirth(LocalDate.of(1985, 6, 27));
-        rosberg.setPhone("+49 69 209 777 777");
-        rosberg.setAnnotation("previous years very good driver");
+        EmployeeDTO rosbergUpdate = new EmployeeDTO();
+        rosbergUpdate.setId(0l);  //mock set to return non-existing (id=0)
+        rosbergUpdate.setName("Nico");
+        rosbergUpdate.setSurname("Rosberg");
+        rosbergUpdate.setTitle("Mr.");
+        rosbergUpdate.setEmail("nico.rosberg@mercedes.de");
+        rosbergUpdate.setAddress("Monte Carlo, Monaco");
+        rosbergUpdate.setBirth(LocalDate.of(1985, 6, 27));
+        rosbergUpdate.setPhone("+49 69 209 777 777");
+        rosbergUpdate.setAnnotation("previous years very good driver");
 
-        employeeFacade.updateEmployee(rosberg);
+        employeeFacade.updateEmployee(rosbergUpdate);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -224,5 +222,10 @@ public class EmployeeFacadeTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void getEmployeeByNullKeyTest() {
         employeeFacade.findEmployeesByKey(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void getEmployeeByEmptyKeyTest() {
+        employeeFacade.findEmployeesByKey("");
     }
 }

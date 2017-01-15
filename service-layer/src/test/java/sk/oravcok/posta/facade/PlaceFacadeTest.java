@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import sk.oravcok.posta.ServiceConfiguration;
 import sk.oravcok.posta.dto.PlaceCreateDTO;
 import sk.oravcok.posta.dto.PlaceDTO;
-import sk.oravcok.posta.dto.PlaceUpdateDTO;
 import sk.oravcok.posta.entity.Place;
 import sk.oravcok.posta.enums.PlaceType;
 import sk.oravcok.posta.exception.NonExistingEntityException;
@@ -111,7 +110,7 @@ public class PlaceFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void updatePlaceTest() {
-        PlaceUpdateDTO window18 = new PlaceUpdateDTO();
+        PlaceDTO window18 = new PlaceDTO();
         window18.setId(1l); //mock set to return window1
         window18.setName("Window 18");
         window18.setPlaceType(PlaceType.WINDOW);
@@ -127,7 +126,7 @@ public class PlaceFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = NonExistingEntityException.class)
     public void updateNonExistingPlaceTest() {
-        PlaceUpdateDTO window18 = new PlaceUpdateDTO();
+        PlaceDTO window18 = new PlaceDTO();
         window18.setId(0l); //mock set to return NULL
         window18.setName("Window 18");
         window18.setPlaceType(PlaceType.WINDOW);

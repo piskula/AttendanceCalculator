@@ -2,7 +2,6 @@ package sk.oravcok.posta.facade;
 
 import sk.oravcok.posta.dto.PlaceCreateDTO;
 import sk.oravcok.posta.dto.PlaceDTO;
-import sk.oravcok.posta.dto.PlaceUpdateDTO;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public interface PlaceFacade {
      * @throws IllegalArgumentException   if place is null
      * @throws NonExistingEntityException on attempt to update non existing place
      */
-    void updatePlace(PlaceUpdateDTO place);
+    void updatePlace(PlaceDTO place);
 
     /**
      * Returns all places.

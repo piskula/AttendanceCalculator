@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sk.oravcok.posta.dto.EmployeeCreateDTO;
 import sk.oravcok.posta.dto.EmployeeDTO;
-import sk.oravcok.posta.dto.EmployeeUpdateDTO;
 import sk.oravcok.posta.entity.Employee;
 import sk.oravcok.posta.exception.NonExistingEntityException;
 import sk.oravcok.posta.mapping.BeanMappingService;
@@ -40,11 +39,11 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
     }
 
     @Override
-    public void updateEmployee(EmployeeUpdateDTO employeeUpdateDTO) {
-        if (employeeUpdateDTO == null) {
+    public void updateEmployee(EmployeeDTO employeeDTO) {
+        if (employeeDTO == null) {
             throw new IllegalArgumentException("employee cannot be null");
         }
-        Employee employee = beanMappingService.mapTo(employeeUpdateDTO, Employee.class);
+        Employee employee = beanMappingService.mapTo(employeeDTO, Employee.class);
 
         if(employeeService.findById(employee.getId()) == null){
             throw new NonExistingEntityException("Can not update non existing employee");
@@ -73,6 +72,9 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
     @Override
     public List<EmployeeDTO> findEmployeesByKey(String key) {
         if(key == null) {
+            throw new IllegalArgumentException("searching key is null - cannot look for employees");
+        }
+        if(key.isEmpty()) {
             throw new IllegalArgumentException("searching key is null - cannot look for employees");
         }
         return beanMappingService.mapTo(employeeService.findEmployeesByKey(key), EmployeeDTO.class);
