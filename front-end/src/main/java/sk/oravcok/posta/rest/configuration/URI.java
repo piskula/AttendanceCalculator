@@ -8,5 +8,6 @@ public class URI {
 
     public static final String PLACES = "/places";
     public static final String EMPLOYEES = "/employees";
+    public static final String JOBS = "/jobs";
 
 }
