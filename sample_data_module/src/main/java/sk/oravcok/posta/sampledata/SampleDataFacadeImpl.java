@@ -166,6 +166,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         job.setJobStart(jobStart);
         job.setJobEnd(jobEnd);
 
+        jobService.create(job);
         return job;
     }
 

@@ -55,12 +55,12 @@ public class JobFacadeImpl implements JobFacade {
     }
 
     @Override
-    public void updateJob(JobUpdateDTO jobUpdateDTO) {
-        if(jobUpdateDTO == null){
+    public void updateJob(JobUpdateDTO jobDTO) {
+        if(jobDTO == null){
             throw new IllegalArgumentException("job is null - cannot update job");
         }
 
-        Job job = beanMappingService.mapTo(jobUpdateDTO, Job.class);
+        Job job = beanMappingService.mapTo(jobDTO, Job.class);
         if(job.getId() == null){
             throw new IllegalArgumentException("jobId is null - cannot update job");
         }
@@ -68,8 +68,8 @@ public class JobFacadeImpl implements JobFacade {
             throw new NonExistingEntityException("Cannot update non existing Job");
         }
 
-        job.setEmployee(getEmployeeOrThrowException(jobUpdateDTO.getEmployeeId()));
-        job.setPlace(getPlaceOrThrowException(jobUpdateDTO.getPlaceId()));
+        job.setEmployee(getEmployeeOrThrowException(jobDTO.getEmployeeId()));
+        job.setPlace(getPlaceOrThrowException(jobDTO.getPlaceId()));
 
         jobService.update(job);
     }

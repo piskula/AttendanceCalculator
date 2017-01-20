@@ -28,12 +28,12 @@ public interface JobFacade {
     /**
      * Updates job.
      *
-     * @param jobUpdateDTO entity to be updated
+     * @param jobDTO entity to be updated
      * @throws IllegalArgumentException   if job is null
      * @throws NonExistingEntityException on attempt to update non existing job
      * @throws NonExistingEntityException if Place or Employee does not exist
      */
-    void updateJob(JobUpdateDTO jobUpdateDTO);
+    void updateJob(JobUpdateDTO jobDTO);
 
     /**
      * Returns all jobs.

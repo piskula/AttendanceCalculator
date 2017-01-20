@@ -92,7 +92,7 @@ public class EmployeeRestController {
     /**
      * creates new Employee in system
      *
-     * curl -X POST -i -H "Content-Type: application/json" --data '{"name":"Michael","surname":"Schumacher"}' http://localhost:8080/posta/rest/employees
+     * curl -X POST -i -H "Content-Type: application/json" --data '{"name":"Michael","surname":"Schumacher","birth":"1971-12-06"}' http://localhost:8080/posta/rest/employees
      *
      * @param employee to create
      * @return created employee
