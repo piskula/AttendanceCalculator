@@ -354,8 +354,8 @@ public class JobFacadeTest extends AbstractTestNGSpringContextTests {
 
     private void assertDeepEquals(JobDTO j1, Job j2) {
         assertEquals(j1.getId(), j2.getId());
-        assertEquals(j1.getEmployee(), j2.getEmployee());
-        assertEquals(j1.getPlace(), j2.getPlace());
+        assertEquals(j1.getEmployee().getId(), j2.getEmployee().getId());
+        assertEquals(j1.getPlace().getId(), j2.getPlace().getId());
         assertEquals(j1.getJobStart(), j2.getJobStart());
         assertEquals(j1.getJobEnd(), j2.getJobEnd());
         assertEquals(j1.getJobDate(), j2.getJobDate());

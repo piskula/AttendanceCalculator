@@ -18,10 +18,10 @@ public class JobDTO {
     private Long id;
 
     @NotNull
-    private Employee employee;
+    private EmployeeDTO employee;
 
     @NotNull
-    private Place place;
+    private PlaceDTO place;
 
     @NotNull
     private LocalTime jobStart;
@@ -42,19 +42,19 @@ public class JobDTO {
         this.id = id;
     }
 
-    public Employee getEmployee() {
+    public EmployeeDTO getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(EmployeeDTO employee) {
         this.employee = employee;
     }
 
-    public Place getPlace() {
+    public PlaceDTO getPlace() {
         return place;
     }
 
-    public void setPlace(Place place) {
+    public void setPlace(PlaceDTO place) {
         this.place = place;
     }
 

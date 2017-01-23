@@ -7,7 +7,8 @@ import java.util.Objects;
 /**
  * DTO for Employee
  *
- * Created by Ondrej Oravcok on 18-Nov-16.
+ * @author Ondrej Oravcok
+ * @version 18-Nov-16.
  */
 public class EmployeeDTO {
 
@@ -108,9 +109,9 @@ public class EmployeeDTO {
     @Override
     public boolean equals(Object object){
         if(this == object) return true;
-        if(!(object instanceof EmployeeCreateDTO)) return false;
+        if(!(object instanceof EmployeeDTO)) return false;
 
-        final EmployeeCreateDTO other = (EmployeeCreateDTO) object;
+        final EmployeeDTO other = (EmployeeDTO) object;
 
         if (name != null ? !name.equals(other.getName()) : other.getName() != null) return false;
         if (surname != null ? !surname.equals(other.getSurname()) : other.getSurname() != null) return false;
@@ -131,7 +132,7 @@ public class EmployeeDTO {
 
     @Override
     public String toString(){
-        return "EmployeeCreateDTO{"
+        return "EmployeeDTO{"
                 + "id=" + id
                 + ", name=" + name
                 + ", surname=" + surname
