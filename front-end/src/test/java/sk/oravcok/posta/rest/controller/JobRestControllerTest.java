@@ -173,4 +173,38 @@ public class JobRestControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(jsonPath("$.employee.annotation").value(tuesdayWindowRosberg.getEmployee().getAnnotation()));
     }
 
+    @Test
+    public void findNonExistingJobByIdTest() throws Exception {
+        mockMvc.perform(get(URI.JOBS + "/findId/0"))
+                .andExpect(status().is(404));
+    }
+
+    @Test
+    public void findAllJobsTest() throws Exception {
+        mockMvc.perform(get(URI.JOBS))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobDate.[0]").value(tuesdayWindowRosberg.getJobDate().getYear()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobDate.[1]").value(tuesdayWindowRosberg.getJobDate().getMonthValue()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobDate.[2]").value(tuesdayWindowRosberg.getJobDate().getDayOfMonth()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobStart.[0]").value(tuesdayWindowRosberg.getJobStart().getHour()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobStart.[1]").value(tuesdayWindowRosberg.getJobStart().getMinute()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobEnd.[0]").value(tuesdayWindowRosberg.getJobEnd().getHour()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].jobEnd.[1]").value(tuesdayWindowRosberg.getJobEnd().getMinute()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].place.id").value(tuesdayWindowRosberg.getPlace().getId().intValue()))
+                .andExpect(jsonPath("$.[?(@.id==" + tuesdayWindowRosberg.getId() + ")].employee.id").value(tuesdayWindowRosberg.getEmployee().getId().intValue()))
+
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobDate.[0]").value(mondayWindowRosberg.getJobDate().getYear()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobDate.[1]").value(mondayWindowRosberg.getJobDate().getMonthValue()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobDate.[2]").value(mondayWindowRosberg.getJobDate().getDayOfMonth()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobStart.[0]").value(mondayWindowRosberg.getJobStart().getHour()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobStart.[1]").value(mondayWindowRosberg.getJobStart().getMinute()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobEnd.[0]").value(mondayWindowRosberg.getJobEnd().getHour()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobEnd.[1]").value(mondayWindowRosberg.getJobEnd().getMinute()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].place.id").value(mondayWindowRosberg.getPlace().getId().intValue()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].employee.id").value(mondayWindowRosberg.getEmployee().getId().intValue()))
+                ;
+    }
+
+
+
 }
