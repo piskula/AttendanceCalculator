@@ -281,6 +281,12 @@ public class PlaceRestControllerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void updateNonExistingPlaceTest() throws Exception {
+        mockMvc.perform(post(URI.PLACES + "/update/0").contentType(MediaType.APPLICATION_JSON).content(convertObjectToJsonBytes(window1)))
+                .andExpect(status().is(404));
+    }
+
+    @Test
     public void deletePlaceTest() throws Exception {
         doNothing().when(placeFacade).removePlace(window1.getId());
         mockMvc.perform(delete(URI.PLACES + "/" + window1.getId())).andExpect(status().isOk());

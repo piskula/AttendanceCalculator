@@ -279,7 +279,7 @@ public class EmployeeRestControllerTest extends AbstractTestNGSpringContextTests
     }
 
     @Test
-    public void updateNamePartialPlaceTest() throws Exception {
+    public void updateNamePartialEmployeeTest() throws Exception {
         EmployeeDTO webberUpdate = new EmployeeDTO();
         webberUpdate.setName("Webber updated");
 
@@ -296,6 +296,12 @@ public class EmployeeRestControllerTest extends AbstractTestNGSpringContextTests
                 .andExpect(jsonPath("$.birth.[2]").value(webber.getBirth().getDayOfMonth()))
                 .andExpect(jsonPath("$.phone").value(webber.getPhone()))
                 .andExpect(jsonPath("$.annotation").value(webber.getAnnotation()));
+    }
+
+    @Test
+    public void updateNonExistingEmployeeTest() throws Exception {
+        mockMvc.perform(post(URI.EMPLOYEES + "/update/0").contentType(MediaType.APPLICATION_JSON).content(convertObjectToJsonBytes(webber)))
+                .andExpect(status().is(404));
     }
 
     @Test
