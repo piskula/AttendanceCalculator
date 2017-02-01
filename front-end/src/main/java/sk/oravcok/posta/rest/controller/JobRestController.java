@@ -157,12 +157,12 @@ public class JobRestController {
     /**
      * find Jobs by criteria in system
      *
-     * curl -X GET -i -H "Content-Type: application/json" --data '{}' http://localhost:8080/posta/rest/jobs/findByCriteria
+     * curl -X POST -i -H "Content-Type: application/json" application/json" --data '{"employeeId":"1"}' http://localhost:8080/posta/rest/jobs/findByCriteria
      *
      * @param criteria to find by specific criteria
      * @return specific jobs
      */
-    @RequestMapping(value = "/findByCriteria", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/findByCriteria", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<JobDTO> findJobsByCriteria(@RequestBody JobSearchDTO criteria) {
         if(criteria.getPlaceId() != null && criteria.getEmployeeId() == null
                 && criteria.getJobDateStart() == null && criteria.getJobDateEnd() == null) {
