@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/vis/dist/vis.css" type="text/css">
+    <!--Bower Styling, navigation and so on-->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/vis/dist/vis.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <!--own scripts-->
+    <script src="scripts/app.js"></script>
+    <script src="elements/employees/employeesOverview.js"></script>
+    <script src="elements/jobs/jobsOfPlace.js"></script>
+    <script src="elements/jobs/jobsOverview.js"></script>
+    <script src="elements/places/placesOverview.js"></script>
+  </head>
+  <body ng-app="angularApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/">angular</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#/">Home</a></li>
+              <li class="dropdown"><a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown">Jobs.. <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a ng-href="#!/jobs">..of employee</a></li>
+                  <li><a ng-href="#!/jobsOfPlace">..of place</a></li>
+                </ul>
+              </li>
+              <li><a ng-href="#!/employees">Employees</a></li>
+              <li><a ng-href="#!/places">Places</a></li>
+              <li><a ng-href="#!/about">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <div ng-view=""></div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p>Ondrej Oravcok <span class="glyphicon glyphicon-heart"></span> Attendance Calculator</p>
+      </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<div class="jumbotron">
+    <p class="lead">
+        Employees
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>Phone</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="employee in employees">
+        <td>{{employee.name}} {{employee.surname}}{{titleWithComma(employee)}}</td>
+        <td>{{employee.email}}</td>
+        <td>{{employee.phone}}</td>
+        <td>{{employee.address}}</td>
+    </tr>
+    </tbody>
+</table>

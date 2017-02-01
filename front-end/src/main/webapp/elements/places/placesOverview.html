@@ -1,0 +1,20 @@
+<div class="jumbotron">
+    <p class="lead">
+        Places
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Place type</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="place in places">
+        <td>{{place.placeType}}</td>
+        <td>{{place.name}}</td>
+    </tr>
+    </tbody>
+</table>

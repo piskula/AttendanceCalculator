@@ -1,0 +1,26 @@
+<div class="jumbotron">
+    <p class="lead">
+        Jobs
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Employee</th>
+        <th>Place</th>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="job in jobs">
+        <td>{{job.employee.name}} {{job.employee.surname}}</td>
+        <td>{{job.place.name}}</td>
+        <td>{{job.jobDate}}</td>
+        <td>{{job.jobStart}}</td>
+        <td>{{job.jobEnd}}</td>
+    </tr>
+    </tbody>
+</table>
