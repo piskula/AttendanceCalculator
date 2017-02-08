@@ -8,6 +8,18 @@ angular.module('angularApp')
             $scope.reloadJobs();
         });
 
+        $scope.options = [];
+        $scope.nameColors = [
+            "color: red; background-color: pink;",
+            "color: black; background-color: gray;",
+            "color: yellow; background-color: blue;"
+        ];
+
+        $scope.dayDivs = [];
+        for (var i = 0; i < 7; i++) {
+            $scope.dayDivs.push(document.getElementById('vis' + i));
+        }
+
         $scope.reloadJobs = function () {
             if($scope.selectedPlace.id != undefined) {
                 $http({
@@ -18,9 +30,6 @@ angular.module('angularApp')
                     }
                 }).then(function (response) {
                     $scope.jobs = response.data;
-                    $scope.items = [[],[],[],[],[],[],[]];
-                    $scope.employees = [];
-                    $scope.nameGroups = [];
                     $scope.reloadDays();
                 }, function (response) {
                     $scope.jobs = [];
@@ -32,84 +41,71 @@ angular.module('angularApp')
         };
 
         $scope.reloadDays = function() {
+            $scope.items = [[],[],[],[],[],[],[]];
+            $scope.options = [];
+            $scope.employees = [];
+            $scope.nameGroups = [];
+
             $scope.jobs.forEach(function (item, index) {
-                if($scope.employees.indexOf(item.employee.id) == -1) {
+                if ($scope.employees.indexOf(item.employee.id) == -1) {
                     $scope.employees.push(item.employee.id);
                     $scope.nameGroups.push({
                         id: item.employee.id,
                         content: item.employee.name + ' ' + item.employee.surname
                     });
                 }
-                var d = new Date(item.jobDate);
+            });
+            $scope.jobs.forEach(function (item, index) {
+                var jobDate = new Date(item.jobDate);
                 var jobStart = item.jobStart.split(":");
                 var jobEnd = item.jobEnd.split(":");
-                $scope.items[d.getDay() - 1].push({
+                $scope.items[jobDate.getDay() - 1].push({
                     id: item.id,
                     content: item.employee.name + ' ' + item.employee.surname,
+                    title: item.jobStart + " - " + item.jobEnd,
                     group: item.employee.id,
-                    start: moment().hours(jobStart[0]).minutes(jobStart[1]),
-                    end: moment().hours(jobEnd[0]).minutes(jobEnd[1])
+                    start: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobStart[0]).minutes(jobStart[1]),
+                    end: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobEnd[0]).minutes(jobEnd[1]),
+                    style: $scope.nameColors[$scope.employees.indexOf(item.employee.id) % $scope.nameColors.length]
                 });
             });
 
-            $scope.timelineMonday.setGroups($scope.nameGroups);
-            $scope.timelineMonday.setItems(new vis.DataSet($scope.items[0]));
-            $scope.timelineTuesday.setGroups($scope.nameGroups);
-            $scope.timelineTuesday.setItems(new vis.DataSet($scope.items[1]));
-            $scope.timelineWednesday.setGroups($scope.nameGroups);
-            $scope.timelineWednesday.setItems(new vis.DataSet($scope.items[2]));
-            $scope.timelineThursday.setGroups($scope.nameGroups);
-            $scope.timelineThursday.setItems(new vis.DataSet($scope.items[3]));
-            $scope.timelineFriday.setGroups($scope.nameGroups);
-            $scope.timelineFriday.setItems(new vis.DataSet($scope.items[4]));
-            $scope.timelineSaturday.setGroups($scope.nameGroups);
-            $scope.timelineSaturday.setItems(new vis.DataSet($scope.items[5]));
-            $scope.timelineSunday.setGroups($scope.nameGroups);
-            $scope.timelineSunday.setItems(new vis.DataSet($scope.items[6]));
-        };
+            for (var i = 0; i < 7; i++) {
+                $scope.options.push({
+                    min: moment().year(2017).month(0).date(2).hours(5).minutes(0).add(i, 'days'),
+                    start: moment().year(2017).month(0).date(2).hours(5).minutes(0).add(i, 'days'),
+                    max: moment().year(2017).month(0).date(2).hours(20).minutes(0).add(i, 'days'),
+                    end: moment().year(2017).month(0).date(2).hours(20).minutes(0).add(i, 'days'),
+                    zoomable: false,
+                    moveable: false,
+                    orientation: 'top',
+                    stack: false,
+                    timeAxis: {scale: 'hour', step: 1},
+                    showMajorLabels: false,
+                    showMinorLabels: true
+                });
+            };
 
-        // DOM element where the Timeline will be attached
-        var containerHead = document.getElementById('vis0');
-        var containerMonday = document.getElementById('vis1');
-        var containerTuesday = document.getElementById('vis2');
-        var containerWednesday = document.getElementById('vis3');
-        var containerThursday = document.getElementById('vis4');
-        var containerFriday = document.getElementById('vis5');
-        var containerSaturday = document.getElementById('vis6');
-        var containerSunday = document.getElementById('vis7');
+            if($scope.timelineMonday != undefined) { $scope.timelineMonday.destroy(); }
+            $scope.timelineMonday = new vis.Timeline($scope.dayDivs[0], new vis.DataSet($scope.items[0]), $scope.nameGroups, $scope.options[0]);
 
-        // Configuration for the Timeline
-        var options = {
-            min: moment().hours(5).minutes(0),
-            start: moment().hours(5).minutes(0),
-            max: moment().hours(20).minutes(0),
-            end: moment().hours(20).minutes(0),
-            zoomable: false,
-            moveable: false,
-            orientation: 'none',
-            stack: false,
-            timeAxis: {scale: 'hour', step: 1}
-        };
-        var optionsHead = {
-            min: moment().hours(5).minutes(0),
-            start: moment().hours(5).minutes(0),
-            max: moment().hours(20).minutes(0),
-            end: moment().hours(20).minutes(0),
-            zoomable: false,
-            moveable: false,
-            orientation: 'top',
-            stack: false,
-            timeAxis: {scale: 'hour', step: 1}
-        };
+            if($scope.timelineTuesday != undefined) { $scope.timelineTuesday.destroy(); }
+            $scope.timelineTuesday = new vis.Timeline($scope.dayDivs[1], new vis.DataSet($scope.items[1]), $scope.nameGroups, $scope.options[1]);
 
-        // Create a Timeline
-        $scope.timelineMonday = new vis.Timeline(containerMonday, new vis.DataSet([]), options);
-        $scope.timelineTuesday = new vis.Timeline(containerTuesday, new vis.DataSet([]), options);
-        $scope.timelineWednesday = new vis.Timeline(containerWednesday, new vis.DataSet([]), options);
-        $scope.timelineThursday = new vis.Timeline(containerThursday, new vis.DataSet([]), options);
-        $scope.timelineFriday = new vis.Timeline(containerFriday, new vis.DataSet([]), options);
-        $scope.timelineSaturday = new vis.Timeline(containerSaturday, new vis.DataSet([]), options);
-        $scope.timelineSunday = new vis.Timeline(containerSunday, new vis.DataSet([]), options);
-        var timelineHead = new vis.Timeline(containerHead, new vis.DataSet([]), $scope.nameGroups, optionsHead);
+            if($scope.timelineWednesday != undefined) { $scope.timelineWednesday.destroy(); }
+            $scope.timelineWednesday = new vis.Timeline($scope.dayDivs[2], new vis.DataSet($scope.items[2]), $scope.nameGroups, $scope.options[2]);
+
+            if($scope.timelineThursday != undefined) { $scope.timelineThursday.destroy(); }
+            $scope.timelineThursday = new vis.Timeline($scope.dayDivs[3], new vis.DataSet($scope.items[3]), $scope.nameGroups, $scope.options[3]);
+
+            if($scope.timelineFriday != undefined) { $scope.timelineFriday.destroy(); }
+            $scope.timelineFriday = new vis.Timeline($scope.dayDivs[4], new vis.DataSet($scope.items[4]), $scope.nameGroups, $scope.options[4]);
+
+            if($scope.timelineSaturday != undefined) { $scope.timelineSaturday.destroy(); }
+            $scope.timelineSaturday = new vis.Timeline($scope.dayDivs[5], new vis.DataSet($scope.items[5]), $scope.nameGroups, $scope.options[5]);
+
+            if($scope.timelineSunday != undefined) { $scope.timelineSunday.destroy(); }
+            $scope.timelineSunday = new vis.Timeline($scope.dayDivs[6], new vis.DataSet($scope.items[6]), $scope.nameGroups, $scope.options[6]);
+        };
 
     }]);
