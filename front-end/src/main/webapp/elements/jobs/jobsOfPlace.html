@@ -10,30 +10,13 @@
     </select>
 </div>
 
-<!--<table class="table">-->
-    <!--<thead>-->
-        <!--<tr>-->
-            <!--<th>Employee</th>-->
-            <!--<th>Place</th>-->
-            <!--<th>Date</th>-->
-            <!--<th>Start</th>-->
-            <!--<th>End</th>-->
-        <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-        <!--<tr ng-repeat="job in jobs">-->
-            <!--<td>{{job.employee.name}} {{job.employee.surname}}</td>-->
-            <!--<td>{{job.place.name}}</td>-->
-            <!--<td>{{job.jobDate}}</td>-->
-            <!--<td>{{job.jobStart}}</td>-->
-            <!--<td>{{job.jobEnd}}</td>-->
-        <!--</tr>-->
-    <!--</tbody>-->
-<!--</table>-->
 <div class="panel panel-info" ng-show="jobs.length == 0">
     <div class="panel-body">There are no jobs for {{selectedPlace.name}}</div>
 </div>
-<table class="table">
+<div style="text-align: center; padding-top: 10px" ng-hide="loaded">
+    <img src="images/hourglass.gif"/>
+</div>
+<table ng-hide="jobs.length == 0" class="table">
     <col width="0">
     <col width="1500">
     <thead>
