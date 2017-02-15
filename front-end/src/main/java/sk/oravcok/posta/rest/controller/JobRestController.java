@@ -157,7 +157,7 @@ public class JobRestController {
     /**
      * find Jobs by criteria in system
      *
-     * curl -X POST -i -H "Content-Type: application/json" application/json" --data '{"employeeId":"1"}' http://localhost:8080/posta/rest/jobs/findByCriteria
+     * curl -X POST -i -H "Content-Type: application/json" --data '{"employeeId":"1"}' http://localhost:8080/posta/rest/jobs/findByCriteria
      *
      * @param criteria to find by specific criteria
      * @return specific jobs
