@@ -199,6 +199,7 @@ public class JobRestController {
                 if(criteria.getPlaceId() != null) {
                     return findJobsOfPlaceOfDay(criteria.getPlaceId(), exactDate, null);
                 }
+                //TODO implement find jobs of whole one day
                 throw new ValidationException(ERROR_NOT_PLACE_NEITHER_EMPLOYEE);
             }
             else {
