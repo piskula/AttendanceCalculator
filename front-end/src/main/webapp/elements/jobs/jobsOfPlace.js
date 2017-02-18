@@ -4,46 +4,30 @@ angular.module('angularApp')
     .controller('JobsOfPlaceCtrl', ['$scope', 'placesAvailable', '$http', function ($scope, placesAvailable, $http) {
         //load all places into <select>
         placesAvailable.getData().then(function (response) {
+            $scope.loaded = false;
             $scope.places = response;
             $scope.selectedPlace = $scope.places[0];
-            $scope.reloadJobs();
+            $scope.init();
         });
 
         $scope.loaded = false;
+        $scope.dayChoosen = new Date();
         $scope.nameColors = [
             "color: #000000; background-color: #ffc425;",
             "color: #000000; background-color: #83d064;",
             "color: #000000; background-color: #77aaff;",
             "color: #000000; background-color: #fb78c9;"
         ];
-
         $scope.dayDivs = [];
         for (var i = 0; i < 7; i++) {
             $scope.dayDivs.push(document.getElementById('vis' + i));
         }
 
-        $scope.reloadJobs = function () {
-            $scope.loaded = false;
-            if($scope.selectedPlace.id != undefined) {
-                $http({
-                    url: '/posta/rest/jobs/findByCriteria',
-                    method: "POST",
-                    data: {
-                        "placeId": $scope.selectedPlace.id
-                    }
-                }).then(function (response) {
-                    $scope.jobs = response.data;
-                    $scope.reloadDays();
-                }, function (response) {
-                    $scope.jobs = [];
-                });
-            }
-            else {
-                $scope.jobs = [];
-            }
+        $scope.formatDateForRest = function (dateToFormat) {
+            return [dateToFormat.getFullYear(), (dateToFormat.getMonth() + 1), dateToFormat.getDate()];
         };
 
-        $scope.reloadDays = function() {
+        $scope.refreshDays = function() {
             $scope.items = [[],[],[],[],[],[],[]];
             $scope.options = [];
             $scope.allEmployeeIDs = [];
@@ -115,6 +99,53 @@ angular.module('angularApp')
             $scope.timelineSunday = new vis.Timeline($scope.dayDivs[6], new vis.DataSet($scope.items[6]), $scope.nameGroups[6], $scope.options[6]);
 
             $scope.loaded = true;
+        };
+
+        $scope.reloadJobs = function () {
+            $scope.loaded = false;
+            if($scope.selectedPlace.id != undefined) {
+                $http({
+                    url: '/posta/rest/jobs/findByCriteria',
+                    method: "POST",
+                    data: {
+                        "placeId": $scope.selectedPlace.id,
+                        "jobDateStart": $scope.formatDateForRest($scope.monday),
+                        "jobDateEnd": $scope.formatDateForRest($scope.saturday)
+                    }
+                }).then(function (response) {
+                    $scope.jobs = response.data;
+                    $scope.refreshDays();
+                }, function (response) {
+                    $scope.jobs = [];
+                    $scope.loaded = true;
+                });
+            }
+            else {
+                $scope.jobs = [];
+            }
+        };
+
+        $scope.changePlaceEvent = function () {
+            $scope.reloadJobs();
+        }
+
+        $scope.changeDateEvent = function() {
+            var d = new Date($scope.dayChoosen);
+            var tryParseMonday = new Date(d.setDate(d.getDate() - d.getDay() + (d.getDay() == 0 ? -6 : 1)));
+            if(isNaN(tryParseMonday)) {
+                $scope.dayString = "Incorrect week number!";
+            } else {
+                $scope.monday = tryParseMonday;
+                $scope.saturday = new Date($scope.monday);
+                $scope.saturday.setDate($scope.monday.getDate() + 5);
+                $scope.dayString = $scope.monday.getDate() + "." + ($scope.monday.getMonth()+1)
+                    + ". - " + $scope.saturday.getDate() + "." + ($scope.saturday.getMonth()+1) + ".";
+                $scope.changePlaceEvent();
+            }
+        };
+
+        $scope.init = function() {
+            $scope.changeDateEvent();
         };
 
     }]);

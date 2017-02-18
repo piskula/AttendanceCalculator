@@ -4,19 +4,40 @@
     </p>
 </div>
 
-<div>
-    <select class="form-control" ng-model="selectedPlace" ng-change="reloadJobs()"
-            ng-options="item.name group by item.placeType for item in places">
-    </select>
-</div>
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td>
+                <div style="padding-left: 20px; padding-right: 20px">
+                    <select class="form-control" ng-model="selectedPlace" ng-change="changePlaceEvent()"
+                            ng-options="item.name group by item.placeType for item in places">
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div style="padding-left: 20px; padding-right: 20px">
+                    <input class="form-control" style="width: 100%" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required ng-change="changeDateEvent()" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td/>
+            <td>
+                <div style="text-align: center">
+                    {{dayString}}
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <div class="panel panel-info" ng-show="jobs.length == 0">
-    <div class="panel-body">There are no jobs for {{selectedPlace.name}}</div>
+    <div class="panel-body">There are no jobs for {{selectedPlace.name}} in selected week ({{dayString}})</div>
 </div>
 <div style="text-align: center; padding-top: 10px" ng-hide="loaded">
     <img src="images/hourglass.gif"/>
 </div>
-<table ng-hide="jobs.length == 0" class="table">
+<table ng-show="loaded && (jobs.length != 0)" class="table">
     <col width="0">
     <col width="1500">
     <thead>
