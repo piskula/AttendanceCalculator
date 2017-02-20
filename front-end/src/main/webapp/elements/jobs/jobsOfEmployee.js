@@ -1,31 +1,48 @@
 'use strict';
 
 angular.module('angularApp')
-    .controller('JobsOfPlaceCtrl', ['$scope', '$http', 'commonTools', function ($scope, $http, commonTools) {
-        //load all places into <select>
-        commonTools.getPlacesAvailable().then(function (response) {
+    .controller('JobsOfEmployeeCtrl', ['$scope', 'commonTools', '$http', function ($scope, commonTools, $http) {
+        //load all employees into <select>
+        commonTools.getEmployeesAvailable().then(function (response) {
             $scope.loaded = false;
-            $scope.places = response;
-            $scope.selectedPlace = $scope.places[0];
-            $scope.init();
+            $scope.employees = response;
+            $scope.selectedEmployee = $scope.employees[0];
+
+            $http({
+                url: '/posta/rest/jobs/findByCriteria',
+                method: "POST",
+                data: {
+                    "employeeId": 10,
+                    "jobDateStart": commonTools.formatDateForRest(new Date(2017, 1, 1)),
+                    "jobDateEnd": commonTools.formatDateForRest(new Date(2017, 1, 10))
+                }
+            }).then(function (response) {
+                $scope.jobs = response.data;
+                $scope.reloadPositionsNeeded();
+                // $scope.refreshDays();
+            }, function (response) {
+                $scope.jobs = [];
+                $scope.loaded = true;
+            });
+
+            // $scope.init();
         });
 
         $scope.loaded = false;
         $scope.dayChoosen = new Date();
-        $scope.nameColors = [
-            "color: #000000; background-color: #ffc425;",
-            "color: #000000; background-color: #83d064;",
-            "color: #000000; background-color: #77aaff;",
-            "color: #000000; background-color: #fb78c9;"
-        ];
-        $scope.dayDivs = [];
-        for (var i = 0; i < 7; i++) {
-            $scope.dayDivs.push(document.getElementById('vis' + i));
-        }
+        $scope.nameColor = "color: #000000; background-color: #ffc425;";
+        $scope.positionsNeeded = [];
+        // for (var i = 0; i < 7; i++) {
+        //     $scope.dayDivs.push(document.getElementById('vis' + i));
+        // }
 
-        // $scope.formatDateForRest = function (dateToFormat) {
-        //     return [dateToFormat.getFullYear(), (dateToFormat.getMonth() + 1), dateToFormat.getDate()];
-        // };
+        $scope.reloadPositionsNeeded = function () {
+            $scope.jobs.forEach(function (item, index) {
+                if ($scope.positionsNeeded.indexOf(item.place.id) == -1) {
+                    $scope.positionsNeeded.push(item.place.id);
+                }
+            });
+        };
 
         $scope.refreshDays = function() {
             $scope.items = [[],[],[],[],[],[],[]];
@@ -109,8 +126,8 @@ angular.module('angularApp')
                     method: "POST",
                     data: {
                         "placeId": $scope.selectedPlace.id,
-                        "jobDateStart": commonTools.formatDateForRest($scope.monday),
-                        "jobDateEnd": commonTools.formatDateForRest($scope.saturday)
+                        "jobDateStart": $scope.formatDateForRest($scope.monday),
+                        "jobDateEnd": $scope.formatDateForRest($scope.saturday)
                     }
                 }).then(function (response) {
                     $scope.jobs = response.data;
