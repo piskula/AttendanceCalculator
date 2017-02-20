@@ -6,7 +6,7 @@ I can not guarantee that all used frameworks and libraries are working and set u
 
 # FAQ
 ### How can I run it?
-![Build Status](https://travis-ci.org/MartinStyk/pa165-activity-tracker.svg?branch=master)
+![Build Status](https://travis-ci.org/piskula/AttendanceCalculator.svg?branch=master)
 
 1. If you see green status here, you are able to simply clone this repository. If you see red, try to checkout [last green commit](https://github.com/piskula/AttendanceCalculator/commits/).
 2. In project main directory run these commands:
