@@ -120,10 +120,10 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         jobs.put("tue-ves-win3", job(employees.get("ves"), places.get("Window 3"), date(3, 1, 2017), time("07:20"), time("12:55")));
         jobs.put("wed-hul-win3", job(employees.get("hul"), places.get("Window 3"), date(4, 1, 2017), time("07:35"), time("13:25")));
         jobs.put("wed-mas-win3", job(employees.get("mas"), places.get("Window 3"), date(4, 1, 2017), time("13:35"), time("17:30")));
-        jobs.put("tue-ves-win3", job(employees.get("ves"), places.get("Window 3"), date(5, 1, 2017), time("13:55"), time("18:10")));
-        jobs.put("tue-hul-win3", job(employees.get("hul"), places.get("Window 3"), date(5, 1, 2017), time("07:20"), time("12:55")));
-        jobs.put("wed-mas-win3", job(employees.get("mas"), places.get("Window 3"), date(6, 1, 2017), time("07:35"), time("13:25")));
-        jobs.put("wed-ves-win3", job(employees.get("ves"), places.get("Window 3"), date(6, 1, 2017), time("13:25"), time("17:30")));
+        jobs.put("thu-ves-win3", job(employees.get("ves"), places.get("Window 3"), date(5, 1, 2017), time("13:55"), time("18:10")));
+        jobs.put("thu-hul-win3", job(employees.get("hul"), places.get("Window 3"), date(5, 1, 2017), time("07:20"), time("12:55")));
+        jobs.put("fri-mas-win3", job(employees.get("mas"), places.get("Window 3"), date(6, 1, 2017), time("07:35"), time("13:25")));
+        jobs.put("fri-ves-win3", job(employees.get("ves"), places.get("Window 3"), date(6, 1, 2017), time("13:25"), time("17:30")));
 
         jobs.put("mon-hul-win4", job(employees.get("hul"), places.get("Window 4"), date(2, 1, 2017), time("07:40"), time("14:10")));
         jobs.put("mon-mas-win4", job(employees.get("mas"), places.get("Window 4"), date(2, 1, 2017), time("14:20"), time("17:55")));
@@ -132,8 +132,8 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         jobs.put("wed-mas-win4", job(employees.get("mas"), places.get("Window 4"), date(4, 1, 2017), time("07:35"), time("13:20")));
         jobs.put("wed-but-win4", job(employees.get("but"), places.get("Window 4"), date(4, 1, 2017), time("13:25"), time("17:30")));
         jobs.put("thu-hul-win4", job(employees.get("hul"), places.get("Window 4"), date(5, 1, 2017), time("13:55"), time("18:10")));
-        jobs.put("thu-msk-win4", job(employees.get("msk"), places.get("Window 4"), date(5, 1, 2017), time("07:20"), time("12:55")));
-        jobs.put("fri-msk-win4", job(employees.get("msk"), places.get("Window 4"), date(6, 1, 2017), time("07:35"), time("13:25")));
+        jobs.put("thu-mks-win4", job(employees.get("mks"), places.get("Window 4"), date(5, 1, 2017), time("07:20"), time("12:55")));
+        jobs.put("fri-but-win4", job(employees.get("but"), places.get("Window 4"), date(6, 1, 2017), time("07:35"), time("13:25")));
         jobs.put("fri-mas-win4", job(employees.get("mas"), places.get("Window 4"), date(6, 1, 2017), time("13:40"), time("17:00")));
 
         LOGGER.info("jobs loaded");
