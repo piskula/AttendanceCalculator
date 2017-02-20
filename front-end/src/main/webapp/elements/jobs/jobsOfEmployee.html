@@ -9,16 +9,14 @@
         <tr>
             <td>
                 <div style="padding-left: 20px; padding-right: 20px">
-                    <!--<select class="form-control" ng-model="selectedEmployee" ng-change="changeEmployeeEvent()"-->
-                    <select class="form-control" ng-model="selectedEmployee"
+                    <select class="form-control" ng-model="selectedEmployee" ng-change="changeEmployeeEvent()"
                             ng-options="item.name for item in employees">
                     </select>
                 </div>
             </td>
             <td>
                 <div style="padding-left: 20px; padding-right: 20px">
-                    <!--<input class="form-control" style="width: 100%" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required ng-change="changeDateEvent()" />-->
-                    <input class="form-control" style="width: 100%" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required />
+                    <input class="form-control" style="width: 100%" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required ng-change="changeDateEvent()" />
                 </div>
             </td>
         </tr>
@@ -39,24 +37,63 @@
 <div style="text-align: center; padding-top: 10px" ng-hide="loaded">
     <img src="images/hourglass.gif"/>
 </div>
-<!--<table ng-show="loaded && (jobs.length != 0)" class="table">-->
 <table ng-show="loaded && (jobs.length != 0)" class="table">
     <col width="0">
     <col width="1500">
     <thead>
-        <tr>
-            <th>Day</th>
-            <th>Data</th>
-        </tr>
+    <tr>
+        <th>Day</th>
+        <th>Data</th>
+    </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="position in positionsNeeded">
-            <td>Monday</td>
-            <td>
-                <div id="vis0">{{position.name}}</div>
-            </td>
-        </tr>
+    <tr>
+        <td>Monday</td>
+        <td>
+            <div ng-show="(placeIDs[0].length != 0)" id="vis0"></div>
+            <div ng-show="(placeIDs[0].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr>
+        <td>Tuesday</td>
+        <td>
+            <div ng-show="(placeIDs[1].length != 0)" id="vis1"></div>
+            <div ng-show="(placeIDs[1].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr>
+        <td>Wednesday</td>
+        <td>
+            <div ng-show="(placeIDs[2].length != 0)" id="vis2"></div>
+            <div ng-show="(placeIDs[2].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr>
+        <td>Thursday</td>
+        <td>
+            <div ng-show="(placeIDs[3].length != 0)" id="vis3"></div>
+            <div ng-show="(placeIDs[3].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr>
+        <td>Friday</td>
+        <td>
+            <div ng-show="(placeIDs[4].length != 0)" id="vis4"></div>
+            <div ng-show="(placeIDs[4].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr>
+        <td>Saturday</td>
+        <td>
+            <div ng-show="(placeIDs[5].length != 0)" id="vis5"></div>
+            <div ng-show="(placeIDs[5].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr ng-show="(placeIDs[6].length != 0)">
+        <td>Sunday</td>
+        <td>
+            <div id="vis6"></div>
+        </td>
+    </tr>
     </tbody>
 </table>
-
-<!--<div id="visualization"></div>-->

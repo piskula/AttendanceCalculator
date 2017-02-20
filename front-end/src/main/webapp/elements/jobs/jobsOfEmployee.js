@@ -7,74 +7,53 @@ angular.module('angularApp')
             $scope.loaded = false;
             $scope.employees = response;
             $scope.selectedEmployee = $scope.employees[0];
-
-            $http({
-                url: '/posta/rest/jobs/findByCriteria',
-                method: "POST",
-                data: {
-                    "employeeId": 10,
-                    "jobDateStart": commonTools.formatDateForRest(new Date(2017, 1, 1)),
-                    "jobDateEnd": commonTools.formatDateForRest(new Date(2017, 1, 10))
-                }
-            }).then(function (response) {
-                $scope.jobs = response.data;
-                $scope.reloadPositionsNeeded();
-                // $scope.refreshDays();
-            }, function (response) {
-                $scope.jobs = [];
-                $scope.loaded = true;
-            });
-
-            // $scope.init();
+            $scope.init();
         });
 
         $scope.loaded = false;
         $scope.dayChoosen = new Date();
-        $scope.nameColor = "color: #000000; background-color: #ffc425;";
-        $scope.positionsNeeded = [];
-        // for (var i = 0; i < 7; i++) {
-        //     $scope.dayDivs.push(document.getElementById('vis' + i));
-        // }
-
-        $scope.reloadPositionsNeeded = function () {
-            $scope.jobs.forEach(function (item, index) {
-                if ($scope.positionsNeeded.indexOf(item.place.id) == -1) {
-                    $scope.positionsNeeded.push(item.place.id);
-                }
-            });
-        };
+        $scope.nameColors = [
+            "color: #000000; background-color: #ffc425;",
+            "color: #000000; background-color: #83d064;",
+            "color: #000000; background-color: #77aaff;",
+            "color: #000000; background-color: #fb78c9;"
+        ];
+        $scope.dayDivs = [];
+        for (var i = 0; i < 7; i++) {
+            $scope.dayDivs.push(document.getElementById('vis' + i));
+        }
 
         $scope.refreshDays = function() {
             $scope.items = [[],[],[],[],[],[],[]];
             $scope.options = [];
-            $scope.allEmployeeIDs = [];
-            $scope.employeeIDs = [[],[],[],[],[],[],[]];
+            $scope.allPlaceIDs = [];
+            $scope.placeIDs = [[],[],[],[],[],[],[]];
             $scope.nameGroups = [[],[],[],[],[],[],[]];
 
             $scope.jobs.forEach(function (item, index) {
-                if ($scope.allEmployeeIDs.indexOf(item.employee.id) == -1) {
-                    $scope.allEmployeeIDs.push(item.employee.id);
+                if ($scope.allPlaceIDs.indexOf(item.place.id) == -1) {
+                    $scope.allPlaceIDs.push(item.place.id);
                 }
             });
             $scope.jobs.forEach(function (item, index) {
                 var jobDate = new Date(item.jobDate);
-                if ($scope.employeeIDs[jobDate.getDay() - 1].indexOf(item.employee.id) == -1) {
-                    $scope.employeeIDs[jobDate.getDay() - 1].push(item.employee.id);
+                if ($scope.placeIDs[jobDate.getDay() - 1].indexOf(item.place.id) == -1) {
+                    $scope.placeIDs[jobDate.getDay() - 1].push(item.place.id);
                     $scope.nameGroups[jobDate.getDay() - 1].push({
-                        id: item.employee.id,
-                        content: item.employee.name + ' ' + item.employee.surname
+                        id: item.place.id,
+                        content: item.place.name
                     });
                 }
                 var jobStart = item.jobStart.split(":");
                 var jobEnd = item.jobEnd.split(":");
                 $scope.items[jobDate.getDay() - 1].push({
                     id: item.id,
-                    content: item.employee.name + ' ' + item.employee.surname,
+                    content: item.place.name,
                     title: item.jobStart + " - " + item.jobEnd,
-                    group: item.employee.id,
+                    group: item.place.id,
                     start: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobStart[0]).minutes(jobStart[1]),
                     end: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobEnd[0]).minutes(jobEnd[1]),
-                    style: $scope.nameColors[$scope.allEmployeeIDs.indexOf(item.employee.id) % $scope.nameColors.length]
+                    style: $scope.nameColors[$scope.allPlaceIDs.indexOf(item.place.id) % $scope.nameColors.length]
                 });
             });
 
@@ -120,14 +99,14 @@ angular.module('angularApp')
 
         $scope.reloadJobs = function () {
             $scope.loaded = false;
-            if($scope.selectedPlace.id != undefined) {
+            if($scope.selectedEmployee.id != undefined) {
                 $http({
                     url: '/posta/rest/jobs/findByCriteria',
                     method: "POST",
                     data: {
-                        "placeId": $scope.selectedPlace.id,
-                        "jobDateStart": $scope.formatDateForRest($scope.monday),
-                        "jobDateEnd": $scope.formatDateForRest($scope.saturday)
+                        "employeeId": $scope.selectedEmployee.id,
+                        "jobDateStart": commonTools.formatDateForRest($scope.monday),
+                        "jobDateEnd": commonTools.formatDateForRest($scope.saturday)
                     }
                 }).then(function (response) {
                     $scope.jobs = response.data;
@@ -142,7 +121,7 @@ angular.module('angularApp')
             }
         };
 
-        $scope.changePlaceEvent = function () {
+        $scope.changeEmployeeEvent = function () {
             $scope.reloadJobs();
         }
 
@@ -157,7 +136,7 @@ angular.module('angularApp')
                 $scope.saturday.setDate($scope.monday.getDate() + 5);
                 $scope.dayString = $scope.monday.getDate() + "." + ($scope.monday.getMonth()+1)
                     + ". - " + $scope.saturday.getDate() + "." + ($scope.saturday.getMonth()+1) + ".";
-                $scope.changePlaceEvent();
+                $scope.changeEmployeeEvent();
             }
         };
 

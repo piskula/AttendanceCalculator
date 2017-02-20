@@ -32,7 +32,7 @@
 </table>
 
 <div class="panel panel-info" ng-show="jobs.length == 0">
-    <div class="panel-body">There are no jobs for {{selectedPlace.name}} in selected week ({{dayString}})</div>
+    <div class="panel-body">There are no jobs for {{selectedEmployee.name}} in selected week ({{dayString}})</div>
 </div>
 <div style="text-align: center; padding-top: 10px" ng-hide="loaded">
     <img src="images/hourglass.gif"/>
@@ -50,40 +50,46 @@
         <tr>
             <td>Monday</td>
             <td>
-                <div id="vis0"></div>
+                <div ng-show="(employeeIDs[0].length != 0)" id="vis0"></div>
+                <div ng-show="(employeeIDs[0].length == 0)">Free</div>
             </td>
         </tr>
         <tr>
             <td>Tuesday</td>
             <td>
-                <div id="vis1"></div>
+                <div ng-show="(employeeIDs[1].length != 0)" id="vis1"></div>
+                <div ng-show="(employeeIDs[1].length == 0)">Free</div>
             </td>
         </tr>
         <tr>
             <td>Wednesday</td>
             <td>
-                <div id="vis2"></div>
+                <div ng-show="(employeeIDs[2].length != 0)" id="vis2"></div>
+                <div ng-show="(employeeIDs[2].length == 0)">Free</div>
             </td>
         </tr>
         <tr>
             <td>Thursday</td>
             <td>
-                <div id="vis3"></div>
+                <div ng-show="(employeeIDs[3].length != 0)" id="vis3"></div>
+                <div ng-show="(employeeIDs[3].length == 0)">Free</div>
             </td>
         </tr>
         <tr>
             <td>Friday</td>
             <td>
-                <div id="vis4"></div>
+                <div ng-show="(employeeIDs[4].length != 0)" id="vis4"></div>
+                <div ng-show="(employeeIDs[4].length == 0)">Free</div>
             </td>
         </tr>
         <tr>
             <td>Saturday</td>
             <td>
-                <div id="vis5"></div>
+                <div ng-show="(employeeIDs[5].length != 0)" id="vis5"></div>
+                <div ng-show="(employeeIDs[5].length == 0)">Free</div>
             </td>
         </tr>
-        <tr>
+        <tr ng-show="(employeeIDs[6].length != 0)">
             <td>Sunday</td>
             <td>
                 <div id="vis6"></div>
@@ -91,5 +97,3 @@
         </tr>
     </tbody>
 </table>
-
-<!--<div id="visualization"></div>-->

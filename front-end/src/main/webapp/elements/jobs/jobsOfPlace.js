@@ -23,10 +23,6 @@ angular.module('angularApp')
             $scope.dayDivs.push(document.getElementById('vis' + i));
         }
 
-        // $scope.formatDateForRest = function (dateToFormat) {
-        //     return [dateToFormat.getFullYear(), (dateToFormat.getMonth() + 1), dateToFormat.getDate()];
-        // };
-
         $scope.refreshDays = function() {
             $scope.items = [[],[],[],[],[],[],[]];
             $scope.options = [];
