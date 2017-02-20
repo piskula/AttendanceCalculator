@@ -80,9 +80,9 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
                 date(25, 4, 1981), "+421 908 334 813", "Cintorinska 17, 82204 Velke Uherce"));
         employees.put("but", employee("Jenson", "Button", null, "pushthebutton@mclaren.co.uk",
                 date(19, 1, 1980), "+421 949 446 600", "J. C. Hronskeho 66, 82202 Zvolenska Slatina"));
-        employees.put("but", employee("Michael", "Schumacher", null, "keepfighting@schumi.de",
+        employees.put("msc", employee("Michael", "Schumacher", null, "keepfighting@schumi.de",
                 date(3, 1, 1969), "+421 902 234 198", "Hurth, 82202 Germany"));
-        employees.put("but", employee("Mick", "Schumacher", null, "futurechampion@schumi.de",
+        employees.put("mks", employee("Mick", "Schumacher", null, "futurechampion@schumi.de",
                 date(22, 3, 1999), "+421 918 231 014", "Zurich, 348SW Switzerland"));
         LOGGER.info("employees loaded");
     }
@@ -131,10 +131,10 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         jobs.put("tue-hul-win4", job(employees.get("hul"), places.get("Window 4"), date(3, 1, 2017), time("07:20"), time("12:55")));
         jobs.put("wed-mas-win4", job(employees.get("mas"), places.get("Window 4"), date(4, 1, 2017), time("07:35"), time("13:20")));
         jobs.put("wed-but-win4", job(employees.get("but"), places.get("Window 4"), date(4, 1, 2017), time("13:25"), time("17:30")));
-        jobs.put("tue-hul-win4", job(employees.get("hul"), places.get("Window 4"), date(5, 1, 2017), time("13:55"), time("18:10")));
-        jobs.put("tue-ves-win4", job(employees.get("ves"), places.get("Window 4"), date(5, 1, 2017), time("07:20"), time("12:55")));
-        jobs.put("wed-but-win4", job(employees.get("but"), places.get("Window 4"), date(6, 1, 2017), time("07:35"), time("13:25")));
-        jobs.put("wed-mas-win4", job(employees.get("mas"), places.get("Window 4"), date(6, 1, 2017), time("13:40"), time("17:00")));
+        jobs.put("thu-hul-win4", job(employees.get("hul"), places.get("Window 4"), date(5, 1, 2017), time("13:55"), time("18:10")));
+        jobs.put("thu-msk-win4", job(employees.get("msk"), places.get("Window 4"), date(5, 1, 2017), time("07:20"), time("12:55")));
+        jobs.put("fri-msk-win4", job(employees.get("msk"), places.get("Window 4"), date(6, 1, 2017), time("07:35"), time("13:25")));
+        jobs.put("fri-mas-win4", job(employees.get("mas"), places.get("Window 4"), date(6, 1, 2017), time("13:40"), time("17:00")));
 
         LOGGER.info("jobs loaded");
     }
