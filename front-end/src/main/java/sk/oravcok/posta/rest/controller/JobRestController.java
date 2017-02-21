@@ -191,8 +191,11 @@ public class JobRestController {
         //Some of 'DATES' fields is filled
         if(criteria.getJobDateStart() != null || criteria.getJobDateEnd() != null) {
             if(criteria.getJobDateStart() == null || criteria.getJobDateEnd() == null) {
-                //exactly one of 'DATES' fields is filled, so we need jobs of [places/employees] of one exact date
+                //exactly one of 'DATES' fields is filled, so we need jobs of [places/employees/all] of one exact date
                 LocalDate exactDate = criteria.getJobDateStart() != null ? criteria.getJobDateStart() : criteria.getJobDateEnd();
+                if(criteria.getEmployeeId() == null && criteria.getPlaceId() == null) {
+                    return jobFacade.findJobsOfDay(exactDate);
+                }
                 if(criteria.getEmployeeId() != null) {
                     return findJobsOfEmployeeOfDay(criteria.getEmployeeId(), exactDate, null);
                 }
@@ -213,7 +216,7 @@ public class JobRestController {
                 throw new ValidationException(ERROR_NOT_PLACE_NEITHER_EMPLOYEE);
             }
         }
-        throw new ValidationException("You have only following criteria options to specify: only employee, only place, employee with date/dates, place with date/dates");
+        throw new ValidationException("You have only following criteria options to specify: only employee, only place, only exact day, employee with date/dates, place with date/dates");
     }
 
     private List<JobDTO> findJobsOfEmployeeOfDay(Long employeeId, LocalDate exactDate, LocalDate toDay) {

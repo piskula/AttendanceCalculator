@@ -161,6 +161,9 @@ public class JobFacadeTest extends AbstractTestNGSpringContextTests {
         when(jobService.findJobsOfPlace(window)).thenReturn(Arrays.asList(mondayWindowVettel, tuesdayWindowWebber));
         when(jobService.findJobsOfPlace(background)).thenReturn(Arrays.asList(mondayBackgroundVettel, tuesdayBackgroundWebber));
 
+        when(jobService.findJobsOfDay(monday)).thenReturn(Arrays.asList(mondayWindowVettel, mondayBackgroundVettel));
+        when(jobService.findJobsOfDay(tuesday)).thenReturn(Arrays.asList(tuesdayWindowWebber, tuesdayBackgroundWebber));
+
         when(jobService.findJobsOfEmployeeBetweenDays(vettel, monday, monday)).thenReturn(Arrays.asList(mondayWindowVettel));
         when(jobService.findJobsOfEmployeeBetweenDays(webber, monday, tuesday)).thenReturn(Arrays.asList(tuesdayBackgroundWebber, tuesdayWindowWebber));
 
@@ -297,6 +300,27 @@ public class JobFacadeTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void findJobsOfNullPlaceTest() {
         jobFacade.findJobsOfPlace(null);
+    }
+
+    @Test
+    public void findJobsOfDayTest() {
+        Set<JobDTO> jobsMonday = new HashSet<>(jobFacade.findJobsOfDay(monday));
+        Set<JobDTO> jobsTuesday = new HashSet<>(jobFacade.findJobsOfDay(tuesday));
+
+        assertEquals(jobsMonday.size(), 2);
+        assertEquals(jobsTuesday.size(), 2);
+
+        for(JobDTO current : jobsMonday) {
+            assertDeepEquals(current, current.getId().equals(1l) ? mondayWindowVettel : mondayBackgroundVettel);
+        }
+        for(JobDTO current : jobsTuesday) {
+            assertDeepEquals(current, current.getId().equals(2l) ? tuesdayWindowWebber : tuesdayBackgroundWebber);
+        }
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findJobsOfNullDayTest() {
+        jobFacade.findJobsOfDay(null);
     }
 
     @Test

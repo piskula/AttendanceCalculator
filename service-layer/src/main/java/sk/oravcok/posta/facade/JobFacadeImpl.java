@@ -105,6 +105,14 @@ public class JobFacadeImpl implements JobFacade {
     }
 
     @Override
+    public List<JobDTO> findJobsOfDay(LocalDate exactDay) {
+        if (exactDay == null) {
+            throw new IllegalArgumentException("exactDay cannot be null when looking for Jobs of specific day");
+        }
+        return beanMappingService.mapTo(jobService.findJobsOfDay(exactDay), JobDTO.class);
+    }
+
+    @Override
     public List<JobDTO> findJobsOfEmployeeBetweenDays(Long employeeId, LocalDate fromDay, LocalDate toDay) {
         if(fromDay == null){
             throw new IllegalArgumentException("fromDay is null - cannot find jobs of employee between days");

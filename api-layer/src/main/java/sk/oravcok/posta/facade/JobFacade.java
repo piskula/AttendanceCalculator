@@ -73,6 +73,15 @@ public interface JobFacade {
     List<JobDTO> findJobsOfPlace(Long placeId);
 
     /**
+     * Returns jobs of specific Day
+     *
+     * @param exactDay retrieve all jobs of exact day
+     * @return jobs for this day
+     * @throws IllegalArgumentException if exactDay is null
+     */
+    List<JobDTO> findJobsOfDay(LocalDate exactDay);
+
+    /**
      * Returns jobs of employee between specific days
      *
      * @param employeeId id of employee

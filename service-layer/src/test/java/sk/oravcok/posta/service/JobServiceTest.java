@@ -369,6 +369,23 @@ public class JobServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void findJobsOfDayTest() {
+        List<Job> mondayResult = jobService.findJobsOfDay(monday);
+        List<Job> tuesdayResult = jobService.findJobsOfDay(tuesday);
+
+        assertEquals(mondayResult.size(), 3);
+        assertEquals(tuesdayResult.size(), 1);
+
+        assertEquals(new HashSet<>(mondayResult), new HashSet<>(Arrays.asList(mondayWindowRicciardo, mondayWindowVettel, mondayBackgroundVettel)));
+        assertEquals(new HashSet<>(tuesdayResult), new HashSet<>(Arrays.asList(tuesdayBackgroundRicciardo)));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findJobsOfNullDayTest() {
+        jobService.findJobsOfDay(null);
+    }
+
+    @Test
     public void findJobsOfEmployeeDateTest() {
         List<Job> mondayVettel = jobService.findJobsOfEmployeeBetweenDays(vettel, monday, monday);
         List<Job> mondayTuesdayRicciardo = jobService.findJobsOfEmployeeBetweenDays(ricciardo, monday, tuesday);

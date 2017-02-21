@@ -66,6 +66,15 @@ public interface JobService {
     List<Job> findJobsOfPlace(Place place);
 
     /**
+     * Returns jobs of specific day
+     *
+     * @param exactDay to find jobs of this specific day
+     * @return these jobs
+     * @throws IllegalArgumentException if exactDay is null
+     */
+    List<Job> findJobsOfDay(LocalDate exactDay);
+
+    /**
      * Returns jobs of employee between specific days
      *
      * @param employee to find his jobs

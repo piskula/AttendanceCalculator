@@ -67,6 +67,14 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<Job> findJobsOfDay(LocalDate exactDay) {
+        if(exactDay == null) {
+            throw new IllegalArgumentException("exactDay is null - cannot find jobs on it");
+        }
+        return jobDao.findJobsOfDate(exactDay);
+    }
+
+    @Override
     public List<Job> findJobsOfEmployeeBetweenDays(Employee employee, LocalDate fromDay, LocalDate toDay) {
         if(employee == null) {
             throw new IllegalArgumentException("employee is null - cannot find his jobs");

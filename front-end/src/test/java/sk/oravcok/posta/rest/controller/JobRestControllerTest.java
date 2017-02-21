@@ -477,6 +477,38 @@ public class JobRestControllerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void findJobsByDayCriteriaTest() throws Exception {
+        JobSearchDTO jobSearchDTO = new JobSearchDTO();
+        jobSearchDTO.setJobDateStart(monday);
+
+        when(jobFacade.findJobsOfDay(monday)).thenReturn(Arrays.asList(mondayWindowRosberg));
+
+        mockMvc.perform(post(URI.JOBS + "/findByCriteria").contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(jobSearchDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobDate.[0]").value(mondayWindowRosberg.getJobDate().getYear()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobDate.[1]").value(mondayWindowRosberg.getJobDate().getMonthValue()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobDate.[2]").value(mondayWindowRosberg.getJobDate().getDayOfMonth()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobStart.[0]").value(mondayWindowRosberg.getJobStart().getHour()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobStart.[1]").value(mondayWindowRosberg.getJobStart().getMinute()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobEnd.[0]").value(mondayWindowRosberg.getJobEnd().getHour()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].jobEnd.[1]").value(mondayWindowRosberg.getJobEnd().getMinute()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].place.id").value(mondayWindowRosberg.getPlace().getId().intValue()))
+                .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].employee.id").value(mondayWindowRosberg.getEmployee().getId().intValue()));
+    }
+
+    @Test
+    public void findJobsByDateDateCriteriaTest() throws Exception {
+        JobSearchDTO jobSearchDTO = new JobSearchDTO();
+        jobSearchDTO.setJobDateStart(monday);
+        jobSearchDTO.setJobDateEnd(tuesday);
+
+        mockMvc.perform(post(URI.JOBS + "/findByCriteria").contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonBytes(jobSearchDTO)))
+                .andExpect(status().is(422));
+    }
+
+    @Test
     public void findJobsByEmployeeFirstDate() throws Exception {
         JobSearchDTO jobSearchDTO = new JobSearchDTO();
         jobSearchDTO.setEmployeeId(rosberg.getId());
