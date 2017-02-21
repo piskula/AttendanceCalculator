@@ -47,9 +47,9 @@ angular
       .when('/', {templateUrl: 'elements/home/home.html'})
       .when('/about', {templateUrl: 'elements/home/about.html'})
       .when('/employees', {templateUrl: 'elements/employees/employeesOverview.html', controller: 'EmployeesCtrl', controllerAs: 'employeesOverview'})
-      .when('/jobs', {templateUrl: 'elements/jobs/jobsOverview.html', controller: 'JobsCtrl', controllerAs: 'jobsOverview'})
-      .when('/jobsOfPlace', {templateUrl: 'elements/jobs/jobsOfPlace.html', controller: 'JobsOfPlaceCtrl', controllerAs: 'jobsOfPlace'})
+      .when('/jobsOfDay', {templateUrl: 'elements/jobs/jobsOfDay.html', controller: 'JobsOfDayCtrl', controllerAs: 'jobsOfDay'})
       .when('/jobsOfEmployee', {templateUrl: 'elements/jobs/jobsOfEmployee.html', controller: 'JobsOfEmployeeCtrl', controllerAs: 'jobsOfEmployee'})
+      .when('/jobsOfPlace', {templateUrl: 'elements/jobs/jobsOfPlace.html', controller: 'JobsOfPlaceCtrl', controllerAs: 'jobsOfPlace'})
       .when('/places', {templateUrl: 'elements/places/placesOverview.html', controller: 'PlacesCtrl', controllerAs: 'placesOverview'})
       .otherwise({redirectTo: '/'});
   });
