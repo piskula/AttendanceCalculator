@@ -1,0 +1,56 @@
+<div class="jumbotron">
+    <p class="lead">
+        Create New Employee
+    </p>
+</div>
+
+<div>
+    <form name="form" class="css-form" novalidate>
+        <table>
+            <tbody>
+            <tr>
+                <td>Name</td>
+                <td><input class="form-control" type="text" ng-model="employee.name" name="eName" required /></td>
+                <td>
+                    <div ng-show="form.$submitted || form.eName.$touched">
+                        <div ng-show="form.eName.$error.required">Name is required.</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Surname</td>
+                <td><input class="form-control" type="text" ng-model="employee.surname" name="eSurname" required /></td>
+                <td>
+                    <div ng-show="form.$submitted || form.eSurname.$touched">
+                        <div ng-show="form.eSurname.$error.required">Surname is required.</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>E-mail</td>
+                <td><input class="form-control" type="text" ng-model="employee.email" name="eEmail" pattern=".+@.+\....?" /></td>
+                <td>
+                    <div ng-show="form.$submitted || form.eEmail.$touched">
+                        <span ng-show="form.eEmail.$error.pattern">Email is not valid.</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input class="form-control" type="text" ng-model="employee.phone" name="ePhone" pattern="(09\d{8}|\+421\d{9})" /></td>
+                <td>
+                    <div ng-show="form.$submitted || form.ePhone.$touched">
+                        <span ng-show="form.ePhone.$error.pattern">Phone is not valid.</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <input type="button" ng-click="reset(form)" value="Reset" />
+        <input type="submit" ng-click="update(employee)" value="Save" />
+    </form>
+    <pre>user = {{employee | json}}</pre>
+    <pre>master = {{master | json}}</pre>
+    <pre>status = {{status}}</pre>
+</div>

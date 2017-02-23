@@ -39,6 +39,29 @@ angular
         },
         formatDateForRest: function (dateToFormat) {
             return [dateToFormat.getFullYear(), (dateToFormat.getMonth() + 1), dateToFormat.getDate()];
+        },
+        formatNameSurname: function (employee) {
+            return employee.name + " " + employee.surname;
+        },
+        formatSurnameName: function (employee) {
+            return employee.surname + " " + employee.name;
+        },
+        formatTimeRangeOfJob: function (job) {
+            return job.jobStart + " - " + job.jobEnd;
+        },
+        getColors: function () {
+            return [
+                "color: #000000; background-color: #ffc425;",
+                "color: #000000; background-color: #83d064;",
+                "color: #000000; background-color: #77aaff;",
+                "color: #000000; background-color: #fb78c9;"
+            ];
+        },
+        getShortDateRange: function (from, to) {
+            return from.getDate() + "." + (from.getMonth()+1) + ". - " + to.getDate() + "." + (to.getMonth()+1) + ".";
+        },
+        getDateFormatted: function (date) {
+            return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
         }
     };
 }])
@@ -46,6 +69,7 @@ angular
     $routeProvider
       .when('/', {templateUrl: 'elements/home/home.html'})
       .when('/about', {templateUrl: 'elements/home/about.html'})
+      .when('/createEmployee', {templateUrl: 'elements/employees/createEmployee.html', controller: 'CreateEmployeeCtrl', controllerAs: 'createEmployee'})
       .when('/employees', {templateUrl: 'elements/employees/employeesOverview.html', controller: 'EmployeesCtrl', controllerAs: 'employeesOverview'})
       .when('/jobsOfDay', {templateUrl: 'elements/jobs/jobsOfDay.html', controller: 'JobsOfDayCtrl', controllerAs: 'jobsOfDay'})
       .when('/jobsOfEmployee', {templateUrl: 'elements/jobs/jobsOfEmployee.html', controller: 'JobsOfEmployeeCtrl', controllerAs: 'jobsOfEmployee'})
