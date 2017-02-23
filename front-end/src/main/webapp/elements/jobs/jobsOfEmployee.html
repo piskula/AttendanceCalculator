@@ -32,7 +32,7 @@
 </table>
 
 <div class="panel panel-info" ng-show="jobs.length == 0">
-    <div class="panel-body">There are no jobs for {{selectedEmployee.name}} {{selectedEmployee.surname}} in selected week ({{dayString}})</div>
+    <div class="panel-body">There are no jobs for {{getEmployeeName()}} in selected week ({{dayString}})</div>
 </div>
 <div style="text-align: center; padding-top: 10px" ng-hide="loaded">
     <img src="images/hourglass.gif"/>

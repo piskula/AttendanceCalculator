@@ -1,26 +1,30 @@
 <div class="jumbotron">
     <p class="lead">
-        Jobs
+        Jobs of day
     </p>
 </div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Employee</th>
-        <th>Place</th>
-        <th>Date</th>
-        <th>Start</th>
-        <th>End</th>
-    </tr>
-    </thead>
+<table style="width: 100%">
     <tbody>
-    <tr ng-repeat="job in jobs">
-        <td>{{job.employee.name}} {{job.employee.surname}}</td>
-        <td>{{job.place.name}}</td>
-        <td>{{job.jobDate}}</td>
-        <td>{{job.jobStart}}</td>
-        <td>{{job.jobEnd}}</td>
+    <tr>
+        <td>
+            <div style="padding-left: 20px; padding-right: 20px">
+                <input class="form-control" style="width: 50%" type="date" name="input" ng-model="dayChoosen" required ng-change="changeDateEvent()" />
+            </div>
+        </td>
+        <td>
+            <form>
+                <input ng-change="changeGroupEmployeePlace()" style="vertical-align:text-bottom; margin-bottom: 1px; margin-right: 1%"type="radio" ng-model="reportType" value="place">Place
+                <input ng-change="changeGroupEmployeePlace()" style="margin-left: 10%; vertical-align:text-bottom; margin-bottom: 1px; margin-right: 1%" type="radio" ng-model="reportType" value="employee">Employee
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
+<div style="margin-top: 20px" class="panel panel-info" ng-show="jobs.length == 0">
+    <div class="panel-body">There are no jobs for {{dayString}}</div>
+</div>
+<div style="text-align: center; padding-top: 10px" ng-hide="loaded">
+    <img src="images/hourglass.gif"/>
+</div>
+<div style="padding: 30px 0px" ng-show="(employeeData.length != 0)" id="timeline"></div>

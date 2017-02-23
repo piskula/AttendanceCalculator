@@ -12,12 +12,6 @@ angular.module('angularApp')
 
         $scope.loaded = false;
         $scope.dayChoosen = new Date();
-        $scope.nameColors = [
-            "color: #000000; background-color: #ffc425;",
-            "color: #000000; background-color: #83d064;",
-            "color: #000000; background-color: #77aaff;",
-            "color: #000000; background-color: #fb78c9;"
-        ];
         $scope.dayDivs = [];
         for (var i = 0; i < 7; i++) {
             $scope.dayDivs.push(document.getElementById('vis' + i));
@@ -41,19 +35,19 @@ angular.module('angularApp')
                     $scope.employeeIDs[jobDate.getDay() - 1].push(item.employee.id);
                     $scope.nameGroups[jobDate.getDay() - 1].push({
                         id: item.employee.id,
-                        content: item.employee.name + ' ' + item.employee.surname
+                        content: commonTools.formatNameSurname(item.employee)
                     });
                 }
                 var jobStart = item.jobStart.split(":");
                 var jobEnd = item.jobEnd.split(":");
                 $scope.items[jobDate.getDay() - 1].push({
                     id: item.id,
-                    content: item.employee.name + ' ' + item.employee.surname,
-                    title: item.jobStart + " - " + item.jobEnd,
+                    content: commonTools.formatNameSurname(item.employee),
+                    title: commonTools.formatTimeRangeOfJob(item),
                     group: item.employee.id,
                     start: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobStart[0]).minutes(jobStart[1]),
                     end: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobEnd[0]).minutes(jobEnd[1]),
-                    style: $scope.nameColors[$scope.allEmployeeIDs.indexOf(item.employee.id) % $scope.nameColors.length]
+                    style: commonTools.getColors()[$scope.allEmployeeIDs.indexOf(item.employee.id) % commonTools.getColors().length]
                 });
             });
 
@@ -118,6 +112,7 @@ angular.module('angularApp')
             }
             else {
                 $scope.jobs = [];
+                $scope.loaded = true;
             }
         };
 
@@ -134,8 +129,7 @@ angular.module('angularApp')
                 $scope.monday = tryParseMonday;
                 $scope.saturday = new Date($scope.monday);
                 $scope.saturday.setDate($scope.monday.getDate() + 5);
-                $scope.dayString = $scope.monday.getDate() + "." + ($scope.monday.getMonth()+1)
-                    + ". - " + $scope.saturday.getDate() + "." + ($scope.saturday.getMonth()+1) + ".";
+                $scope.dayString = commonTools.getShortDateRange($scope.monday, $scope.saturday);
                 $scope.changePlaceEvent();
             }
         };
