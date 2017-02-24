@@ -14,5 +14,5 @@ I can not guarantee that all used frameworks and libraries are working and set u
   2. ``cd front-end`` this changes directory
   3. ``mvn`` this command is configured to run tomcat - server
 3. After that you have running server on your local machine and there are two ways how to communicate with application
-  1. using your web browser (application is available on http://localhost:8080/posta/)
-  2. using REST API (which your browser from previous case also uses, but data is in human-readable form that time). More information you can get in [REST API documentation](/front-end) (front-end README.md)
+  1. using your web browser - application is available on [http://localhost:8080/posta/](http://localhost:8080/posta/)
+  2. using REST API (which your browser from previous case also uses, but data is in human-readable form that time). REST API is available on [http://localhost:8080/posta/rest/](http://localhost:8080/posta/rest/). More information you can get in [REST API documentation](/front-end) (front-end [README.md](/front-end) file)
