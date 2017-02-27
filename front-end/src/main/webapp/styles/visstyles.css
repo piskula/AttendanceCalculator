@@ -1,3 +1,39 @@
 .vis-item {
     border-color: black;
 }
+.form-table td {
+    padding: 12px 20px;
+}
+table {
+    width: 100%;
+}
+
+.overview-table div {
+    padding: 0px 20px;
+    text-align: center;
+}
+
+.loader-div {
+    text-align: center;
+    padding-top: 10px
+}
+
+.timesheet-table tr {
+    height: 1px;
+}
+.timesheet-data-td {
+    vertical-align: middle;
+}
+.timesheet-date-td {
+    border: 0 !important;
+    font-size: 27px;
+}
+.timesheet-date-week-td {
+    border: 0 !important;
+    font-size: 27px;
+    color:#d4514a;
+}
+
+.form-warning {
+    color:#d4514a;
+}
