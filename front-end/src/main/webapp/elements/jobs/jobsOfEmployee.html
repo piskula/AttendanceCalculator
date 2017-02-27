@@ -4,18 +4,18 @@
     </p>
 </div>
 
-<table style="width: 100%">
+<table class="overview-table">
     <tbody>
         <tr>
             <td>
-                <div style="padding-left: 20px; padding-right: 20px">
+                <div>
                     <select class="form-control" ng-model="selectedEmployee" ng-change="changeEmployeeEvent()"
                             ng-options="(item.surname + ' ' + item.name) for item in employees">
                     </select>
                 </div>
             </td>
             <td>
-                <div style="padding-left: 20px; padding-right: 20px">
+                <div>
                     <input class="form-control" style="width: 100%" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required ng-change="changeDateEvent()" />
                 </div>
             </td>
@@ -23,7 +23,7 @@
         <tr>
             <td/>
             <td>
-                <div style="text-align: center">
+                <div>
                     {{dayString}}
                 </div>
             </td>
@@ -34,10 +34,10 @@
 <div class="panel panel-info" ng-show="jobs.length == 0">
     <div class="panel-body">There are no jobs for {{getEmployeeName()}} in selected week ({{dayString}})</div>
 </div>
-<div style="text-align: center; padding-top: 10px" ng-hide="loaded">
+<div class="loader-div" ng-hide="loaded">
     <img src="images/hourglass.gif"/>
 </div>
-<table ng-show="loaded && (jobs.length != 0)" class="table">
+<table ng-show="loaded && (jobs.length != 0)" class="table timesheet-table">
     <col width="0">
     <col width="1500">
     <thead>
@@ -47,75 +47,75 @@
     </tr>
     </thead>
     <tbody>
-    <tr style="height: 1px">
+    <tr>
         <td>Monday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[0].length != 0)" id="vis0"></div>
             <div ng-show="(placeIDs[0].length == 0)">Free</div>
         </td>
     </tr>
     <tr>
-        <td align="center" style="border: 0; font-size: 27px">{{options[0].end.date()}}</td>
+        <td align="center" class="timesheet-date-td">{{options[0].end.date()}}</td>
     </tr>
-    <tr style="height: 1px">
+    <tr>
         <td>Tuesday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[1].length != 0)" id="vis1"></div>
             <div ng-show="(placeIDs[1].length == 0)">Free</div>
         </td>
     </tr>
     <tr>
-        <td align="center" style="border: 0; font-size: 27px">{{options[1].end.date()}}</td>
+        <td align="center" class="timesheet-date-td">{{options[1].end.date()}}</td>
     </tr>
-    <tr style="height: 1px">
+    <tr>
         <td>Wednesday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[2].length != 0)" id="vis2"></div>
             <div ng-show="(placeIDs[2].length == 0)">Free</div>
         </td>
     </tr>
     <tr>
-        <td align="center" style="border: 0; font-size: 27px">{{options[2].end.date()}}</td>
+        <td align="center" class="timesheet-date-td">{{options[2].end.date()}}</td>
     </tr>
-    <tr style="height: 1px">
+    <tr>
         <td>Thursday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[3].length != 0)" id="vis3"></div>
             <div ng-show="(placeIDs[3].length == 0)">Free</div>
         </td>
     </tr>
     <tr>
-        <td align="center" style="border: 0; font-size: 27px">{{options[3].end.date()}}</td>
+        <td align="center" class="timesheet-date-td">{{options[3].end.date()}}</td>
     </tr>
-    <tr style="height: 1px">
+    <tr>
         <td>Friday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[4].length != 0)" id="vis4"></div>
             <div ng-show="(placeIDs[4].length == 0)">Free</div>
         </td>
     </tr>
     <tr>
-        <td align="center" style="border: 0; font-size: 27px">{{options[4].end.date()}}</td>
+        <td align="center" class="timesheet-date-td">{{options[4].end.date()}}</td>
     </tr>
-    <tr style="height: 1px">
+    <tr>
         <td>Saturday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[5].length != 0)" id="vis5"></div>
             <div ng-show="(placeIDs[5].length == 0)">Free</div>
         </td>
     </tr>
     <tr>
-        <td align="center" style="border: 0; font-size: 27px; color:#d4514a">{{options[5].end.date()}}</td>
+        <td align="center" class="timesheet-date-week-td">{{options[5].end.date()}}</td>
     </tr>
-    <tr style="height: 1px" ng-show="(placeIDs[6].length != 0)">
+    <tr ng-show="(placeIDs[6].length != 0)">
         <td>Sunday</td>
-        <td rowspan="2" style="vertical-align: middle">
+        <td rowspan="2" class="timesheet-data-td">
             <div ng-show="(placeIDs[6].length != 0)" id="vis6"></div>
             <div ng-show="(placeIDs[6].length == 0)">Free</div>
         </td>
     </tr>
     <tr ng-show="(placeIDs[6].length != 0)">
-        <td align="center" style="border: 0; font-size: 27px; color:#d4514a">{{options[6].end.date()}}</td>
+        <td align="center" class="timesheet-date-week-td">{{options[6].end.date()}}</td>
     </tr>
     </tbody>
 </table>

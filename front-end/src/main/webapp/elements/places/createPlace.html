@@ -1,0 +1,33 @@
+<div class="jumbotron">
+    <p class="lead">
+        Create New Place
+    </p>
+</div>
+
+<div>
+    <form name="form" class="css-form" novalidate>
+        <table>
+            <tbody>
+            <tr>
+                <td>Name</td>
+                <td><input class="form-control" type="text" ng-model="place.name" name="pName" required /></td>
+                <td>
+                    <div ng-show="form.$submitted || form.pName.$touched">
+                        <div ng-show="form.pName.$error.required">Name is required.</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td><input type="radio" ng-model="place.placeType" name="pPlaceType" value="WINDOW" />Window</td>
+                <td><input type="radio" ng-model="place.placeType" name="pPlaceType" value="BACKGROUND" />Background</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <input class="form-control" type="submit" ng-click="update(place)" value="Save" />
+    </form>
+    <pre>place = {{place | json}}</pre>
+    <pre>master = {{master | json}}</pre>
+    <pre>status = {{status}}</pre>
+</div>

@@ -52,11 +52,13 @@ angular.module('angularApp')
             });
 
             for (var i = 0; i < 7; i++) {
+                var startingPoint = moment($scope.monday).hours(5).minutes(0).add(i, 'days');
+                var endingPoint = moment($scope.monday).hours(20).minutes(0).add(i, 'days');
                 $scope.options.push({
-                    min: moment().year(2017).month(0).date(2).hours(5).minutes(0).add(i, 'days'),
-                    start: moment().year(2017).month(0).date(2).hours(5).minutes(0).add(i, 'days'),
-                    max: moment().year(2017).month(0).date(2).hours(20).minutes(0).add(i, 'days'),
-                    end: moment().year(2017).month(0).date(2).hours(20).minutes(0).add(i, 'days'),
+                    min: startingPoint,
+                    start: startingPoint,
+                    max: endingPoint,
+                    end: endingPoint,
                     zoomable: false,
                     moveable: false,
                     orientation: 'top',

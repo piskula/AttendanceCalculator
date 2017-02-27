@@ -6,12 +6,12 @@
 
 <div>
     <form name="form" class="css-form" novalidate>
-        <table>
+        <table class="form-table">
             <tbody>
             <tr>
-                <td>Name</td>
-                <td><input class="form-control" type="text" ng-model="employee.name" name="eName" required /></td>
-                <td>
+                <td style="width: 80px">Name</td>
+                <td style="width: 350px"><input class="form-control" type="text" ng-model="employee.name" name="eName" required /></td>
+                <td style="width: auto" class="form-warning">
                     <div ng-show="form.$submitted || form.eName.$touched">
                         <div ng-show="form.eName.$error.required">Name is required.</div>
                     </div>
@@ -20,16 +20,26 @@
             <tr>
                 <td>Surname</td>
                 <td><input class="form-control" type="text" ng-model="employee.surname" name="eSurname" required /></td>
-                <td>
+                <td class="form-warning">
                     <div ng-show="form.$submitted || form.eSurname.$touched">
                         <div ng-show="form.eSurname.$error.required">Surname is required.</div>
                     </div>
                 </td>
             </tr>
             <tr>
+                <td>Title</td>
+                <td><input class="form-control" type="text" ng-model="employee.title" name="eTitle" /></td>
+                <td class="form-warning"></td>
+            </tr>
+            <tr>
+                <td>Birth</td>
+                <td><input class="form-control" type="date" ng-model="employee.birth" name="eBirth" required /></td>
+                <td><a ng-click="resetBirth(employee)" >reset</a></td>
+            </tr>
+            <tr>
                 <td>E-mail</td>
                 <td><input class="form-control" type="text" ng-model="employee.email" name="eEmail" pattern=".+@.+\....?" /></td>
-                <td>
+                <td class="form-warning">
                     <div ng-show="form.$submitted || form.eEmail.$touched">
                         <span ng-show="form.eEmail.$error.pattern">Email is not valid.</span>
                     </div>
@@ -38,19 +48,28 @@
             <tr>
                 <td>Phone</td>
                 <td><input class="form-control" type="text" ng-model="employee.phone" name="ePhone" pattern="(09\d{8}|\+421\d{9})" /></td>
-                <td>
+                <td class="form-warning">
                     <div ng-show="form.$submitted || form.ePhone.$touched">
                         <span ng-show="form.ePhone.$error.pattern">Phone is not valid.</span>
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>Address</td>
+                <td><input class="form-control" type="text" ng-model="employee.address" name="eAddress" /></td>
+                <td class="form-warning"></td>
+            </tr>
             </tbody>
         </table>
 
         <input type="button" ng-click="reset(form)" value="Reset" />
-        <input type="submit" ng-click="update(employee)" value="Save" />
+        <input ng-show="item == null" type="submit" ng-click="update(employee)" value="Create" />
+        <input ng-show="item != null" type="submit" ng-click="update(employee)" value="Update" />
     </form>
     <pre>user = {{employee | json}}</pre>
     <pre>master = {{master | json}}</pre>
     <pre>status = {{status}}</pre>
+</div>
+<div>
+    item: {{item}}
 </div>

@@ -64,13 +64,28 @@ angular
             return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
         }
     };
-}])
+}]).service('createUpdateTools', function () {
+    var item = null;
+    return {
+        getItem: function () {
+            return item;
+        },
+        setItem: function (newItem) {
+            item = newItem;
+        },
+        deleteItem: function () {
+            item = null;
+        }
+    }
+})
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {templateUrl: 'elements/home/home.html'})
       .when('/about', {templateUrl: 'elements/home/about.html'})
       .when('/createEmployee', {templateUrl: 'elements/employees/createEmployee.html', controller: 'CreateEmployeeCtrl', controllerAs: 'createEmployee'})
+      .when('/createPlace', {templateUrl: 'elements/places/createPlace.html', controller: 'CreatePlaceCtrl', controllerAs: 'createPlace'})
       .when('/employees', {templateUrl: 'elements/employees/employeesOverview.html', controller: 'EmployeesCtrl', controllerAs: 'employeesOverview'})
+      .when('/employees/create', {templateUrl: 'elements/employees/createEmployee.html', controller: 'CreateEmployee', controllerAs: 'createEmployee'})
       .when('/jobsOfDay', {templateUrl: 'elements/jobs/jobsOfDay.html', controller: 'JobsOfDayCtrl', controllerAs: 'jobsOfDay'})
       .when('/jobsOfEmployee', {templateUrl: 'elements/jobs/jobsOfEmployee.html', controller: 'JobsOfEmployeeCtrl', controllerAs: 'jobsOfEmployee'})
       .when('/jobsOfPlace', {templateUrl: 'elements/jobs/jobsOfPlace.html', controller: 'JobsOfPlaceCtrl', controllerAs: 'jobsOfPlace'})
