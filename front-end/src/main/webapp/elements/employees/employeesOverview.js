@@ -6,6 +6,14 @@ angular.module('angularApp')
             $scope.employees = response;
         });
 
+        $scope.alerts = angular.copy(createUpdateTools.getAlerts());
+        createUpdateTools.deleteAlerts();
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+
         $scope.titleWithComma = function(employee) {
             return employee.title == null ? "" : ", " + employee.title;
         }

@@ -33,7 +33,9 @@ angular.module('angularApp')
                     data: data
                 }).then(function (response) {
                     $scope.status = "New employee successfully created.";
-                    // $location.path("/employees");
+                    createUpdateTools.setAlerts([{type: 'success', title: 'Successfull!', msg: $scope.status}]);
+                    createUpdateTools.deleteItem();
+                    $location.path("/employees");
                 }, function (response) {
                     $scope.status = "Cannot create, "+ response.status;
                 });
@@ -91,12 +93,16 @@ angular.module('angularApp')
                         data: $scope.updatingItem
                     }).then(function (response) {
                         $scope.status = $scope.messageBuilder.substring(0, $scope.messageBuilder.length - 2) + "] of employee.";
-                        // $location.path("/employees");
+                        createUpdateTools.setAlerts([{type: 'success', title:'Successfull!', msg: $scope.status}]);
+                        createUpdateTools.deleteItem();
+                        $location.path("/employees");
                     }, function (response) {
                         $scope.status = "Cannot update employee. An error "+ response.status +" occured.";
                     });
                 } else {
-                    $scope.status = "No change done.";
+                    createUpdateTools.setAlerts([{type: 'info', title: "No change!", msg: 'There have been no changes.'}]);
+                    createUpdateTools.deleteItem();
+                    $location.path("/employees");
                 }
             }
         };
@@ -112,5 +118,6 @@ angular.module('angularApp')
         $scope.resetBirth = function (employee) {
             employee.birth = undefined;
         };
+
 
     }]);

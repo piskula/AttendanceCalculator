@@ -14,6 +14,11 @@
     </table>
 </div>
 
+<div ng-repeat="alert in alerts" ng-class="'alert alert-' + (alert.type || 'warning') + ' alert-dismissible'" >
+    <a ng-click="closeAlert($index)" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>{{alert.title}} </strong>{{alert.msg}}
+</div>
+
 <table class="table">
     <thead>
     <tr>

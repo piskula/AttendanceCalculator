@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td>Birth</td>
-                <td><input class="form-control" type="date" ng-model="employee.birth" name="eBirth" required /></td>
+                <td><input class="form-control" type="date" ng-model="employee.birth" name="eBirth" /></td>
                 <td><a ng-click="resetBirth(employee)" >reset</a></td>
             </tr>
             <tr>
@@ -66,9 +66,6 @@
         <input ng-show="doing == 'create'" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Create" />
         <input ng-hide="doing == 'create'" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Update" />
     </form>
-    <pre>user = {{employee | json}}</pre>
-    <pre>master = {{master | json}}</pre>
-    <pre>status = {{status}}</pre>
 </div>
 <div>
     item: {{item}}

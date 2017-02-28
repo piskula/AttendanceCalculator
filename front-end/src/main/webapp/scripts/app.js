@@ -66,6 +66,7 @@ angular
     };
 }]).service('createUpdateTools', function () {
     var item = null;
+    var alerts = null;
     return {
         getItem: function () {
             return item;
@@ -75,6 +76,15 @@ angular
         },
         deleteItem: function () {
             item = null;
+        },
+        getAlerts: function () {
+            return alerts;
+        },
+        setAlerts: function (newAlerts) {
+            alerts = newAlerts;
+        },
+        deleteAlerts: function () {
+            alerts = null;
         }
     }
 })
