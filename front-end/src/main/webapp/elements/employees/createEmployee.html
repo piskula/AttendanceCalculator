@@ -62,9 +62,9 @@
             </tbody>
         </table>
 
-        <input type="button" ng-click="reset(form)" value="Reset" />
-        <input ng-show="item == null" type="submit" ng-click="update(employee)" value="Create" />
-        <input ng-show="item != null" type="submit" ng-click="update(employee)" value="Update" />
+        <input ng-show="doing == 'create'" type="submit" ng-click="reset(form)" value="Reset" />
+        <input ng-show="doing == 'create'" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Create" />
+        <input ng-hide="doing == 'create'" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Update" />
     </form>
     <pre>user = {{employee | json}}</pre>
     <pre>master = {{master | json}}</pre>
