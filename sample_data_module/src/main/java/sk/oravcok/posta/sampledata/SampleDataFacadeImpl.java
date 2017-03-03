@@ -65,25 +65,25 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
 
     private void initEmployees() {
         employees.put("web", employee("Mark", "Webber", null, "mark.webber@porsche.de",
-                date(27, 8, 1976), "+421 950 436 723", "Borovnianska 43, 96001 Zvolen"));
+                date(27, 8, 1976), "+421950436723", "Borovnianska 43, 96001 Zvolen"));
         employees.put("vet", employee("Sebastian", "Vettel", null, "seb@ferrari.it",
-                date(3, 7, 1987), "+421 950 434 423", "Kukucinova 3, 96001 Zvolen"));
+                date(3, 7, 1987), "+421950434423", "Kukucinova 3, 96001 Zvolen"));
         employees.put("ros", employee("Nico", "Rosberg", null, "nico.rosberg@mercedes.de",
-                date(27, 6, 1985), "+421 950 535 723", "Slatinska cesta 102/55, 96250 Ocova"));
+                date(27, 6, 1985), "+421950535723", "Slatinska cesta 102/55, 96250 Ocova"));
         employees.put("ric", employee("Daniel", "Ricciardo", "Ing.", "daniel.ricciardo@redbullracing.com",
-                date(1, 7, 1989), "+421 950 676 390", "Gagarinova 72, 93400 Ocova"));
+                date(1, 7, 1989), "+421950676390", "Gagarinova 72, 93400 Ocova"));
         employees.put("ves", employee("Max", "Verstappen", null, "max33verstappen@redbullracing.com",
-                date(30, 9, 1997), "+421 950 448 011","Nam. SNP 60, 92007 Kokava nad Rimavicou"));
+                date(30, 9, 1997), "+421950448011","Nam. SNP 60, 92007 Kokava nad Rimavicou"));
         employees.put("hul", employee("Nico", "Hulkenberg", null, "hulk@saharafi.co.uk",
-                date(19, 8, 1987), "+421 917 834 447", "Milady Horackovej 1023/16, 79030 Podhorie"));
+                date(19, 8, 1987), "+421917834447", "Milady Horackovej 1023/16, 79030 Podhorie"));
         employees.put("mas", employee("Felipe", "Massa", "Mr.", "felipemassa@williams.co.uk",
-                date(25, 4, 1981), "+421 908 334 813", "Cintorinska 17, 82204 Velke Uherce"));
+                date(25, 4, 1981), "+421908334813", "Cintorinska 17, 82204 Velke Uherce"));
         employees.put("but", employee("Jenson", "Button", null, "pushthebutton@mclaren.co.uk",
-                date(19, 1, 1980), "+421 949 446 600", "J. C. Hronskeho 66, 82202 Zvolenska Slatina"));
+                date(19, 1, 1980), "+421949446600", "J. C. Hronskeho 66, 82202 Zvolenska Slatina"));
         employees.put("msc", employee("Michael", "Schumacher", null, "keepfighting@schumi.de",
-                date(3, 1, 1969), "+421 902 234 198", "Hurth, 82202 Germany"));
+                date(3, 1, 1969), "+421902234198", "Hurth, 82202 Germany"));
         employees.put("mks", employee("Mick", "Schumacher", null, "futurechampion@schumi.de",
-                date(22, 3, 1999), "+421 918 231 014", "Zurich, 348SW Switzerland"));
+                date(22, 3, 1999), "+421918231014", "Zurich, 348SW Switzerland"));
         LOGGER.info("employees loaded");
     }
 

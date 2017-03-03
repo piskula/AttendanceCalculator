@@ -62,11 +62,22 @@
             </tbody>
         </table>
 
-        <input ng-show="doing == 'create'" type="submit" ng-click="reset(form)" value="Reset" />
-        <input ng-show="doing == 'create'" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Create" />
-        <input ng-hide="doing == 'create'" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Update" />
+        <div>
+            <table>
+                <tr ng-show="doing == 'create'">
+                    <td align="right">
+                        <input class="form-control input-button" type="submit" ng-click="reset(form)" value="Reset" />
+                    </td>
+                    <td align="left">
+                        <input class="form-control input-button do-btn" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Create" />
+                    </td>
+                </tr>
+                <tr ng-hide="doing == 'create'">
+                    <td align="center">
+                        <input class="form-control input-button do-btn" type="submit" ng-click="form.$invalid ? null : update(employee)" value="Update" />
+                    </td>
+                </tr>
+            </table>
+        </div>
     </form>
-</div>
-<div>
-    item: {{item}}
 </div>

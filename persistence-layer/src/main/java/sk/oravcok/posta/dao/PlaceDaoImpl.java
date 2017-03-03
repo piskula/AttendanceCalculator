@@ -43,7 +43,7 @@ public class PlaceDaoImpl implements PlaceDao {
 
     @Override
     public List<Place> findAll() {
-        TypedQuery<Place> query = entityManager.createQuery("SELECT p FROM Place p", Place.class);
+        TypedQuery<Place> query = entityManager.createQuery("SELECT p FROM Place p ORDER BY p.placeType, p.name", Place.class);
         return query.getResultList();
     }
 

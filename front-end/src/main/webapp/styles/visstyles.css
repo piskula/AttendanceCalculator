@@ -37,3 +37,14 @@ table {
 .form-warning {
     color:#d4514a;
 }
+
+.input-button {
+    width: 30%;
+    margin: 15px 20px;
+}
+
+.do-btn {
+    background-color: #286090;
+    color: #fff;
+    border-color: #204d74;
+}
