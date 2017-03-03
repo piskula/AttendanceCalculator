@@ -31,11 +31,11 @@ table {
 .timesheet-date-week-td {
     border: 0 !important;
     font-size: 27px;
-    color:#d4514a;
+    color: #d4514a;
 }
 
 .form-warning {
-    color:#d4514a;
+    color: #d4514a;
 }
 
 .input-button {
@@ -47,4 +47,10 @@ table {
     background-color: #286090;
     color: #fff;
     border-color: #204d74;
+}
+
+.remove-a {
+    background-color: #d4514a;
+    color: #fff;
+    padding: 5px 11px 5px 10px;
 }
