@@ -1,16 +1,16 @@
 <div class="jumbotron">
-    <p class="lead">
-        Employees
-    </p>
-    <table style="width: 100%">
+    <table>
+        <tbody>
         <tr>
-            <td style="text-align: left">
-                <!--<input type="button" ng-click="createEmployee()" value="+">-->
+            <td class="button-width"></td>
+            <td class="middle-icon-title">
+                <span class="glyphicon glyphicon-user"></span> Employees
             </td>
-            <td style="text-align: right">
-                <a style="padding: 4px 10px" class="btn btn-success" ng-click="createEmployee()"><span class="glyphicon glyphicon-plus"></span></a>
+            <td class="button-width">
+                <a title="Create new" class="btn-success" ng-href="#!/createEmployee"><span class="glyphicon glyphicon-plus"></span></a>
             </td>
         </tr>
+        </tbody>
     </table>
 </div>
 
@@ -36,7 +36,7 @@
         <td>{{employee.phone}}</td>
         <td>{{employee.address}}</td>
         <td>{{employee.birth}}</td>
-        <td><a title="Edit" class="btn" style="padding: 0" ng-click="updateEmployee(employee)"><span class="glyphicon glyphicon-tag"></span></a></td>
+        <td><a title="Edit" class="btn list-item-href" ng-click="updateEmployee(employee)"><span class="glyphicon glyphicon-tag"></span></a></td>
     </tr>
     </tbody>
 </table>

@@ -23,6 +23,7 @@
     <script src="scripts/app.js"></script>
     <script src="elements/employees/createEmployee.js"></script>
     <script src="elements/employees/employeesOverview.js"></script>
+    <script src="elements/jobs/createJobsForPlace.js"></script>
     <script src="elements/jobs/jobsOfDay.js"></script>
     <script src="elements/jobs/jobsOfEmployee.js"></script>
     <script src="elements/jobs/jobsOfPlace.js"></script>
@@ -50,18 +51,22 @@
             <a class="navbar-brand" href="#/">Home</a>
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+          <div class="collapse navbar-collapse navbar-hover-selected" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
               <li class="dropdown"><a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown">Jobs.. <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a ng-href="#!/jobsOfEmployee">..of employee</a></li>
-                  <li><a ng-href="#!/jobsOfPlace">..of place</a></li>
-                  <li><a ng-href="#!/jobsOfDay">..of day</a></li>
+                  <li><a ng-href="#!/jobsOfEmployee"><span class="glyphicon glyphicon-user"></span> ..of employee</a></li>
+                  <li><a ng-href="#!/jobsOfPlace"><span class="glyphicon glyphicon-lamp"></span> ..of place</a></li>
+                  <li><a ng-href="#!/jobsOfDay"><span class="glyphicon glyphicon-calendar"></span> ..of day</a></li>
                 </ul>
-              </li>
-              <li><a ng-href="#!/employees">Employees</a></li>
-              <li><a ng-href="#!/places">Places</a></li>
+              <li><a ng-href="#!/employees"><span class="glyphicon glyphicon-user"></span> Employees</a></li>
+              <li><a ng-href="#!/places"><span class="glyphicon glyphicon-lamp"></span> Places</a></li>
+              <li class="dropdown"><a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-tasks"></span> Assigning jobs.. <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a ng-href="#!/createJobsForEmployee"><span class="glyphicon glyphicon-user"></span> ..to employee</a></li>
+                  <li><a ng-href="#!/createJobsForPlace"><span class="glyphicon glyphicon-lamp"></span> ..to place</a></li>
+                </ul>
               <li><a ng-href="#!/about">About</a></li>
             </ul>
           </div>

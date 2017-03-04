@@ -16,7 +16,7 @@
             </td>
             <td>
                 <div>
-                    <input class="form-control" style="width: 100%" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required ng-change="changeDateEvent()" />
+                    <input class="form-control" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" required ng-change="changeDateEvent()" />
                 </div>
             </td>
         </tr>
@@ -31,7 +31,7 @@
     </tbody>
 </table>
 
-<div class="panel panel-info" ng-show="jobs.length == 0">
+<div class="panel panel-danger" ng-show="jobs.length == 0">
     <div class="panel-body">There are no jobs for {{getEmployeeName()}} in selected week ({{dayString}})</div>
 </div>
 <div class="loader-div" ng-hide="loaded">
