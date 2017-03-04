@@ -21,13 +21,13 @@
                 <td>Type</td>
                 <td>
                     <div>
-                        <input type="radio" ng-model="place.placeType" name="pPlaceType" value="WINDOW" ng-required="!place.placeType"/>Window<br>
-                        <input type="radio" ng-model="place.placeType" name="pPlaceType" value="BACKGROUND" ng-required="!place.placeType"/>Background
+                        <label class="label-radio"><input type="radio" ng-model="place.placeType" name="pPlaceType" value="WINDOW" ng-required="!place.placeType"/>Window</label></br>
+                        <label class="label-radio"><input type="radio" ng-model="place.placeType" name="pPlaceType" value="BACKGROUND" ng-required="!place.placeType"/>Background</label>
                     </div>
                 </td>
                 <td class="form-warning">
                     <div ng-show="form.$submitted || form.pPlaceType.$touched">
-                        <div ng-show="form.pName.$error.required">Place type is required.</div>
+                        <div ng-show="form.pPlaceType.$error.required">Place type is required.</div>
                     </div>
                 </td>
             </tr>
@@ -48,9 +48,6 @@
                     <td align="center">
                         <input class="form-control input-button do-btn" type="submit" ng-click="form.$invalid ? null : update(place)" value="Update" />
                     </td>
-                    <!--<td align="right">-->
-                        <!--<input class="form-control input-button" type="submit" ng-click="reset(form)" value="Reset" />-->
-                    <!--</td>-->
                     <td>
                         <a title="Remove" class="btn remove-a" ng-click="removePlace()"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>

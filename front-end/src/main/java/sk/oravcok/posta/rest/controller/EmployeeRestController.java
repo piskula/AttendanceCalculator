@@ -16,6 +16,7 @@ import sk.oravcok.posta.rest.exception.RequestedResourceNotFound;
 import sk.oravcok.posta.rest.exception.ValidationException;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -167,10 +168,22 @@ public class EmployeeRestController {
         employee.setName(actual.getName() != null ? actual.getName() : previous.getName());
         employee.setSurname(actual.getSurname() != null ? actual.getSurname() : previous.getSurname());
         employee.setTitle(actual.getTitle() != null ? actual.getTitle() : previous.getTitle());
-        employee.setBirth(actual.getBirth() != null ? actual.getBirth() : previous.getBirth());
+
+        if(actual.getBirth() != null) {
+            employee.setBirth(actual.getBirth().isBefore(LocalDate.of(1940,1,1)) ? null : actual.getBirth());
+        } else {
+            employee.setBirth(previous.getBirth());
+        }
+
         employee.setPhone(actual.getPhone() != null ? actual.getPhone() : previous.getPhone());
         employee.setAddress(actual.getAddress() != null ? actual.getAddress() : previous.getAddress());
-        employee.setEmail(actual.getEmail() != null ? actual.getEmail() : previous.getEmail());
+
+        if(actual.getEmail() != null) {
+            employee.setEmail(actual.getEmail().isEmpty() ? null : actual.getEmail());
+        } else {
+            employee.setEmail(previous.getEmail());
+        }
+
         employee.setAnnotation(actual.getAnnotation() != null ? actual.getAnnotation() : previous.getAnnotation());
 
         return employee;

@@ -12,6 +12,9 @@ table {
     padding: 0px 20px;
     text-align: center;
 }
+.overview-table td {
+    width: 45%;
+}
 
 .loader-div {
     text-align: center;
@@ -49,8 +52,67 @@ table {
     border-color: #204d74;
 }
 
+.do-btn:hover {
+    color: #dddddd;
+}
+
 .remove-a {
     background-color: #d4514a;
     color: #fff;
     padding: 5px 11px 5px 10px;
+}
+
+.remove-a:hover {
+    color: #dddddd;
+}
+
+.reset-a {
+    color: #d4514a;
+    cursor: pointer;
+    font-size: 18px;
+}
+.reset-a:hover {
+    color: #a52d27;
+}
+
+.label-radio {
+    font-weight: normal;
+}
+
+.label-radio input {
+    margin-right: 5px;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.vertical-space-before {
+    margin-top: 25px;
+}
+
+.button-width {
+    width: 50px;
+}
+.button-width a {
+    padding: 8px 11px 7px 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 21px;
+}
+
+.list-item-href {
+    padding: 0;
+}
+
+.middle-icon-title {
+    font-size: 40px;
+}
+.middle-icon-title span {
+    vertical-align: middle;
+}
+
+#js-navbar-collapse a:hover,
+#js-navbar-collapse a:focus {
+    background-color: #ddd;
 }
