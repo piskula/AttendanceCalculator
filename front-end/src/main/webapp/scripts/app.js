@@ -62,6 +62,12 @@ angular
         },
         getDateFormatted: function (date) {
             return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
+        },
+        getPossibleHours: function () {
+            return ['05','06','07','08','09','10','11','12','13','14','15','16','17','18','19'];
+        },
+        getPossibleMinutes: function () {
+            return ['00','05','10','15','20','25','30','35','40','45','50','55'];
         }
     };
 }]).service('createUpdateTools', function () {
@@ -87,12 +93,26 @@ angular
             alerts = null;
         }
     }
+}).service('globalDate', function () {
+    var globalDate = new Date();
+    return {
+        get: function () {
+            return globalDate;
+        },
+        set: function (date) {
+            globalDate = date;
+        },
+        delete: function () {
+            globalDate = new Date();
+        }
+    }
 })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {templateUrl: 'elements/home/home.html'})
       .when('/about', {templateUrl: 'elements/home/about.html'})
       .when('/createEmployee', {templateUrl: 'elements/employees/createEmployee.html', controller: 'CreateEmployeeCtrl', controllerAs: 'createEmployee'})
+      .when('/createJobsForPlace', {templateUrl: 'elements/jobs/createJobsForPlace.html', controller: 'CreateJobsForPlaceCtrl', controllerAs: 'createJobsForPlace'})
       .when('/createPlace', {templateUrl: 'elements/places/createPlace.html', controller: 'CreatePlaceCtrl', controllerAs: 'createPlace'})
       .when('/employees', {templateUrl: 'elements/employees/employeesOverview.html', controller: 'EmployeesCtrl', controllerAs: 'employeesOverview'})
       .when('/jobsOfDay', {templateUrl: 'elements/jobs/jobsOfDay.html', controller: 'JobsOfDayCtrl', controllerAs: 'jobsOfDay'})

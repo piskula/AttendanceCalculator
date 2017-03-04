@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularApp')
-    .controller('JobsOfPlaceCtrl', ['$scope', '$http', 'commonTools', function ($scope, $http, commonTools) {
+    .controller('JobsOfPlaceCtrl', ['$scope', '$http', 'commonTools', 'globalDate', function ($scope, $http, commonTools, globalDate) {
         //load all places into <select>
         commonTools.getPlacesAvailable().then(function (response) {
             $scope.loaded = false;
@@ -11,7 +11,7 @@ angular.module('angularApp')
         });
 
         $scope.loaded = false;
-        $scope.dayChoosen = new Date();
+        $scope.dayChoosen = globalDate.get();
         $scope.dayDivs = [];
         for (var i = 0; i < 7; i++) {
             $scope.dayDivs.push(document.getElementById('vis' + i));
@@ -124,6 +124,7 @@ angular.module('angularApp')
 
         $scope.changeDateEvent = function() {
             var d = new Date($scope.dayChoosen);
+            globalDate.set(d);
             var tryParseMonday = new Date(d.setDate(d.getDate() - d.getDay() + (d.getDay() == 0 ? -6 : 1)));
             if(isNaN(tryParseMonday)) {
                 $scope.dayString = "Incorrect week number!";

@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('angularApp')
-    .controller('JobsOfDayCtrl', ['$scope', 'commonTools', '$http', function ($scope, commonTools, $http) {
+    .controller('JobsOfDayCtrl', ['$scope', 'commonTools', '$http', 'globalDate', function ($scope, commonTools, $http, globalDate) {
 
         $scope.loaded = false;
-        $scope.dayChoosen = new Date();
+        $scope.dayChoosen = globalDate.get();
         $scope.reportType = 'place';
 
         $scope.changeGroupEmployeePlace = function () {
@@ -68,6 +68,7 @@ angular.module('angularApp')
 
         $scope.changeDateEvent = function () {
             $scope.loaded = false;
+            globalDate.set($scope.dayChoosen);
             $scope.dayString = commonTools.getDateFormatted($scope.dayChoosen);
             if($scope.dayChoosen != undefined) {
                 $http({
