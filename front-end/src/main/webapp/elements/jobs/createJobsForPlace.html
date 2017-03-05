@@ -1,0 +1,98 @@
+<div class="jumbotron">
+    <p class="lead">
+        Create Jobs For Place
+    </p>
+</div>
+
+<table class="overview-table">
+    <tbody>
+    <tr>
+        <td>
+            <div>
+                <select class="form-control" ng-model="selectedPlace" ng-change="changePlace()"
+                        ng-options="item.name group by item.placeType for item in placesAvailable">
+                </select>
+            </div>
+        </td>
+        <td>
+            <div>
+                <!--<input class="form-control" class="half-width" type="date" name="input" ng-model="dayChoosen" required ng-change="changeDateEvent()" />-->
+                <input class="form-control" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" ng-change="changeDate()" />
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td/>
+        <td>
+            <div>
+                {{dayString}}
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<div class="panel panel-danger vertical-space-before" ng-show="jobs.length == 0">-->
+    <!--<div class="panel-body">There are no jobs for {{dayString}}</div>-->
+<!--</div>-->
+<div class="loader-div" ng-hide="loaded">
+    <img src="images/hourglass.gif"/>
+</div>
+<!--<table ng-show="loaded && (jobs.length != 0)" class="table timesheet-table">-->
+<table class="table timesheet-table vertical-space-before">
+    <col width="0">
+    <col width="1500">
+    <thead>
+    <tr>
+        <th>Day</th>
+        <th>Data</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Monday</td>
+        <td rowspan="2" class="timesheet-data-td">
+            <div class="form-inline">
+                <select style="width: 350px" class="form-control" ng-model="selectedEmployee[0]" ng-change="changeEmployeeEvent()"
+                        ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
+                    <option value="">No employee selected ...</option>
+                </select>
+                <div style="width: 350px; float: right">
+                    <label style="font-weight: normal">From</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[0][0]" ng-options="item for item in possibleHours">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesFrom[0][1]" ng-options="item for item in possibleMinutes">
+                    </select>
+                    <label style="font-weight: normal">To</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesTo[0][0]" ng-options="item for item in possibleHours">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[0][1]" ng-options="item for item in possibleMinutes">
+                    </select>
+                </div>
+            </div>
+            <div ng-repeat="alert in alerts[0]" >
+                <!--<strong>{{alert.title}} </strong>{{alert.msg}}-->
+                {{alert.msg}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="timesheet-date-td">6</td>
+    </tr>
+    <tr>
+        <td>Tuesday</td>
+        <td rowspan="2" class="timesheet-data-td">
+            <div ng-show="(placeIDs[1].length != 0)" id="vis1"></div>
+            <div ng-show="(placeIDs[1].length == 0)">Free</div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="timesheet-date-td">7</td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    {{selectedEmployee}}
+</div>
