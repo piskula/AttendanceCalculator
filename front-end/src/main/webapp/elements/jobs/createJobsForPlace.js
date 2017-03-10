@@ -6,20 +6,48 @@ angular.module('angularApp')
         $scope.loaded = false;
         $scope.dayChoosen = globalDate.get();
         
-        $scope.changeEmployee1Event = function () {
+        $scope.changeDayEvent = function (indexDay) {
+            $scope.dayTimeFrom[[indexDay]] = moment().hours($scope.timesFrom[[indexDay]][0]).minutes($scope.timesFrom[[indexDay]][1]).seconds(0).milliseconds(0);
+            $scope.dayTimeTo[[indexDay]] = moment().hours($scope.timesTo[[indexDay]][0]).minutes($scope.timesTo[[indexDay]][1]).seconds(0).milliseconds(0);
 
+            $scope.dayJobs[[indexDay]] = [[],[]];    //error messages + info messages
+            $scope.jobsSorted[[indexDay]].forEach(function (item, index) {
+                var jobStartSplit = item.jobStart.split(":");
+                var jobEndSplit = item.jobEnd.split(":");
+                var jobStart = moment().hours(jobStartSplit[0]).minutes(jobStartSplit[1]).seconds(0).milliseconds(0);
+                var jobEnd = moment().hours(jobEndSplit[0]).minutes(jobEndSplit[1]).seconds(0).milliseconds(0);
+                if ($scope.dayTimeFrom[[indexDay]].isAfter(jobStart) && $scope.dayTimeFrom[[indexDay]].isBefore(jobEnd)) {
+                    $scope.dayJobs[[indexDay]][0].push("Start of this job "+ $scope.dayTimeFrom[[indexDay]].format("HH:mm") +" is in conflict with "+ commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd);
+                } else if ($scope.dayTimeTo[[indexDay]].isBefore(jobEnd) && $scope.dayTimeTo[[indexDay]].isAfter(jobStart)) {
+                    $scope.dayJobs[[indexDay]][0].push("End of this job "+ $scope.dayTimeTo[[indexDay]].format("HH:mm") +" is in conflict with "+ commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd);
+                } else if ((!($scope.dayTimeFrom[[indexDay]].isAfter(jobStart))) && (!($scope.dayTimeTo[[indexDay]].isBefore(jobEnd)))) {
+                    $scope.dayJobs[[indexDay]][0].push("Whole job "+ $scope.dayTimeFrom[[indexDay]].format("HH:mm") +" - "+ $scope.dayTimeTo[[indexDay]].format("HH:mm") +" is over "+ commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd);
+                } else if ($scope.selectedEmployee[[indexDay]].id == item.employee.id) {
+                    var msg = commonTools.formatNameSurname(item.employee) +" already works here "+ item.jobStart +" - "+ item.jobEnd;
+                    $scope.dayJobs[[indexDay]][1].push(msg);
+                } else {
+                    var msg = commonTools.formatNameSurname(item.employee) +" works also here "+ item.jobStart +" - "+ item.jobEnd;
+                    $scope.dayJobs[[indexDay]][1].push(msg);
+                }
+            });
         };
 
         $scope.init = function() {
             $scope.selectedEmployee = [null,null,null,null,null,null];
             $scope.possibleMinutes = commonTools.getPossibleMinutes();
             $scope.possibleHours = commonTools.getPossibleHours();
+            $scope.dayJobs = [[],[],[],[],[],[],[]];
 
             $scope.timesFrom = [];
             $scope.timesTo = [];
+            $scope.dayTimeFrom = [];
+            $scope.dayTimeTo = [];
             for (var i = 0; i < 7; i++) {
                 $scope.timesFrom.push(['07', '00']);
                 $scope.timesTo.push(['19', '00']);
+
+                $scope.dayTimeFrom.push(moment().hours($scope.timesFrom[i][0]).minutes($scope.timesFrom[i][1]).seconds(0).milliseconds(0));
+                $scope.dayTimeTo.push(moment().hours($scope.timesTo[i][0]).minutes($scope.timesTo[i][1]).seconds(0).milliseconds(0));
             }
 
             $scope.jobsSorted = [[],[],[],[],[],[],[]];
@@ -32,6 +60,7 @@ angular.module('angularApp')
         };
 
         $scope.changeDate = function () {
+            $scope.dayNumber = [];
             $scope.loaded = false;
             var d = new Date($scope.dayChoosen);
             globalDate.set(d);
@@ -39,16 +68,20 @@ angular.module('angularApp')
             if(isNaN(tryParseMonday)) {
                 $scope.dayString = "Incorrect week number!";
             } else {
-                $scope.monday = tryParseMonday;
-                $scope.saturday = new Date($scope.monday);
-                $scope.saturday.setDate($scope.monday.getDate() + 5);
-                $scope.dayString = commonTools.getShortDateRange($scope.monday, $scope.saturday);
+                for (var i = 0; i < 7; i++) {
+                    var day = new Date(tryParseMonday);
+                    day.setDate(tryParseMonday.getDate() + i);
+                    $scope.dayNumber.push(day.getDate());
+                }
+                $scope.saturday = new Date(tryParseMonday);
+                $scope.saturday.setDate(tryParseMonday.getDate() + 5);
+                $scope.dayString = commonTools.getShortDateRange(tryParseMonday, $scope.saturday);
 
                 $http({
                     url: '/posta/rest/jobs/findByCriteria',
                     method: "POST",
                     data: {
-                        "jobDateStart": commonTools.formatDateForRest($scope.monday),
+                        "jobDateStart": commonTools.formatDateForRest(tryParseMonday),
                         "jobDateEnd": commonTools.formatDateForRest($scope.saturday),
                         "placeId": $scope.selectedPlace.id
                     }
@@ -79,12 +112,8 @@ angular.module('angularApp')
             $scope.getPlacesAvailable();
         });
 
-        // $scope.loaded = false;
-
-        // $scope.dayDivs = [];
-        // for (var i = 0; i < 7; i++) {
-        //     $scope.dayDivs.push(document.getElementById('vis' + i));
-        // }
-
-
+        $scope.dayName = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+        $scope.getNumber = function(num) {
+            return new Array(num);
+        }
     }]);

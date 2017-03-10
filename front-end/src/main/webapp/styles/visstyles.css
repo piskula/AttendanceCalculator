@@ -116,3 +116,9 @@ table {
 #js-navbar-collapse a:focus {
     background-color: #ddd;
 }
+
+.create-job-alert {
+    margin-bottom: 0px;
+    padding: 3px;
+    margin-top: 3px;
+}
