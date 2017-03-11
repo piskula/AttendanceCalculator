@@ -85,6 +85,8 @@ you are able to specify same fields (as when creating new job)
 ##### find specific jobs by criteria
 ``curl -X POST -i -H "Content-Type: application/json" --data '{"employeeId":"1"}' http://localhost:8080/posta/rest/jobs/findByCriteria``
 This methods allows you to find jobs by specifying one or more details:
-1. Employee - find all jobs of specified employee
-2. Place - find all jobs according to specified place
-3. Date - find all jobs by specifying one exact day
+ 1. Employee - find all jobs of specified employee
+ 2. Place - find all jobs according to specified place
+ 3. Date - find all jobs by specifying one exact day
+ 4. Employee & date/dates
+ 5. Place & date/dates
