@@ -1,7 +1,15 @@
 <div class="jumbotron">
-    <p class="lead">
-        Jobs of place
-    </p>
+    <table>
+        <tbody>
+        <tr>
+            <td class="button-width"></td>
+            <td class="middle-icon-title">
+                <span class="glyphicon glyphicon-tasks"></span> Jobs of Place
+            </td>
+            <td class="button-width"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <table class="overview-table">
@@ -30,6 +38,11 @@
         </tr>
     </tbody>
 </table>
+
+<div ng-repeat="alert in alerts" ng-class="'alert alert-' + (alert.type || 'warning') + ' create-job-alert alert-dismissible'" >
+    <a ng-click="closeAlert($index)" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>{{alert.title}} </strong>{{alert.msg}}
+</div>
 
 <div class="panel panel-danger" ng-show="jobs.length == 0">
     <div class="panel-body">There are no jobs for {{selectedPlace.name}} in selected week ({{dayString}})</div>

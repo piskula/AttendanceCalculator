@@ -122,3 +122,10 @@ table {
     padding: 3px;
     margin-top: 3px;
 }
+.create-job-alert .close {
+    position: static;
+}
+
+.vis-labelset {
+    width: 150px;
+}

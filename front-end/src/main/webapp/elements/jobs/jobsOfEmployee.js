@@ -43,7 +43,7 @@ angular.module('angularApp')
                 $scope.items[jobDate.getDay() - 1].push({
                     id: item.id,
                     content: item.place.name,
-                    title: item.jobStart + " - " + item.jobEnd,
+                    title: commonTools.formatTimeRangeOfJob(item) +" "+ item.place.name,
                     group: item.place.id,
                     start: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobStart[0]).minutes(jobStart[1]),
                     end: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobEnd[0]).minutes(jobEnd[1]),

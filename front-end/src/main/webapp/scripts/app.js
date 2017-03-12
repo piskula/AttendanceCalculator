@@ -72,7 +72,7 @@ angular
     };
 }]).service('createUpdateTools', function () {
     var item = null;
-    var alerts = null;
+    var alerts = [];
     return {
         getItem: function () {
             return item;
@@ -86,11 +86,14 @@ angular
         getAlerts: function () {
             return alerts;
         },
+        addAlert: function (newAlert) {
+            alerts.push(newAlert);
+        },
         setAlerts: function (newAlerts) {
             alerts = newAlerts;
         },
         deleteAlerts: function () {
-            alerts = null;
+            alerts = [];
         }
     }
 }).service('globalDate', function () {

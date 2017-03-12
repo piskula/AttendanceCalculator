@@ -1,17 +1,36 @@
 'use strict';
 
 angular.module('angularApp')
-    .controller('JobsOfPlaceCtrl', ['$scope', '$http', 'commonTools', 'globalDate', function ($scope, $http, commonTools, globalDate) {
+    .controller('JobsOfPlaceCtrl', ['$scope', '$http', 'commonTools', 'createUpdateTools', 'globalDate', function ($scope, $http, commonTools, createUpdateTools, globalDate) {
         //load all places into <select>
         commonTools.getPlacesAvailable().then(function (response) {
             $scope.loaded = false;
             $scope.places = response;
-            $scope.selectedPlace = $scope.places[0];
+            if(createUpdateTools.getItem() != undefined) {
+                for (var i = 0; i < $scope.places.length; i++) {
+                    if ($scope.places[i].id == createUpdateTools.getItem()) {
+                        $scope.selectedPlace = $scope.places[i];
+                        break;
+                    }
+                }
+            }
+            if ($scope.selectedPlace == undefined) {
+                $scope.selectedPlace = $scope.places[0];
+            }
+            createUpdateTools.deleteItem();
             $scope.init();
         });
 
         $scope.loaded = false;
         $scope.dayChoosen = globalDate.get();
+
+        $scope.alerts = angular.copy(createUpdateTools.getAlerts());
+        createUpdateTools.deleteAlerts();
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+
         $scope.dayDivs = [];
         for (var i = 0; i < 7; i++) {
             $scope.dayDivs.push(document.getElementById('vis' + i));
@@ -43,7 +62,7 @@ angular.module('angularApp')
                 $scope.items[jobDate.getDay() - 1].push({
                     id: item.id,
                     content: commonTools.formatNameSurname(item.employee),
-                    title: commonTools.formatTimeRangeOfJob(item),
+                    title: commonTools.formatTimeRangeOfJob(item) +" "+ commonTools.formatNameSurname(item.employee),
                     group: item.employee.id,
                     start: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobStart[0]).minutes(jobStart[1]),
                     end: moment().year(jobDate.getFullYear()).month(jobDate.getMonth()).date(jobDate.getDate()).hours(jobEnd[0]).minutes(jobEnd[1]),
