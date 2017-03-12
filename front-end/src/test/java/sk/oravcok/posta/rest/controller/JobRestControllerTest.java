@@ -497,16 +497,16 @@ public class JobRestControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(jsonPath("$.[?(@.id==" + mondayWindowRosberg.getId() + ")].employee.id").value(mondayWindowRosberg.getEmployee().getId().intValue()));
     }
 
-    @Test
-    public void findJobsByDateDateCriteriaTest() throws Exception {
-        JobSearchDTO jobSearchDTO = new JobSearchDTO();
-        jobSearchDTO.setJobDateStart(monday);
-        jobSearchDTO.setJobDateEnd(tuesday);
-
-        mockMvc.perform(post(URI.JOBS + "/findByCriteria").contentType(MediaType.APPLICATION_JSON)
-                .content(convertObjectToJsonBytes(jobSearchDTO)))
-                .andExpect(status().is(422));
-    }
+//    @Test
+//    public void findJobsByDateDateCriteriaTest() throws Exception {
+//        JobSearchDTO jobSearchDTO = new JobSearchDTO();
+//        jobSearchDTO.setJobDateStart(monday);
+//        jobSearchDTO.setJobDateEnd(tuesday);
+//
+//        mockMvc.perform(post(URI.JOBS + "/findByCriteria").contentType(MediaType.APPLICATION_JSON)
+//                .content(convertObjectToJsonBytes(jobSearchDTO)))
+//                .andExpect(status().is(422));
+//    }
 
     @Test
     public void findJobsByEmployeeFirstDate() throws Exception {

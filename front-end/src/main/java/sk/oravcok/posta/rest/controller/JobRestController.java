@@ -18,6 +18,7 @@ import sk.oravcok.posta.rest.exception.ValidationException;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -213,9 +214,26 @@ public class JobRestController {
                 if(criteria.getPlaceId() != null) {
                     return findJobsOfPlaceOfDay(criteria.getPlaceId(), criteria.getJobDateStart(), criteria.getJobDateEnd());
                 }
-                throw new ValidationException(ERROR_NOT_PLACE_NEITHER_EMPLOYEE);
+                if(criteria.getJobDateStart().isBefore(criteria.getJobDateEnd())) {
+                    List<JobDTO> result = new ArrayList<>();
+                    for (LocalDate day = criteria.getJobDateStart(); !day.isAfter(criteria.getJobDateEnd()); day = day.plusDays(1)) {
+                        result.addAll(jobFacade.findJobsOfDay(day));
+                    }
+                    return result;
+                }
+//                throw new ValidationException(ERROR_NOT_PLACE_NEITHER_EMPLOYEE);
             }
         }
+
+//        if(criteria.getJobDateStart() != null && criteria.getJobDateEnd() != null) {
+//            if(criteria.getJobDateStart().isBefore(criteria.getJobDateEnd())) {
+//                List<JobDTO> result = new ArrayList<>();
+//                for (LocalDate day = criteria.getJobDateStart(); !day.isAfter(criteria.getJobDateEnd()); day = day.plusDays(1)) {
+//                    result.addAll(jobFacade.findJobsOfDay(day));
+//                }
+//                return result;
+//            }
+//        }
         throw new ValidationException("You have only following criteria options to specify: only employee, only place, only exact day, employee with date/dates, place with date/dates");
     }
 
