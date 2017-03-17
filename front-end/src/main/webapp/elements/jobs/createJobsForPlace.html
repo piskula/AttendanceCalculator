@@ -1,7 +1,15 @@
 <div class="jumbotron">
-    <p class="lead">
-        Create Jobs For Place
-    </p>
+    <table>
+        <tbody>
+        <tr>
+            <td class="button-width"></td>
+            <td class="middle-icon-title">
+                <span class="glyphicon glyphicon-tasks"></span> Create Jobs for Place
+            </td>
+            <td class="button-width"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <table class="overview-table">
@@ -16,7 +24,6 @@
         </td>
         <td>
             <div>
-                <!--<input class="form-control" class="half-width" type="date" name="input" ng-model="dayChoosen" required ng-change="changeDateEvent()" />-->
                 <input class="form-control" type="week" name="input" ng-model="dayChoosen" placeholder="YYYY-W##" ng-change="changeDate()" />
             </div>
         </td>
@@ -32,13 +39,9 @@
     </tbody>
 </table>
 
-<!--<div class="panel panel-danger vertical-space-before" ng-show="jobs.length == 0">-->
-    <!--<div class="panel-body">There are no jobs for {{dayString}}</div>-->
-<!--</div>-->
 <div class="loader-div" ng-hide="loaded">
     <img src="images/hourglass.gif"/>
 </div>
-<!--<table ng-show="loaded && (jobs.length != 0)" class="table timesheet-table">-->
 <table class="table timesheet-table vertical-space-before">
     <col width="0">
     <col width="1500">
@@ -57,7 +60,7 @@
                         ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
                     <option value="">No employee selected ...</option>
                 </select>
-                <div style="width: 350px; float: right">
+                <div style="width: 320px; float: right">
                     <label style="font-weight: normal">From</label>
                     <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[0][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(0)">
                     </select>
@@ -70,13 +73,19 @@
                     <label style="font-weight: normal">:</label>
                     <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[0][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(0)">
                     </select>
+                    <div style="font-size: 18px; color: #d4514a; width: 30px; float: right" ng-show="!(timeOk[0]) && selectedEmployee[0] != null">
+                        <span class="glyphicon glyphicon-alert"></span>
+                    </div>
+                    <div style="font-size: 18px; color: #4cae4c; width: 30px; float: right" ng-show="timeOk[0] && selectedEmployee[0] != null">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
                 </div>
             </div>
             <div ng-repeat="alert in dayJobs[0][0]" class="alert alert-danger create-job-alert alert-dismissible'" >
-                {{alert}}
+                {{alert.what}}<b>{{alert.when}}</b>{{alert.why}}<b>{{alert.whom}}</b>
             </div>
             <div ng-repeat="alert in dayJobs[0][1]" class="alert alert-info create-job-alert alert-dismissible'" >
-                {{alert}}
+                <b>{{alert.who}}</b>{{alert.msg}}<b>{{alert.place}}</b>{{alert.when}}
             </div>
         </td>
     </tr>
@@ -92,7 +101,7 @@
                         ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
                     <option value="">No employee selected ...</option>
                 </select>
-                <div style="width: 350px; float: right">
+                <div style="width: 320px; float: right">
                     <label style="font-weight: normal">From</label>
                     <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[1][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(1)">
                     </select>
@@ -105,13 +114,19 @@
                     <label style="font-weight: normal">:</label>
                     <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[1][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(1)">
                     </select>
+                    <div style="font-size: 18px; color: #d4514a; width: 30px; float: right" ng-show="!(timeOk[1]) && selectedEmployee[1] != null">
+                        <span class="glyphicon glyphicon-alert"></span>
+                    </div>
+                    <div style="font-size: 18px; color: #4cae4c; width: 30px; float: right" ng-show="timeOk[1] && selectedEmployee[1] != null">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
                 </div>
             </div>
             <div ng-repeat="alert in dayJobs[1][0]" class="alert alert-danger create-job-alert alert-dismissible'" >
-                {{alert}}
+                {{alert.what}}<b>{{alert.when}}</b>{{alert.why}}<b>{{alert.whom}}</b>
             </div>
             <div ng-repeat="alert in dayJobs[1][1]" class="alert alert-info create-job-alert alert-dismissible'" >
-                {{alert}}
+                <b>{{alert.who}}</b>{{alert.msg}}<b>{{alert.place}}</b>{{alert.when}}
             </div>
         </td>
     </tr>
@@ -119,5 +134,179 @@
         <td align="center" class="timesheet-date-td">{{dayNumber[1]}}</td>
     </tr>
 
+    <tr>
+        <td>{{dayName[2]}}</td>
+        <td rowspan="2" class="timesheet-data-td">
+            <div class="form-inline">
+                <select style="width: 350px" class="form-control" ng-model="selectedEmployee[2]" ng-change="changeDayEvent(2)"
+                        ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
+                    <option value="">No employee selected ...</option>
+                </select>
+                <div style="width: 320px; float: right">
+                    <label style="font-weight: normal">From</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[2][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(2)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesFrom[2][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(2)">
+                    </select>
+                    <label style="font-weight: normal">To</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesTo[2][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(2)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[2][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(2)">
+                    </select>
+                    <div style="font-size: 18px; color: #d4514a; width: 30px; float: right" ng-show="!(timeOk[2]) && selectedEmployee[2] != null">
+                        <span class="glyphicon glyphicon-alert"></span>
+                    </div>
+                    <div style="font-size: 18px; color: #4cae4c; width: 30px; float: right" ng-show="timeOk[2] && selectedEmployee[2] != null">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="alert in dayJobs[2][0]" class="alert alert-danger create-job-alert alert-dismissible'" >
+                {{alert.what}}<b>{{alert.when}}</b>{{alert.why}}<b>{{alert.whom}}</b>
+            </div>
+            <div ng-repeat="alert in dayJobs[2][1]" class="alert alert-info create-job-alert alert-dismissible'" >
+                <b>{{alert.who}}</b>{{alert.msg}}<b>{{alert.place}}</b>{{alert.when}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="timesheet-date-td">{{dayNumber[2]}}</td>
+    </tr>
+
+    <tr>
+        <td>{{dayName[3]}}</td>
+        <td rowspan="2" class="timesheet-data-td">
+            <div class="form-inline">
+                <select style="width: 350px" class="form-control" ng-model="selectedEmployee[3]" ng-change="changeDayEvent(3)"
+                        ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
+                    <option value="">No employee selected ...</option>
+                </select>
+                <div style="width: 320px; float: right">
+                    <label style="font-weight: normal">From</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[3][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(3)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesFrom[3][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(3)">
+                    </select>
+                    <label style="font-weight: normal">To</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesTo[3][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(3)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[3][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(3)">
+                    </select>
+                    <div style="font-size: 18px; color: #d4514a; width: 30px; float: right" ng-show="!(timeOk[3]) && selectedEmployee[3] != null">
+                        <span class="glyphicon glyphicon-alert"></span>
+                    </div>
+                    <div style="font-size: 18px; color: #4cae4c; width: 30px; float: right" ng-show="timeOk[3] && selectedEmployee[3] != null">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="alert in dayJobs[3][0]" class="alert alert-danger create-job-alert alert-dismissible'" >
+                {{alert.what}}<b>{{alert.when}}</b>{{alert.why}}<b>{{alert.whom}}</b>
+            </div>
+            <div ng-repeat="alert in dayJobs[3][1]" class="alert alert-info create-job-alert alert-dismissible'" >
+                <b>{{alert.who}}</b>{{alert.msg}}<b>{{alert.place}}</b>{{alert.when}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="timesheet-date-td">{{dayNumber[3]}}</td>
+    </tr>
+
+    <tr>
+        <td>{{dayName[4]}}</td>
+        <td rowspan="2" class="timesheet-data-td">
+            <div class="form-inline">
+                <select style="width: 350px" class="form-control" ng-model="selectedEmployee[4]" ng-change="changeDayEvent(4)"
+                        ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
+                    <option value="">No employee selected ...</option>
+                </select>
+                <div style="width: 320px; float: right">
+                    <label style="font-weight: normal">From</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[4][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(4)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesFrom[4][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(4)">
+                    </select>
+                    <label style="font-weight: normal">To</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesTo[4][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(4)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[4][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(4)">
+                    </select>
+                    <div style="font-size: 18px; color: #d4514a; width: 30px; float: right" ng-show="!(timeOk[4]) && selectedEmployee[4] != null">
+                        <span class="glyphicon glyphicon-alert"></span>
+                    </div>
+                    <div style="font-size: 18px; color: #4cae4c; width: 30px; float: right" ng-show="timeOk[4] && selectedEmployee[4] != null">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div ng-repeat="alert in dayJobs[4][0]" class="alert alert-danger create-job-alert alert-dismissible'" >
+                {{alert.what}}<b>{{alert.when}}</b>{{alert.why}}<b>{{alert.whom}}</b>
+            </div>
+            <div ng-repeat="alert in dayJobs[4][1]" class="alert alert-info create-job-alert alert-dismissible'" >
+                <b>{{alert.who}}</b>{{alert.msg}}<b>{{alert.place}}</b>{{alert.when}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="timesheet-date-td">{{dayNumber[4]}}</td>
+    </tr>
+
+    <tr>
+        <td>{{dayName[5]}}</td>
+        <td rowspan="2" class="timesheet-data-td">
+            <div class="form-inline">
+                <select style="width: 350px" class="form-control" ng-model="selectedEmployee[5]" ng-change="changeDayEvent(5)"
+                        ng-options="(item.surname + ' ' + item.name) for item in employeesAvailable">
+                    <option value="">No employee selected ...</option>
+                </select>
+                <div style="width: 320px; float: right">
+                    <label style="font-weight: normal">From</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesFrom[5][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(5)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesFrom[5][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(5)">
+                    </select>
+                    <label style="font-weight: normal">To</label>
+                    <select style="width: 50px; padding: 0" class="form-control" ng-model="timesTo[5][0]" ng-options="item for item in possibleHours" ng-change="changeDayEvent(5)">
+                    </select>
+                    <label style="font-weight: normal">:</label>
+                    <select style="width: 50px; padding: 0"class="form-control" ng-model="timesTo[5][1]" ng-options="item for item in possibleMinutes" ng-change="changeDayEvent(5)">
+                    </select>
+                    <div style="font-size: 18px; color: #d4514a; width: 30px; float: right" ng-show="!(timeOk[4]) && selectedEmployee[5] != null">
+                        <span class="glyphicon glyphicon-alert"></span>
+                    </div>
+                    <div style="font-size: 18px; color: #4cae4c; width: 30px; float: right" ng-show="timeOk[4] && selectedEmployee[5] != null">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="alert in dayJobs[5][0]" class="alert alert-danger create-job-alert alert-dismissible'" >
+                {{alert.what}}<b>{{alert.when}}</b>{{alert.why}}<b>{{alert.whom}}</b>
+            </div>
+            <div ng-repeat="alert in dayJobs[5][1]" class="alert alert-info create-job-alert alert-dismissible'" >
+                <b>{{alert.who}}</b>{{alert.msg}}<b>{{alert.place}}</b>{{alert.when}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="timesheet-date-td">{{dayNumber[5]}}</td>
+    </tr>
+
     </tbody>
 </table>
+<div>
+    <table>
+        <tr>
+            <td align="center">
+                <input class="form-control input-button do-btn" type="submit" ng-click="createJobs()" value="Create jobs" />
+            </td>
+        </tr>
+    </table>
+</div>

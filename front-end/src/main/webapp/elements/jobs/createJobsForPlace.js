@@ -1,33 +1,110 @@
 'use strict';
 
 angular.module('angularApp')
-    .controller('CreateJobsForPlaceCtrl', ['$scope', '$http', 'commonTools', 'globalDate', function ($scope, $http, commonTools, globalDate) {
+    .controller('CreateJobsForPlaceCtrl', ['$scope', '$http', '$location', '$q', 'commonTools', 'globalDate', 'createUpdateTools', function ($scope, $http, $location, $q, commonTools, globalDate, createUpdateTools) {
 
         $scope.loaded = false;
         $scope.dayChoosen = globalDate.get();
-        
-        $scope.changeDayEvent = function (indexDay) {
-            $scope.dayTimeFrom[[indexDay]] = moment().hours($scope.timesFrom[[indexDay]][0]).minutes($scope.timesFrom[[indexDay]][1]).seconds(0).milliseconds(0);
-            $scope.dayTimeTo[[indexDay]] = moment().hours($scope.timesTo[[indexDay]][0]).minutes($scope.timesTo[[indexDay]][1]).seconds(0).milliseconds(0);
 
-            $scope.dayJobs[[indexDay]] = [[],[]];    //error messages + info messages
-            $scope.jobsSorted[[indexDay]].forEach(function (item, index) {
+        $scope.createOneJob = function () {
+            if($scope.statusesOk.length != 0) {
+                $http($scope.httpJobs[0]
+                ).then(function (response) {
+                    $scope.httpJobs.splice(0, 1);
+                    createUpdateTools.addAlert({type: 'success', title: 'Successful!', msg: $scope.statusesOk[0]});
+                    $scope.statusesOk.splice(0, 1);
+                    $scope.statusesError.splice(0, 1);
+                    $scope.createOneJob();
+                }, function (response) {
+                    $scope.httpJobs.splice(0, 1);
+                    createUpdateTools.addAlert({type: 'danger', title: 'Error!', msg: $scope.statusesError[0] + response.status});
+                    $scope.statusesOk.splice(0, 1);
+                    $scope.statusesError.splice(0, 1);
+                    $scope.createOneJob();
+                });
+            } else {
+                createUpdateTools.setItem($scope.selectedPlace.id);
+                $location.path("/jobsOfPlace");
+            }
+        };
+
+        $scope.createJobs = function () {
+            createUpdateTools.deleteAlerts();
+            var d = new Date($scope.dayChoosen);
+            var tryParseMonday = new Date(d.setDate(d.getDate() - d.getDay() + (d.getDay() == 0 ? -6 : 1)));
+            $scope.httpJobs = [];
+            $scope.statusesOk = [];
+            $scope.statusesError = [];
+            $scope.selectedEmployee.forEach(function (item, index) {
+                if (item != null) {
+                    var myDay = new Date(tryParseMonday);
+                    myDay.setDate(tryParseMonday.getDate() + index);
+                    var data = {
+                        jobStart: [parseInt($scope.timesFrom[index][0]),parseInt($scope.timesFrom[index][1])],
+                        jobEnd: [parseInt($scope.timesTo[index][0]),parseInt($scope.timesTo[index][1])],
+                        jobDate: commonTools.formatDateForRest(myDay),
+                        employeeId: item.id,
+                        placeId: $scope.selectedPlace.id
+                    };
+
+                    $scope.httpJobs.push({
+                        url: '/posta/rest/jobs',
+                        method: "POST",
+                        data: data
+                    });
+
+                    var statusOk = "New job "+  $scope.dayTimeFrom[[index]].format("HH:mm") +" - "+ $scope.dayTimeTo[[index]].format("HH:mm") +" "+ commonTools.getDateFormatted(myDay) +" for "+ commonTools.formatNameSurname(item) +" successfully created.";
+                    var statusError = "Job "+ $scope.dayTimeFrom[[index]].format("HH:mm") +" - "+ $scope.dayTimeTo[[index]].format("HH:mm") +" "+ commonTools.getDateFormatted(myDay)  +" for "+ commonTools.formatNameSurname(item) +" has not been created! HTTP ";
+                    $scope.statusesOk.push(statusOk);
+                    $scope.statusesError.push(statusError);
+                }
+            });
+
+            if($scope.statusesOk.length != 0) {
+                $scope.createOneJob();
+            } else {
+                createUpdateTools.setItem($scope.selectedPlace.id);
+                createUpdateTools.addAlert({type: 'info', title: 'No change!', msg: "You have not created any job."});
+                $location.path("/jobsOfPlace");
+            }
+
+        };
+
+        $scope.changeDayEvent = function (indexDay) {
+            $scope.dayTimeFrom[indexDay] = moment().hours($scope.timesFrom[indexDay][0]).minutes($scope.timesFrom[indexDay][1]).seconds(0).milliseconds(0);
+            $scope.dayTimeTo[indexDay] = moment().hours($scope.timesTo[indexDay][0]).minutes($scope.timesTo[indexDay][1]).seconds(0).milliseconds(0);
+            if ($scope.dayTimeFrom[indexDay].isAfter($scope.dayTimeTo[indexDay])) {
+                $scope.timeOk[indexDay] = false;
+            } else {
+                $scope.timeOk[indexDay] = true;
+            }
+
+            $scope.dayJobs[indexDay] = [[],[]];    //error messages + info messages
+            $scope.jobsSorted[indexDay].forEach(function (item, index) {
                 var jobStartSplit = item.jobStart.split(":");
                 var jobEndSplit = item.jobEnd.split(":");
                 var jobStart = moment().hours(jobStartSplit[0]).minutes(jobStartSplit[1]).seconds(0).milliseconds(0);
                 var jobEnd = moment().hours(jobEndSplit[0]).minutes(jobEndSplit[1]).seconds(0).milliseconds(0);
-                if ($scope.dayTimeFrom[[indexDay]].isAfter(jobStart) && $scope.dayTimeFrom[[indexDay]].isBefore(jobEnd)) {
-                    $scope.dayJobs[[indexDay]][0].push("Start of this job "+ $scope.dayTimeFrom[[indexDay]].format("HH:mm") +" is in conflict with "+ commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd);
-                } else if ($scope.dayTimeTo[[indexDay]].isBefore(jobEnd) && $scope.dayTimeTo[[indexDay]].isAfter(jobStart)) {
-                    $scope.dayJobs[[indexDay]][0].push("End of this job "+ $scope.dayTimeTo[[indexDay]].format("HH:mm") +" is in conflict with "+ commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd);
-                } else if ((!($scope.dayTimeFrom[[indexDay]].isAfter(jobStart))) && (!($scope.dayTimeTo[[indexDay]].isBefore(jobEnd)))) {
-                    $scope.dayJobs[[indexDay]][0].push("Whole job "+ $scope.dayTimeFrom[[indexDay]].format("HH:mm") +" - "+ $scope.dayTimeTo[[indexDay]].format("HH:mm") +" is over "+ commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd);
-                } else if ($scope.selectedEmployee[[indexDay]].id == item.employee.id) {
-                    var msg = commonTools.formatNameSurname(item.employee) +" already works here "+ item.jobStart +" - "+ item.jobEnd;
-                    $scope.dayJobs[[indexDay]][1].push(msg);
+                if ($scope.selectedEmployee[indexDay].id == item.employee.id) {
+                    if ($scope.dayTimeFrom[indexDay].isAfter(jobStart) && $scope.dayTimeFrom[indexDay].isBefore(jobEnd)) {
+                        $scope.dayJobs[indexDay][0].push({what: "Start of this job ", when: $scope.dayTimeFrom[indexDay].format("HH:mm"), why: " is in conflict with ", whom: commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd});
+                    } else if ($scope.dayTimeTo[indexDay].isBefore(jobEnd) && $scope.dayTimeTo[indexDay].isAfter(jobStart)) {
+                        $scope.dayJobs[indexDay][0].push({what: "End of this job ", when: $scope.dayTimeTo[indexDay].format("HH:mm"), why: " is in conflict with ", whom: commonTools.formatNameSurname(item.employee) +" "+ item.jobStart +" - "+ item.jobEnd});
+                    } else if ((!($scope.dayTimeFrom[indexDay].isAfter(jobStart))) && (!($scope.dayTimeTo[indexDay].isBefore(jobEnd)))) {
+                        $scope.dayJobs[indexDay][0].push({what: "Whole job ", when: $scope.dayTimeFrom[indexDay].format("HH:mm") +" - "+ $scope.dayTimeTo[indexDay].format("HH:mm"), why: " is over "+ commonTools.formatNameSurname(item.employee) +" ", whom: item.jobStart +" - "+ item.jobEnd +" "+ item.place.name});
+                    } else {
+                        $scope.dayJobs[indexDay][1].push({who: commonTools.formatNameSurname(item.employee), msg: " works also at ", place: item.place.name + " ", when: item.jobStart + " - " + item.jobEnd});
+                    }
                 } else {
-                    var msg = commonTools.formatNameSurname(item.employee) +" works also here "+ item.jobStart +" - "+ item.jobEnd;
-                    $scope.dayJobs[[indexDay]][1].push(msg);
+                    if ($scope.selectedPlace.id == item.place.id) {
+                        if ($scope.dayTimeFrom[indexDay].isAfter(jobStart) && $scope.dayTimeFrom[indexDay].isBefore(jobEnd)
+                            || $scope.dayTimeTo[indexDay].isBefore(jobEnd) && $scope.dayTimeTo[indexDay].isAfter(jobStart)
+                            || (!($scope.dayTimeFrom[indexDay].isAfter(jobStart))) && (!($scope.dayTimeTo[indexDay].isBefore(jobEnd)))) {
+                            $scope.dayJobs[indexDay][0].push({what: "", when: commonTools.formatNameSurname(item.employee), why: " already works at ", whom: item.place.name +" "+ item.jobStart +" - "+ item.jobEnd});
+                        } else {
+                            $scope.dayJobs[indexDay][1].push({who: commonTools.formatNameSurname(item.employee), msg: " works also at ", place: item.place.name + " ", when: item.jobStart +" - "+ item.jobEnd});
+                        }
+                    }
                 }
             });
         };
@@ -37,6 +114,7 @@ angular.module('angularApp')
             $scope.possibleMinutes = commonTools.getPossibleMinutes();
             $scope.possibleHours = commonTools.getPossibleHours();
             $scope.dayJobs = [[],[],[],[],[],[],[]];
+            $scope.timeOk = [true,true,true,true,true,true,true];
 
             $scope.timesFrom = [];
             $scope.timesTo = [];
@@ -82,8 +160,7 @@ angular.module('angularApp')
                     method: "POST",
                     data: {
                         "jobDateStart": commonTools.formatDateForRest(tryParseMonday),
-                        "jobDateEnd": commonTools.formatDateForRest($scope.saturday),
-                        "placeId": $scope.selectedPlace.id
+                        "jobDateEnd": commonTools.formatDateForRest($scope.saturday)
                     }
                 }).then(function (response) {
                     $scope.allJobs = response.data;
